@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="lean-ops — a Claude Code skill that minimises token and tool usage across any task. Parallel calls, targeted reads, aggregators over crawlers. Applies by default.">
+    <meta name="author" content="Cameron J. Moir">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://streamables.live/projects/lean-ops.html">
+    <meta property="og:title" content="lean-ops | Streamables.live">
+    <meta property="og:description" content="A Claude Code skill that minimises token and tool usage across any task. Parallel calls, targeted reads, aggregators over crawlers. Applies by default.">
+    <meta property="og:image" content="https://streamables.live/St-03.png">
+    <meta property="og:url" content="https://streamables.live/projects/lean-ops.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Streamables.live">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="lean-ops | Streamables.live">
+    <meta name="twitter:description" content="A Claude Code skill that minimises token and tool usage across any task. Parallel calls, targeted reads, aggregators over crawlers. Applies by default.">
+    <meta name="twitter:image" content="https://streamables.live/St-03.png">
+    <meta name="theme-color" content="#000000">
+    <title>lean-ops | Streamables.live</title>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZEJMKCZRRJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ZEJMKCZRRJ');
+    </script>
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --neural-cyan:#00ffff;
+            --surface-glass:rgba(255,255,255,0.03);
+            --surface-border:rgba(0,255,255,0.15);
+            --text-primary:#ffffff;
+            --text-secondary:rgba(255,255,255,0.8);
+            --text-muted:rgba(255,255,255,0.55);
+        }
+        html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+        body{
+            font-family:'JetBrains Mono', monospace;
+            background-color:#000;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(0,255,255,.08) 0, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0,245,255,.08) 0, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(0,229,255,.08) 0, transparent 50%),
+                linear-gradient(135deg, #0a0a0f 0, #000 100%);
+            color:var(--text-primary);
+            min-height:100vh;
+            min-height:100dvh;
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+            opacity:0;
+            transition:opacity 0.4s ease;
+            overflow-x:hidden;
+        }
+        .matrix-rain{
+            position:fixed;
+            top:0;left:0;
+            width:100%;height:100%;
+            pointer-events:none;
+            z-index:0;
+            opacity:0.18;
+        }
+
+        /* Nav */
+        .site-nav{
+            position:sticky;
+            top:0;
+            z-index:100;
+            padding:0 2rem;
+            height:3.5rem;
+            background:rgba(0,0,0,0.88);
+            backdrop-filter:blur(12px);
+            -webkit-backdrop-filter:blur(12px);
+            border-bottom:1px solid rgba(0,255,255,0.1);
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:1rem;
+        }
+        .nav-back{
+            color:rgba(0,255,255,0.7);
+            text-decoration:none;
+            font-size:0.72rem;
+            letter-spacing:0.05em;
+            transition:color 0.2s;
+            white-space:nowrap;
+            min-height:44px;
+            display:flex;
+            align-items:center;
+        }
+        .nav-back:hover{color:var(--neural-cyan)}
+        .nav-links{
+            display:flex;
+            align-items:center;
+            gap:0.15rem;
+        }
+        .nav-link{
+            color:rgba(255,255,255,0.5);
+            text-decoration:none;
+            font-size:0.7rem;
+            padding:0.3rem 0.5rem;
+            border-radius:4px;
+            transition:all 0.2s;
+            white-space:nowrap;
+        }
+        .nav-link:hover{color:#fff;background:rgba(255,255,255,0.06)}
+        .nav-link-active{color:var(--neural-cyan) !important;border:1px solid rgba(0,255,255,0.3)}
+        @media(max-width:600px){.nav-links{display:none}}
+
+        /* Page */
+        .page-wrapper{
+            position:relative;
+            z-index:1;
+            max-width:760px;
+            margin:0 auto;
+            padding:clamp(2rem,6vw,3.5rem) clamp(1.25rem,5vw,2rem) clamp(4rem,8vw,6rem);
+        }
+
+        /* Header */
+        .project-header{
+            margin-bottom:2.5rem;
+        }
+        .project-label{
+            font-size:0.68rem;
+            color:rgba(0,255,255,0.5);
+            letter-spacing:0.12em;
+            text-transform:uppercase;
+            margin-bottom:0.9rem;
+        }
+        .project-title{
+            font-size:clamp(1.6rem,5vw,2.4rem);
+            font-weight:600;
+            line-height:1.2;
+            color:#fff;
+            margin-bottom:1rem;
+        }
+        .project-status{
+            display:inline-flex;
+            align-items:center;
+            gap:0.5rem;
+            font-size:0.68rem;
+            color:rgba(0,255,255,0.6);
+            border:1px solid rgba(0,255,255,0.2);
+            border-radius:4px;
+            padding:0.25rem 0.75rem;
+        }
+        .status-dot{
+            width:6px;height:6px;
+            border-radius:50%;
+            background:rgba(0,255,255,0.5);
+            animation:pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse{0%,100%{opacity:0.4}50%{opacity:1}}
+
+        .sep{
+            display:flex;
+            align-items:center;
+            gap:0.75rem;
+            margin:2rem 0;
+        }
+        .sep-line{flex:1;height:1px;background:rgba(0,255,255,0.1)}
+        .sep-text{font-size:0.65rem;color:rgba(0,255,255,0.25)}
+
+        /* Card */
+        .project-card{
+            background:var(--surface-glass);
+            border:1px solid var(--surface-border);
+            border-radius:16px;
+            padding:clamp(1.5rem,4vw,2.5rem) clamp(1.25rem,4vw,2rem);
+            backdrop-filter:blur(8px);
+            -webkit-backdrop-filter:blur(8px);
+        }
+        .project-body p{
+            font-size:clamp(0.84rem,2.2vw,0.9rem);
+            line-height:1.8;
+            color:rgba(255,255,255,0.8);
+            margin-bottom:1.4rem;
+        }
+        .project-body h2{
+            font-size:clamp(0.9rem,2.5vw,1.05rem);
+            font-weight:600;
+            color:#fff;
+            margin:2.2rem 0 0.9rem;
+        }
+        .project-body h3{
+            font-size:clamp(0.84rem,2.2vw,0.92rem);
+            font-weight:600;
+            color:rgba(0,255,255,0.9);
+            margin:1.8rem 0 0.7rem;
+        }
+        .project-body hr{
+            border:none;
+            border-top:1px solid rgba(0,255,255,0.08);
+            margin:2rem 0;
+        }
+        .project-body ul{
+            margin:0 0 1.4rem 1.2rem;
+        }
+        .project-body ul li{
+            font-size:clamp(0.82rem,2vw,0.88rem);
+            line-height:1.75;
+            color:rgba(255,255,255,0.75);
+            margin-bottom:0.4rem;
+        }
+        .project-body ul li::marker{color:var(--neural-cyan)}
+        .project-body strong{color:#fff;font-weight:600}
+
+        /* Terminal block */
+        .terminal{
+            background:#0a0a0a;
+            border:1px solid rgba(0,255,255,0.15);
+            border-radius:10px;
+            margin:1.8rem 0;
+            overflow:hidden;
+        }
+        .terminal-bar{
+            background:rgba(0,255,255,0.04);
+            border-bottom:1px solid rgba(0,255,255,0.08);
+            padding:0.5rem 0.85rem;
+            display:flex;
+            align-items:center;
+            gap:0.4rem;
+        }
+        .terminal-dot{
+            width:8px;height:8px;border-radius:50%;
+        }
+        .terminal-label{
+            font-size:0.6rem;
+            color:rgba(255,255,255,0.2);
+            margin-left:0.4rem;
+            letter-spacing:0.05em;
+        }
+        .terminal-body{
+            padding:1.2rem 1.1rem;
+            font-size:0.72rem;
+            line-height:1.8;
+            color:rgba(255,255,255,0.55);
+            overflow-x:auto;
+        }
+        .terminal-body .prompt{color:rgba(0,255,255,0.6)}
+        .terminal-body .cmd{color:rgba(255,255,255,0.85)}
+        .terminal-body .out{color:rgba(255,255,255,0.35)}
+        .terminal-body .good{color:rgba(0,255,128,0.8)}
+        .terminal-body .dim{color:rgba(255,255,255,0.2)}
+        .terminal-caption{
+            font-size:0.62rem;
+            color:rgba(255,255,255,0.25);
+            text-align:center;
+            margin-top:-1.2rem;
+            margin-bottom:1.8rem;
+            letter-spacing:0.04em;
+        }
+
+        /* Tags */
+        .tag-row{
+            display:flex;
+            flex-wrap:wrap;
+            gap:0.4rem;
+            margin:1.5rem 0 0;
+        }
+        .tag{
+            font-size:0.62rem;
+            color:rgba(255,255,255,0.3);
+            border:1px solid rgba(255,255,255,0.08);
+            border-radius:3px;
+            padding:0.15rem 0.5rem;
+        }
+        .tag-cyan{
+            color:rgba(0,255,255,0.5);
+            border-color:rgba(0,255,255,0.2);
+        }
+
+        /* CTA */
+        .project-cta{
+            margin-top:2rem;
+            padding:1.5rem;
+            background:rgba(0,255,255,0.03);
+            border:1px solid rgba(0,255,255,0.1);
+            border-radius:10px;
+            text-align:center;
+        }
+        .cta-text{
+            font-size:0.78rem;
+            color:rgba(255,255,255,0.45);
+            margin-bottom:0.75rem;
+        }
+        .cta-link{
+            display:inline-flex;
+            align-items:center;
+            color:var(--neural-cyan);
+            text-decoration:none;
+            font-size:0.78rem;
+            border:1px solid rgba(0,255,255,0.3);
+            padding:0.5rem 1.2rem;
+            border-radius:6px;
+            transition:all 0.2s;
+            min-height:44px;
+            margin:0.25rem;
+        }
+        .cta-link:hover{background:rgba(0,255,255,0.08);border-color:rgba(0,255,255,0.6)}
+
+        /* Footer */
+        .page-footer{
+            text-align:center;
+            margin-top:3rem;
+            font-size:0.68rem;
+            color:rgba(255,255,255,0.2);
+            line-height:2;
+        }
+        .page-footer a{color:rgba(0,255,255,0.35);text-decoration:none}
+        .page-footer a:hover{color:rgba(0,255,255,0.7)}
+
+        @media(max-width:480px){
+            .site-nav{padding:0 1rem;height:3rem}
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-rain" id="matrixRain"></div>
+
+    <nav class="site-nav">
+        <a href="https://streamables.live/" class="nav-back">← Streamables.live</a>
+        <div class="nav-links">
+            <a href="https://streamables.live/#home" class="nav-link">Home</a>
+            <a href="https://streamables.live/#services" class="nav-link">Services</a>
+            <a href="https://streamables.live/#research" class="nav-link">Research</a>
+            <a href="https://streamables.live/#projects" class="nav-link nav-link-active">Projects</a>
+            <a href="https://streamables.live/#articles" class="nav-link">Articles</a>
+            <a href="https://streamables.live/#about" class="nav-link">About</a>
+            <a href="https://streamables.live/#contact" class="nav-link">Contact</a>
+        </div>
+    </nav>
+
+    <div class="page-wrapper">
+        <header class="project-header">
+            <div class="project-label">// Project &nbsp;·&nbsp; Open Source</div>
+            <h1 class="project-title">lean-ops</h1>
+            <div class="project-status">
+                <span class="status-dot" style="background:#00ff41"></span>
+                Live &mdash; v1.0.0
+            </div>
+            <div style="margin-top:1.2rem;display:flex;gap:0.5rem;flex-wrap:wrap;">
+                <a href="https://github.com/C-Moir/claude-lean-ops" target="_blank" rel="noopener" class="cta-link">→ View on GitHub</a>
+            </div>
+        </header>
+
+        <div class="sep">
+            <div class="sep-line"></div>
+            <span class="sep-text">//</span>
+            <div class="sep-line"></div>
+        </div>
+
+        <div class="project-card">
+            <div class="project-body">
+
+<p>lean-ops is a Claude Code skill that reduces token usage and tool call overhead on any task — research, file operations, web lookups, or multi-step work. It applies by default. You don't invoke it manually. It just changes how Claude operates.</p>
+
+<p>Every tool call costs tokens and time. Most AI assistants burn them carelessly — sequential lookups when parallel would do, full file reads when a grep would find the answer in one shot, crawling five sites when one aggregator has everything. lean-ops fixes that systematically.</p>
+
+<div class="terminal">
+    <div class="terminal-bar">
+        <span class="terminal-dot" style="background:#ff5f57"></span>
+        <span class="terminal-dot" style="background:#ffbd2e"></span>
+        <span class="terminal-dot" style="background:#28c840"></span>
+        <span class="terminal-label">// claude code — lean-ops active</span>
+    </div>
+    <div class="terminal-body">
+<span class="dim"># without lean-ops</span>
+<span class="prompt">▶</span> <span class="cmd">WebSearch("X version") → wait → WebSearch("Y docs") → wait → WebSearch("Z price")</span>
+<span class="out">3 sequential calls. 3x latency. 3x context consumed.</span>
+<br>
+<span class="dim"># with lean-ops</span>
+<span class="prompt">▶</span> <span class="cmd">WebSearch("X version") + WebSearch("Y docs") + WebSearch("Z price")</span>
+<span class="good">✓ 1 round trip. Same results. Context preserved.</span>
+<br>
+<span class="dim"># file lookup — without lean-ops</span>
+<span class="prompt">▶</span> <span class="cmd">Read("src/bigfile.ts")  // 2,000 lines consumed</span>
+<span class="out">scanning manually for functionName...</span>
+<br>
+<span class="dim"># file lookup — with lean-ops</span>
+<span class="prompt">▶</span> <span class="cmd">Grep("functionName", "src/") → Read offset:142 limit:30</span>
+<span class="good">✓ 30 lines. Targeted. Done.</span>
+    </div>
+</div>
+<p class="terminal-caption">// the difference compounds across a full session</p>
+
+<hr>
+
+<h2>The Core Rule</h2>
+
+<p>Plan before you act. Before making a single tool call, identify the minimum set of operations required to complete the task. Execute that plan — in parallel where possible.</p>
+
+<p>Never react. Never search-then-search-again because the first result was incomplete. Know what you need before reaching for a tool.</p>
+
+<hr>
+
+<h2>Research Operations</h2>
+
+<h3>Aggregators over crawlers</h3>
+
+<p>For any lookup — packages, documentation, availability — find the single source that consolidates the data rather than hitting individual sites. npmjs.com for npm packages. pypi.org for Python. crates.io for Rust. caniuse.com for browser support. The official docs URL directly instead of search engines. One fetch beats five.</p>
+
+<h3>Parallel by default</h3>
+
+<p>Any independent pieces of information get fetched simultaneously — not one at a time. The only exception is when one call's output determines the next call's input.</p>
+
+<h3>Stop when you have enough</h3>
+
+<p>The goal is a correct answer, not an exhaustive survey. If the first result answers the question, stop. Fetching three more sources to confirm something already confirmed is waste.</p>
+
+<hr>
+
+<h2>File Operations</h2>
+
+<h3>Skip noise directories</h3>
+
+<p>node_modules, .git, dist, build, __pycache__, .venv — never searched, never read, unless explicitly asked. These are generated artefacts. They pollute results and burn context.</p>
+
+<h3>Grep before read</h3>
+
+<p>Looking for a function, class, or pattern? Grep first. Only read the file if you need surrounding code the grep didn't capture. Never read a 2,000-line file to find one function when a targeted search takes a second.</p>
+
+<h3>Read minimally</h3>
+
+<p>Large files get read with offset and limit — only the relevant section. Never re-read a file you just edited. The edit tool confirms success. Re-reading is a wasted call.</p>
+
+<hr>
+
+<h2>Context Window Awareness</h2>
+
+<p>The context window is finite. Treat it like RAM — don't page in data you won't use. Targeted reads over full reads. Facts extracted from documents, not documents repeated back in full. Decisions front-loaded so there are fewer corrective calls mid-task.</p>
+
+<p>If the conversation is long, earlier tool results may have been compacted. Re-read only what's actually needed, not everything previously touched.</p>
+
+<hr>
+
+<h2>Output Economy</h2>
+
+<p>Response length matches task complexity. A yes/no question gets a sentence. A factual lookup gets the fact. A complex implementation gets full detail. No padding. No summary of what just happened — the user can see the tool calls. No "next steps" section unless asked.</p>
+
+<hr>
+
+<h2>The Install</h2>
+
+<p>lean-ops ships as a Claude Code plugin. One command and it's active across every session.</p>
+
+<div class="terminal">
+    <div class="terminal-bar">
+        <span class="terminal-dot" style="background:#ff5f57"></span>
+        <span class="terminal-dot" style="background:#ffbd2e"></span>
+        <span class="terminal-dot" style="background:#28c840"></span>
+        <span class="terminal-label">// install</span>
+    </div>
+    <div class="terminal-body">
+<span class="prompt">$</span> <span class="cmd">claude plugin install github:C-Moir/claude-lean-ops</span>
+<span class="good">✓ lean-ops installed. Applies by default.</span>
+    </div>
+</div>
+<p class="terminal-caption">// no configuration required</p>
+
+<p>Or add it manually to <strong>~/.claude/settings.json</strong> under enabledPlugins. The skill loads at session start and applies across all tasks without invocation.</p>
+
+            </div>
+
+            <div class="tag-row">
+                <span class="tag">Claude Code</span>
+                <span class="tag">AI Tools</span>
+                <span class="tag">Token Efficiency</span>
+                <span class="tag">Developer Tools</span>
+                <span class="tag">Open Source</span>
+                <span class="tag tag-cyan">Live</span>
+            </div>
+        </div>
+
+        <div class="project-cta">
+            <p class="cta-text">Free. Open source. MIT licensed.</p>
+            <a href="https://github.com/C-Moir/claude-lean-ops" target="_blank" rel="noopener" class="cta-link">→ github.com/C-Moir/claude-lean-ops</a>
+        </div>
+
+        <footer class="page-footer">
+            © 2026 Streamables.live | Brisbane, Australia<br>
+            <a href="https://streamables.live/">← Back to main site</a> &nbsp;·&nbsp; <a href="https://streamables.live/#projects">← Projects</a>
+        </footer>
+    </div>
+
+    <script>
+        function createMatrixRain() {
+            const container = document.getElementById('matrixRain');
+            container.innerHTML = '';
+            const canvas = document.createElement('canvas');
+            canvas.style.width = '100%';
+            canvas.style.height = '100%';
+            container.appendChild(canvas);
+            const ctx = canvas.getContext('2d');
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize);
+            const matrixChars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const fontSize = 14;
+            const isMobile = window.innerWidth <= 768;
+            const columns = Math.floor(canvas.width / (isMobile ? 40 : 30));
+            const drops = [];
+            for (let i = 0; i < columns; i++) drops[i] = Math.floor(Math.random() * -50);
+            let lastTime = 0, rafId = null;
+            function draw(t) {
+                if (document.hidden) { rafId = null; return; }
+                if (t - lastTime < 80) { rafId = requestAnimationFrame(draw); return; }
+                lastTime = t;
+                ctx.fillStyle = 'rgba(0,0,0,0.08)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.font = fontSize + 'px "JetBrains Mono", monospace';
+                for (let i = 0; i < columns; i++) {
+                    if (Math.random() > 0.75) continue;
+                    const char = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+                    ctx.fillStyle = '#00ffff';
+                    ctx.fillText(char, i * (isMobile ? 40 : 30), drops[i] * fontSize);
+                    drops[i]++;
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.85) drops[i] = Math.floor(Math.random() * -30);
+                }
+                rafId = requestAnimationFrame(draw);
+            }
+            document.addEventListener('visibilitychange', () => {
+                if (!document.hidden && !rafId) rafId = requestAnimationFrame(draw);
+            });
+            rafId = requestAnimationFrame(draw);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (!prefersReducedMotion) setTimeout(createMatrixRain, 200);
+            document.body.style.opacity = '1';
+        });
+    </script>
+</body>
+</html>
