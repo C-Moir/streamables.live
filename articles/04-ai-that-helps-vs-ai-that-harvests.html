@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="There are two types of AI product in the market. They look identical from the outside. The difference is in which direction the value flows.">
+    <meta name="author" content="Cameron J. Moir">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://streamables.live/articles/04-ai-that-helps-vs-ai-that-harvests.html">
+    <meta property="og:title" content="The Difference Between AI That Helps You and AI That Harvests You | Streamables.live">
+    <meta property="og:description" content="There are two types of AI product in the market. They look identical from the outside. The difference is in which direction the value flows.">
+    <meta property="og:image" content="https://streamables.live/St-03.png">
+    <meta property="og:url" content="https://streamables.live/articles/04-ai-that-helps-vs-ai-that-harvests.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Streamables.live">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@X_Streamables">
+    <meta name="twitter:title" content="The Difference Between AI That Helps You and AI That Harvests You | Streamables.live">
+    <meta name="twitter:description" content="There are two types of AI product in the market. They look identical from the outside. The difference is in which direction the value flows.">
+    <meta name="twitter:image" content="https://streamables.live/St-03.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#000000">
+    <title>The Difference Between AI That Helps You and AI That Harvests You | Streamables.live</title>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZEJMKCZRRJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ZEJMKCZRRJ');
+    </script>
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "The Difference Between AI That Helps You and AI That Harvests You",
+      "description": "There are two types of AI product in the market. They look identical from the outside. The difference is in which direction the value flows.",
+      "author": {
+        "@type": "Person",
+        "name": "Cameron J. Moir",
+        "url": "https://streamables.live/#about"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Streamables.live",
+        "url": "https://streamables.live/",
+        "logo": "https://streamables.live/St-03.png"
+      },
+      "url": "https://streamables.live/articles/04-ai-that-helps-vs-ai-that-harvests.html",
+      "mainEntityOfPage": "https://streamables.live/articles/04-ai-that-helps-vs-ai-that-harvests.html"
+    }
+    </script>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --neural-cyan:#00ffff;
+            --surface-glass:rgba(255,255,255,0.03);
+            --surface-border:rgba(0,255,255,0.15);
+            --text-primary:#ffffff;
+            --text-secondary:rgba(255,255,255,0.8);
+            --text-muted:rgba(255,255,255,0.55);
+        }
+        html{scroll-behavior:smooth}
+        body{
+            font-family:'JetBrains Mono', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color:#000;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(0,255,255,.08) 0, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0,245,255,.08) 0, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(0,229,255,.08) 0, transparent 50%),
+                linear-gradient(135deg, #0a0a0f 0, #000 100%);
+            color:var(--text-primary);
+            min-height:100vh;
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+            opacity:0;
+            transition:opacity 0.4s ease;
+        }
+        /* Matrix canvas */
+        .matrix-rain{
+            position:fixed;
+            top:0;left:0;
+            width:100%;height:100%;
+            pointer-events:none;
+            z-index:0;
+            opacity:0.18;
+        }
+        /* Nav */
+        .article-nav{
+            position:sticky;
+            top:0;
+            z-index:100;
+            padding:1rem 1.5rem;
+            background:rgba(0,0,0,0.85);
+            backdrop-filter:blur(12px);
+            -webkit-backdrop-filter:blur(12px);
+            border-bottom:1px solid rgba(0,255,255,0.12);
+            display:flex;
+            align-items:center;
+            gap:1rem;
+        }
+        .back-link{
+            color:var(--neural-cyan);
+            text-decoration:none;
+            font-size:0.75rem;
+            font-family:'JetBrains Mono', monospace;
+            letter-spacing:0.05em;
+            opacity:0.8;
+            transition:opacity 0.2s;
+            white-space:nowrap;
+        }
+        .back-link:hover{opacity:1}
+        .nav-site{
+            font-size:0.7rem;
+            color:rgba(0,255,255,0.4);
+            font-family:'JetBrains Mono', monospace;
+            margin-left:auto;
+        }
+        /* Main layout */
+        .article-wrapper{
+            position:relative;
+            z-index:1;
+            max-width:760px;
+            margin:0 auto;
+            padding:3rem 1.5rem 5rem;
+        }
+        /* Header */
+        .article-header{
+            margin-bottom:2.5rem;
+        }
+        .article-label{
+            font-size:0.68rem;
+            color:rgba(0,255,255,0.5);
+            font-family:'JetBrains Mono', monospace;
+            letter-spacing:0.1em;
+            text-transform:uppercase;
+            margin-bottom:1rem;
+        }
+        .article-title{
+            font-size:clamp(1.4rem, 4vw, 2.1rem);
+            font-weight:600;
+            line-height:1.25;
+            color:#fff;
+            margin-bottom:1.2rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-byline{
+            font-size:0.72rem;
+            color:rgba(255,255,255,0.4);
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-byline span{color:rgba(0,255,255,0.6)}
+        /* Separator */
+        .article-sep{
+            display:flex;
+            align-items:center;
+            gap:0.75rem;
+            margin:2rem 0;
+        }
+        .sep-line{flex:1;height:1px;background:rgba(0,255,255,0.12)}
+        .sep-text{font-size:0.65rem;color:rgba(0,255,255,0.3);font-family:'JetBrains Mono',monospace}
+        /* Card */
+        .article-card{
+            background:var(--surface-glass);
+            border:1px solid var(--surface-border);
+            border-radius:16px;
+            padding:2.5rem 2rem;
+            backdrop-filter:blur(8px);
+            -webkit-backdrop-filter:blur(8px);
+        }
+        /* Article body */
+        .article-body p{
+            font-size:0.9rem;
+            line-height:1.8;
+            color:rgba(255,255,255,0.82);
+            margin-bottom:1.4rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-body h2{
+            font-size:1.05rem;
+            font-weight:600;
+            color:#fff;
+            margin:2.2rem 0 0.9rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-body h3{
+            font-size:0.92rem;
+            font-weight:600;
+            color:rgba(0,255,255,0.9);
+            margin:1.8rem 0 0.7rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-body hr{
+            border:none;
+            border-top:1px solid rgba(0,255,255,0.1);
+            margin:2rem 0;
+        }
+        .article-body ul{
+            margin:0 0 1.4rem 1.2rem;
+        }
+        .article-body ul li{
+            font-size:0.88rem;
+            line-height:1.75;
+            color:rgba(255,255,255,0.78);
+            margin-bottom:0.4rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-body ul li::marker{color:var(--neural-cyan)}
+        .article-body strong{color:#fff;font-weight:600}
+        /* Attribution */
+        .article-attribution{
+            margin-top:2.5rem;
+            padding-top:1.5rem;
+            border-top:1px solid rgba(0,255,255,0.1);
+        }
+        .attribution-text{
+            font-size:0.72rem;
+            color:rgba(255,255,255,0.35);
+            font-family:'JetBrains Mono', monospace;
+            line-height:1.7;
+            font-style:italic;
+        }
+        /* CTA */
+        .article-cta{
+            margin-top:2.5rem;
+            padding:1.5rem;
+            background:rgba(0,255,255,0.04);
+            border:1px solid rgba(0,255,255,0.1);
+            border-radius:10px;
+            text-align:center;
+        }
+        .cta-text{
+            font-size:0.78rem;
+            color:rgba(255,255,255,0.5);
+            font-family:'JetBrains Mono', monospace;
+            margin-bottom:0.75rem;
+        }
+        .cta-link{
+            display:inline-block;
+            color:var(--neural-cyan);
+            text-decoration:none;
+            font-size:0.78rem;
+            font-family:'JetBrains Mono', monospace;
+            border:1px solid rgba(0,255,255,0.3);
+            padding:0.5rem 1.2rem;
+            border-radius:6px;
+            transition:all 0.2s;
+        }
+        .cta-link:hover{background:rgba(0,255,255,0.08);border-color:rgba(0,255,255,0.6)}
+        /* Footer */
+        .article-footer{
+            text-align:center;
+            margin-top:3rem;
+            font-size:0.68rem;
+            color:rgba(255,255,255,0.25);
+            font-family:'JetBrains Mono', monospace;
+            line-height:2;
+        }
+        .article-footer a{color:rgba(0,255,255,0.4);text-decoration:none}
+        .article-footer a:hover{color:rgba(0,255,255,0.7)}
+        @media(max-width:600px){
+            .article-wrapper{padding:2rem 1rem 4rem}
+            .article-card{padding:1.5rem 1.2rem}
+            .article-body p{font-size:0.85rem}
+        }
+
+        /* Next article */
+        .article-next{
+            margin-top:2rem;
+            padding:1.25rem 1.5rem;
+            background:rgba(0,255,255,0.03);
+            border:1px solid rgba(0,255,255,0.12);
+            border-radius:10px;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:1rem;
+        }
+        .next-label{
+            font-size:0.62rem;
+            color:rgba(0,255,255,0.4);
+            font-family:'JetBrains Mono',monospace;
+            letter-spacing:0.1em;
+            white-space:nowrap;
+        }
+        .next-article-link{
+            display:flex;
+            align-items:flex-start;
+            gap:0.6rem;
+            color:rgba(255,255,255,0.75);
+            text-decoration:none;
+            font-size:0.78rem;
+            font-family:'JetBrains Mono',monospace;
+            line-height:1.4;
+            flex:1;
+            text-align:right;
+            justify-content:flex-end;
+            transition:color 0.2s;
+        }
+        .next-article-link:hover{color:#00ffff}
+        .next-article-link svg{flex-shrink:0;color:rgba(0,255,255,0.5);margin-top:0.15rem}
+        .next-article-link:hover svg{color:#00ffff}
+        .next-article-text{display:flex;flex-direction:column;gap:0.25rem;text-align:right}
+        .next-article-title{color:rgba(255,255,255,0.85);font-size:0.78rem}
+        .next-article-teaser{color:rgba(255,255,255,0.4);font-size:0.7rem;line-height:1.5}
+
+        .article-nav{justify-content:space-between}
+        .nav-logo-link{white-space:nowrap}
+        .nav-links{
+            display:flex;
+            align-items:center;
+            gap:0.15rem;
+            flex-wrap:nowrap;
+        }
+        .nav-link{
+            color:rgba(255,255,255,0.55);
+            text-decoration:none;
+            font-size:0.7rem;
+            font-family:'JetBrains Mono',monospace;
+            padding:0.3rem 0.5rem;
+            border-radius:4px;
+            transition:all 0.2s;
+            white-space:nowrap;
+        }
+        .nav-link:hover{color:#fff;background:rgba(255,255,255,0.06)}
+        .nav-link-active{color:var(--neural-cyan) !important;border:1px solid rgba(0,255,255,0.3)}
+        .article-card{position:relative}
+        .close-btn{
+            position:absolute;
+            top:1rem;
+            right:1rem;
+            z-index:10;
+            background:rgba(0,0,0,0.4);
+            backdrop-filter:blur(6px);
+            -webkit-backdrop-filter:blur(6px);
+            border:1px solid rgba(0,255,255,0.2);
+            color:rgba(0,255,255,0.6);
+            font-size:0.9rem;
+            line-height:1;
+            width:2rem;
+            height:2rem;
+            border-radius:50%;
+            cursor:pointer;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            transition:all 0.2s;
+            font-family:'JetBrains Mono',monospace;
+        }
+        .close-btn:hover{
+            background:rgba(0,255,255,0.08);
+            border-color:rgba(0,255,255,0.6);
+            color:#00ffff;
+            transform:scale(1.1);
+        }
+        @media(max-width:600px){
+            .nav-links{display:none}
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-rain" id="matrixRain"></div>
+
+    <nav class="article-nav">
+        <a href="https://streamables.live/" class="back-link nav-logo-link">← Streamables.live</a>
+        <div class="nav-links">
+            <a href="https://streamables.live/#home" class="nav-link">Home</a>
+            <a href="https://streamables.live/#services" class="nav-link">Services</a>
+            <a href="https://streamables.live/#research" class="nav-link">Research</a>
+            <a href="https://streamables.live/#projects" class="nav-link">Projects</a>
+            <a href="https://streamables.live/#articles" class="nav-link nav-link-active">Articles</a>
+            <a href="https://streamables.live/#about" class="nav-link">About</a>
+            <a href="https://streamables.live/#contact" class="nav-link">Contact</a>
+        </div>
+    </nav>
+
+
+    <div class="article-wrapper">
+        <header class="article-header">
+            <div class="article-label">// Article</div>
+            <h1 class="article-title">The Difference Between AI That Helps You and AI That Harvests You</h1>
+            <div class="article-byline">By <span>Cameron J. Moir</span> &nbsp;·&nbsp; Streamables.live</div>
+        </header>
+
+        <div class="article-sep">
+            <div class="sep-line"></div>
+            <span class="sep-text">//</span>
+            <div class="sep-line"></div>
+        </div>
+
+        <div class="article-card">
+            <button class="close-btn" onclick="history.length > 1 ? history.back() : window.location.href='https://streamables.live/#articles'" aria-label="Close">&#x2715;</button>
+            <button class="close-btn" onclick="history.length > 1 ? history.back() : window.location.href='https://streamables.live/#articles'" aria-label="Close">&#x2715;</button>
+            <div class="article-body">
+<p>There are two types of AI product in the market right now. Most people can't tell them apart because they're designed to look identical from the outside.</p>
+<p>Both have a chat interface. Both answer your questions. Both get smarter over time. The difference is in the direction the value flows.</p>
+<hr>
+<p>AI that helps you is straightforward. You give it a task, it does the task, you keep everything. The model improves from general usage patterns, maybe, but your specific inputs, your specific data, your specific context - that stays yours. You're the customer. The product is the service.</p>
+<p>AI that harvests you looks the same but works differently. You give it a task, it does the task - and then everything you told it becomes training data for the next version of the model, gets used to improve targeting for other users, or gets retained indefinitely to build a profile that eventually gets monetised. You're not the customer. You're the product. You're also funding the product's improvement with every interaction.</p>
+<p>The thing is, the second type often delivers a better experience in the short term. Because it's learning from everything you give it, it gets scarily good at predicting what you want. That feels like magic. And it is, sort of - it's just magic you're paying for in ways that don't show up on any invoice.</p>
+<hr>
+<p>The question of which type you're dealing with usually comes down to two things: where the data goes, and who controls it.</p>
+<p>Free consumer AI products almost always harvest. The economics require it. Running frontier AI models is extraordinarily expensive - tens of millions of dollars a month in compute. If you're not paying, someone is, and the most common answer is "your data." Not in a nefarious way necessarily - but the company needs to monetise something, and user data is the thing they have.</p>
+<p>Enterprise AI products are more variable. Some are clean - you pay a proper licence fee, your data is processed locally or in isolated cloud environments, and there's a contractual guarantee it doesn't train the model. Others are less clean - buried in the terms somewhere is a clause about using "anonymised" interaction data for model improvement. Anonymised is doing a lot of work there.</p>
+<p>The test I apply: if I asked this company to delete all data they hold about me, including training data derived from my usage, could they actually do it? For most free consumer products, the honest answer is no. The data's already in the weights.</p>
+<hr>
+<p>For businesses, this matters more than most people realise.</p>
+<p>Every conversation your team has with an AI assistant about your clients, your pricing strategy, your operational problems, your competitive position - that's sensitive information entering a system you don't control. Most people just... don't think about this. They use the consumer version of ChatGPT for work tasks because it's convenient, and the data gets retained and potentially used in ways they'd object to if they read the fine print.</p>
+<p>I've sat in rooms with business owners who are meticulous about data security in their core systems - encrypted backups, careful access controls, NDAs with staff - and then they're dictating their entire client list into a free AI tool and wondering why I'm raising an eyebrow.</p>
+<p>The threat isn't usually that someone's actively reading your inputs. It's more diffuse than that. It's that over time, patterns from thousands of business users' conversations shape model behaviour in ways that might inadvertently surface information that was supposed to be confidential. It's that in a data breach - and AI companies do get breached - your inputs might be in there. It's that regulatory environments are shifting, and the data you freely gave in 2024 might be subject to laws in 2027 that you wish you'd thought about.</p>
+<hr>
+<p>The practical answer for businesses isn't to avoid AI - that's shooting yourself in the foot competitively. It's to be deliberate about which AI tools you use for which tasks.</p>
+<p>Genuinely internal, non-sensitive work? Consumer tools are fine. Drafting a birthday post for your social media, summarising a public news article, generating ideas for a staff event. Low stakes.</p>
+<p>Anything involving client data, financials, operational strategy, competitive intelligence, or personnel matters? That needs either a properly licensed enterprise tool with clear data handling contractuals, or a locally-hosted model that doesn't send anything anywhere.</p>
+<p>The distinction is simple once you make it. The problem is that most businesses have never explicitly made it, so staff default to whatever's easiest, and that's almost always the tool that's harvesting.</p>
+<hr>
+<p>The longer-term question, the one I think about more than the immediate business risk, is what happens when the majority of human knowledge-work is mediated through AI systems that are harvesting the outputs.</p>
+<p>Every insight, every strategy, every creative decision that flows through these tools becomes, in some diffuse way, part of the model. The intellectual diversity of millions of different humans working on millions of different problems gradually gets homogenised through a single architecture. The AI doesn't just reflect human thinking - it starts to shape it, because people increasingly work by prompting a model and iterating on its output rather than generating from scratch.</p>
+<p>That's not a reason to panic. But it is a reason to be deliberate about which tools you trust with your thinking, and why.</p>
+<p>Helping or harvesting. Worth knowing which one you're dealing with.</p>
+            </div>
+
+            <div class="article-attribution">
+                <p class="attribution-text">The ideas, opinions, and frameworks in this article are original to Cameron J. Moir.<br><span style="font-size:0.65rem;opacity:0.7;">Written with the assistance of AI.</span></p>
+            </div>
+        </div>
+        <div class="article-next">
+            <span class="next-label">// Next</span>
+            <a href="07-what-happens-when-ai-makes-the-call.html" class="next-article-link">
+                <span class="next-article-text">
+                    <span class="next-article-title">What Happens When the AI Makes the Call?</span>
+                    <span class="next-article-teaser">When something goes wrong with an AI decision, who’s responsible? Nobody has a clean answer yet — and that’s a problem.</span>
+                </span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+            </a>
+        </div>
+        <div class="article-cta">
+            <p class="cta-text">Interested in working together?</p>
+            <a href="https://streamables.live/#contact" class="cta-link">Get in touch →</a>
+        </div>
+
+        <footer class="article-footer">
+            © 2026 Streamables.live | Brisbane, Australia<br>
+            <a href="https://streamables.live/">← Back to main site</a> &nbsp;·&nbsp; <a href="https://streamables.live/#articles">More articles</a>
+        </footer>
+    </div>
+
+    <script>
+        // Matrix rain
+        function createMatrixRain() {
+            const container = document.getElementById('matrixRain');
+            container.innerHTML = '';
+            const canvas = document.createElement('canvas');
+            canvas.style.width = '100%';
+            canvas.style.height = '100%';
+            container.appendChild(canvas);
+            const ctx = canvas.getContext('2d');
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize);
+            const matrixChars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const fontSize = 14;
+            const isMobile = window.innerWidth <= 768;
+            const columns = Math.floor(canvas.width / (isMobile ? 40 : 30));
+            const drops = [];
+            for (let i = 0; i < columns; i++) drops[i] = Math.floor(Math.random() * -50);
+            let lastTime = 0, rafId = null;
+            function draw(t) {
+                if (document.hidden) { rafId = null; return; }
+                if (t - lastTime < 80) { rafId = requestAnimationFrame(draw); return; }
+                lastTime = t;
+                ctx.fillStyle = 'rgba(0,0,0,0.08)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.font = fontSize + 'px "JetBrains Mono", monospace';
+                for (let i = 0; i < columns; i++) {
+                    if (Math.random() > 0.75) continue;
+                    const char = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+                    ctx.fillStyle = '#00ffff';
+                    ctx.fillText(char, i * (isMobile ? 40 : 30), drops[i] * fontSize);
+                    drops[i]++;
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.85) drops[i] = Math.floor(Math.random() * -30);
+                }
+                rafId = requestAnimationFrame(draw);
+            }
+            document.addEventListener('visibilitychange', () => {
+                if (!document.hidden && !rafId) rafId = requestAnimationFrame(draw);
+            });
+            rafId = requestAnimationFrame(draw);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (!prefersReducedMotion) setTimeout(createMatrixRain, 200);
+            document.body.style.opacity = '1';
+        });
+    </script>
+</body>
+</html>

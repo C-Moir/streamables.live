@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="You've built a workflow around a tool. Your team depends on it. Then the company pivots, or raises prices 300%, or quietly changes the terms. And you're stuck.">
+    <meta name="author" content="Cameron J. Moir">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://streamables.live/articles/12-who-actually-owns-your-ai-assistant.html">
+    <meta property="og:title" content="Who Actually Owns Your AI Assistant? | Streamables.live">
+    <meta property="og:description" content="You've built a workflow around a tool. Your team depends on it. Then the company pivots, or raises prices 300%, or quietly changes the terms. And you're stuck.">
+    <meta property="og:image" content="https://streamables.live/St-03.png">
+    <meta property="og:url" content="https://streamables.live/articles/12-who-actually-owns-your-ai-assistant.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Streamables.live">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@X_Streamables">
+    <meta name="twitter:title" content="Who Actually Owns Your AI Assistant? | Streamables.live">
+    <meta name="twitter:description" content="You've built a workflow around a tool. Your team depends on it. Then the company pivots, or raises prices 300%, or quietly changes the terms. And you're stuck.">
+    <meta name="twitter:image" content="https://streamables.live/St-03.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#000000">
+    <title>Who Actually Owns Your AI Assistant? | Streamables.live</title>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZEJMKCZRRJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ZEJMKCZRRJ');
+    </script>
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Who Actually Owns Your AI Assistant?",
+      "description": "You've built a workflow around a tool. Your team depends on it. Then the company pivots, or raises prices 300%, or quietly changes the terms. And you're stuck.",
+      "author": {
+        "@type": "Person",
+        "name": "Cameron J. Moir",
+        "url": "https://streamables.live/#about"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Streamables.live",
+        "url": "https://streamables.live/",
+        "logo": "https://streamables.live/St-03.png"
+      },
+      "url": "https://streamables.live/articles/12-who-actually-owns-your-ai-assistant.html",
+      "mainEntityOfPage": "https://streamables.live/articles/12-who-actually-owns-your-ai-assistant.html"
+    }
+    </script>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --neural-cyan:#00ffff;
+            --surface-glass:rgba(255,255,255,0.03);
+            --surface-border:rgba(0,255,255,0.15);
+            --text-primary:#ffffff;
+            --text-secondary:rgba(255,255,255,0.8);
+            --text-muted:rgba(255,255,255,0.55);
+        }
+        html{scroll-behavior:smooth}
+        body{
+            font-family:'JetBrains Mono', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color:#000;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(0,255,255,.08) 0, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0,245,255,.08) 0, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(0,229,255,.08) 0, transparent 50%),
+                linear-gradient(135deg, #0a0a0f 0, #000 100%);
+            color:var(--text-primary);
+            min-height:100vh;
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+            opacity:0;
+            transition:opacity 0.4s ease;
+        }
+        /* Matrix canvas */
+        .matrix-rain{
+            position:fixed;
+            top:0;left:0;
+            width:100%;height:100%;
+            pointer-events:none;
+            z-index:0;
+            opacity:0.18;
+        }
+        /* Nav */
+        .article-nav{
+            position:sticky;
+            top:0;
+            z-index:100;
+            padding:1rem 1.5rem;
+            background:rgba(0,0,0,0.85);
+            backdrop-filter:blur(12px);
+            -webkit-backdrop-filter:blur(12px);
+            border-bottom:1px solid rgba(0,255,255,0.12);
+            display:flex;
+            align-items:center;
+            gap:1rem;
+        }
+        .back-link{
+            color:var(--neural-cyan);
+            text-decoration:none;
+            font-size:0.75rem;
+            font-family:'JetBrains Mono', monospace;
+            letter-spacing:0.05em;
+            opacity:0.8;
+            transition:opacity 0.2s;
+            white-space:nowrap;
+        }
+        .back-link:hover{opacity:1}
+        .nav-site{
+            font-size:0.7rem;
+            color:rgba(0,255,255,0.4);
+            font-family:'JetBrains Mono', monospace;
+            margin-left:auto;
+        }
+        /* Main layout */
+        .article-wrapper{
+            position:relative;
+            z-index:1;
+            max-width:760px;
+            margin:0 auto;
+            padding:3rem 1.5rem 5rem;
+        }
+        /* Header */
+        .article-header{
+            margin-bottom:2.5rem;
+        }
+        .article-label{
+            font-size:0.68rem;
+            color:rgba(0,255,255,0.5);
+            font-family:'JetBrains Mono', monospace;
+            letter-spacing:0.1em;
+            text-transform:uppercase;
+            margin-bottom:1rem;
+        }
+        .article-title{
+            font-size:clamp(1.4rem, 4vw, 2.1rem);
+            font-weight:600;
+            line-height:1.25;
+            color:#fff;
+            margin-bottom:1.2rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-byline{
+            font-size:0.72rem;
+            color:rgba(255,255,255,0.4);
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-byline span{color:rgba(0,255,255,0.6)}
+        /* Separator */
+        .article-sep{
+            display:flex;
+            align-items:center;
+            gap:0.75rem;
+            margin:2rem 0;
+        }
+        .sep-line{flex:1;height:1px;background:rgba(0,255,255,0.12)}
+        .sep-text{font-size:0.65rem;color:rgba(0,255,255,0.3);font-family:'JetBrains Mono',monospace}
+        /* Card */
+        .article-card{
+            background:var(--surface-glass);
+            border:1px solid var(--surface-border);
+            border-radius:16px;
+            padding:2.5rem 2rem;
+            backdrop-filter:blur(8px);
+            -webkit-backdrop-filter:blur(8px);
+        }
+        /* Article body */
+        .article-body p{
+            font-size:0.9rem;
+            line-height:1.8;
+            color:rgba(255,255,255,0.82);
+            margin-bottom:1.4rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-body h2{
+            font-size:1.05rem;
+            font-weight:600;
+            color:#fff;
+            margin:2.2rem 0 0.9rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-body h3{
+            font-size:0.92rem;
+            font-weight:600;
+            color:rgba(0,255,255,0.9);
+            margin:1.8rem 0 0.7rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-body hr{
+            border:none;
+            border-top:1px solid rgba(0,255,255,0.1);
+            margin:2rem 0;
+        }
+        .article-body ul{
+            margin:0 0 1.4rem 1.2rem;
+        }
+        .article-body ul li{
+            font-size:0.88rem;
+            line-height:1.75;
+            color:rgba(255,255,255,0.78);
+            margin-bottom:0.4rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-body ul li::marker{color:var(--neural-cyan)}
+        .article-body strong{color:#fff;font-weight:600}
+        /* Attribution */
+        .article-attribution{
+            margin-top:2.5rem;
+            padding-top:1.5rem;
+            border-top:1px solid rgba(0,255,255,0.1);
+        }
+        .attribution-text{
+            font-size:0.72rem;
+            color:rgba(255,255,255,0.35);
+            font-family:'JetBrains Mono', monospace;
+            line-height:1.7;
+            font-style:italic;
+        }
+        /* CTA */
+        .article-cta{
+            margin-top:2.5rem;
+            padding:1.5rem;
+            background:rgba(0,255,255,0.04);
+            border:1px solid rgba(0,255,255,0.1);
+            border-radius:10px;
+            text-align:center;
+        }
+        .cta-text{
+            font-size:0.78rem;
+            color:rgba(255,255,255,0.5);
+            font-family:'JetBrains Mono', monospace;
+            margin-bottom:0.75rem;
+        }
+        .cta-link{
+            display:inline-block;
+            color:var(--neural-cyan);
+            text-decoration:none;
+            font-size:0.78rem;
+            font-family:'JetBrains Mono', monospace;
+            border:1px solid rgba(0,255,255,0.3);
+            padding:0.5rem 1.2rem;
+            border-radius:6px;
+            transition:all 0.2s;
+        }
+        .cta-link:hover{background:rgba(0,255,255,0.08);border-color:rgba(0,255,255,0.6)}
+        /* Footer */
+        .article-footer{
+            text-align:center;
+            margin-top:3rem;
+            font-size:0.68rem;
+            color:rgba(255,255,255,0.25);
+            font-family:'JetBrains Mono', monospace;
+            line-height:2;
+        }
+        .article-footer a{color:rgba(0,255,255,0.4);text-decoration:none}
+        .article-footer a:hover{color:rgba(0,255,255,0.7)}
+        @media(max-width:600px){
+            .article-wrapper{padding:2rem 1rem 4rem}
+            .article-card{padding:1.5rem 1.2rem}
+            .article-body p{font-size:0.85rem}
+        }
+
+        /* Next article */
+        .article-next{
+            margin-top:2rem;
+            padding:1.25rem 1.5rem;
+            background:rgba(0,255,255,0.03);
+            border:1px solid rgba(0,255,255,0.12);
+            border-radius:10px;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:1rem;
+        }
+        .next-label{
+            font-size:0.62rem;
+            color:rgba(0,255,255,0.4);
+            font-family:'JetBrains Mono',monospace;
+            letter-spacing:0.1em;
+            white-space:nowrap;
+        }
+        .next-article-link{
+            display:flex;
+            align-items:flex-start;
+            gap:0.6rem;
+            color:rgba(255,255,255,0.75);
+            text-decoration:none;
+            font-size:0.78rem;
+            font-family:'JetBrains Mono',monospace;
+            line-height:1.4;
+            flex:1;
+            text-align:right;
+            justify-content:flex-end;
+            transition:color 0.2s;
+        }
+        .next-article-link:hover{color:#00ffff}
+        .next-article-link svg{flex-shrink:0;color:rgba(0,255,255,0.5);margin-top:0.15rem}
+        .next-article-link:hover svg{color:#00ffff}
+        .next-article-text{display:flex;flex-direction:column;gap:0.25rem;text-align:right}
+        .next-article-title{color:rgba(255,255,255,0.85);font-size:0.78rem}
+        .next-article-teaser{color:rgba(255,255,255,0.4);font-size:0.7rem;line-height:1.5}
+
+        .article-nav{justify-content:space-between}
+        .nav-logo-link{white-space:nowrap}
+        .nav-links{
+            display:flex;
+            align-items:center;
+            gap:0.15rem;
+            flex-wrap:nowrap;
+        }
+        .nav-link{
+            color:rgba(255,255,255,0.55);
+            text-decoration:none;
+            font-size:0.7rem;
+            font-family:'JetBrains Mono',monospace;
+            padding:0.3rem 0.5rem;
+            border-radius:4px;
+            transition:all 0.2s;
+            white-space:nowrap;
+        }
+        .nav-link:hover{color:#fff;background:rgba(255,255,255,0.06)}
+        .nav-link-active{color:var(--neural-cyan) !important;border:1px solid rgba(0,255,255,0.3)}
+        .article-card{position:relative}
+        .close-btn{
+            position:absolute;
+            top:1rem;
+            right:1rem;
+            z-index:10;
+            background:rgba(0,0,0,0.4);
+            backdrop-filter:blur(6px);
+            -webkit-backdrop-filter:blur(6px);
+            border:1px solid rgba(0,255,255,0.2);
+            color:rgba(0,255,255,0.6);
+            font-size:0.9rem;
+            line-height:1;
+            width:2rem;
+            height:2rem;
+            border-radius:50%;
+            cursor:pointer;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            transition:all 0.2s;
+            font-family:'JetBrains Mono',monospace;
+        }
+        .close-btn:hover{
+            background:rgba(0,255,255,0.08);
+            border-color:rgba(0,255,255,0.6);
+            color:#00ffff;
+            transform:scale(1.1);
+        }
+        @media(max-width:600px){
+            .nav-links{display:none}
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-rain" id="matrixRain"></div>
+
+    <nav class="article-nav">
+        <a href="https://streamables.live/" class="back-link nav-logo-link">← Streamables.live</a>
+        <div class="nav-links">
+            <a href="https://streamables.live/#home" class="nav-link">Home</a>
+            <a href="https://streamables.live/#services" class="nav-link">Services</a>
+            <a href="https://streamables.live/#research" class="nav-link">Research</a>
+            <a href="https://streamables.live/#projects" class="nav-link">Projects</a>
+            <a href="https://streamables.live/#articles" class="nav-link nav-link-active">Articles</a>
+            <a href="https://streamables.live/#about" class="nav-link">About</a>
+            <a href="https://streamables.live/#contact" class="nav-link">Contact</a>
+        </div>
+    </nav>
+
+
+    <div class="article-wrapper">
+        <header class="article-header">
+            <div class="article-label">// Article</div>
+            <h1 class="article-title">Who Actually Owns Your AI Assistant?</h1>
+            <div class="article-byline">By <span>Cameron J. Moir</span> &nbsp;·&nbsp; Streamables.live</div>
+        </header>
+
+        <div class="article-sep">
+            <div class="sep-line"></div>
+            <span class="sep-text">//</span>
+            <div class="sep-line"></div>
+        </div>
+
+        <div class="article-card">
+            <button class="close-btn" onclick="history.length > 1 ? history.back() : window.location.href='https://streamables.live/#articles'" aria-label="Close">&#x2715;</button>
+            <button class="close-btn" onclick="history.length > 1 ? history.back() : window.location.href='https://streamables.live/#articles'" aria-label="Close">&#x2715;</button>
+            <div class="article-body">
+<p>Most people don't think about this until something goes wrong. Then it becomes very obvious, very fast.</p>
+<p>You've built a workflow around a tool. Your team uses it daily. Your processes depend on it. Then the company behind it gets acquired, or pivots, or raises prices by 300%, or just quietly changes the terms of service to include a clause about training on your inputs. And you're stuck, because the thing you depend on isn't yours.</p>
+<p>This is the ownership problem with AI tooling, and it's going to cause a lot of pain over the next few years as the market consolidates.</p>
+<hr>
+<p>Right now there are hundreds of AI products competing for business customers. Pricing is aggressive because everyone's chasing adoption. Terms are generous because they need users. The market looks like a buyer's market and in some ways it is.</p>
+<p>That's not the permanent state of affairs.</p>
+<p>When a market consolidates - and AI tooling will consolidate, because the compute costs create massive scale advantages and most players will either fold or get acquired - pricing power shifts to whoever's left. The customers who built deep dependencies on a specific platform during the growth phase are the ones who pay for it in the consolidation phase.</p>
+<p>It's happened in every previous wave of enterprise software. CRM, ERP, marketing automation - in each case, the scrappy competitors offered great deals to build market share, then the market consolidated around two or three players who gradually raised prices and locked in switching costs. The customers who signed up early because it was cheap often ended up with the worst deals.</p>
+<p>AI is following the same pattern. The question is what you can do about it.</p>
+<hr>
+<p>The technical answer is local deployment where it's viable.</p>
+<p>Running AI models on your own infrastructure means you control the software version, you don't send your data to anyone else's servers, you're not subject to external pricing decisions, and you don't have a dependency on a vendor's continued existence. The tradeoff is that frontier model capability usually isn't available locally - you can run very good open models, but they're not as capable as the top commercial offerings.</p>
+<p>For a lot of business use cases, "very good but not frontier" is completely fine. Internal document Q&A, meeting summarisation, first-draft writing, code assistance, data analysis - these don't require GPT-4 level capability. A well-configured local model on decent hardware does the job, costs nothing per API call, and keeps your data entirely under your control.</p>
+<p>For use cases where you genuinely need frontier capability - complex reasoning, multi-step research, sophisticated analysis - that probably means a commercial API. Just go in with eyes open about the dependency you're creating.</p>
+<hr>
+<p>The data question is separate from the hosting question and in some ways more important.</p>
+<p>When you use a cloud AI tool, the data you put into it - your client information, your internal documents, your business logic, your competitive thinking - leaves your systems and enters someone else's. The terms of service determine what they can do with it. Most enterprise tiers include contractual protections against using your data for training. Most consumer and SME tiers don't.</p>
+<p>The specific risk isn't usually that a human at the AI company is reading your business strategy. It's more diffuse. Your inputs contribute to model improvement in ways that might be hard to track or reverse. In a data breach, your inputs might be in the exposed data. Regulatory changes might create liabilities for data you provided years ago under less regulated conditions. A future acquirer inherits access to years of your data under terms you agreed to with the original company.</p>
+<p>None of these are catastrophic on their own. The aggregate risk over years of deep dependency is real enough to be worth managing deliberately.</p>
+<p>The practical thing is to run a 10-minute audit of every AI tool your business uses. What data goes into it? What do the terms say about that data? What would happen if the vendor disappeared tomorrow or doubled their prices? Which of these tools are you genuinely dependent on versus which are conveniences?</p>
+<p>Most businesses haven't done this. It takes an afternoon and it tells you a lot about where your real risks are.</p>
+<hr>
+<p>The longer-term answer for businesses that want genuine control over their AI capability is building around open-source models and open infrastructure.</p>
+<p>This is more technically involved than buying a SaaS product. It requires someone who knows what they're doing - either internally or as a consultant. It's not the right answer for every business today. But for businesses that are making AI central to their operations, the argument for owning the infrastructure gets stronger as the dependency deepens.</p>
+<p>The open-source AI ecosystem has advanced enormously in the last two years. Models that would have been commercially unviable to run locally a year ago are now practical on mid-range hardware. The tools for deployment, fine-tuning, and management are more accessible. The capability gap between open and commercial models is narrowing on most practical tasks.</p>
+<p>A business that builds on open infrastructure owns its AI capability the same way it owns its other systems. It can update, customise, and migrate without vendor permission. It pays for hardware and expertise, not API calls and annual subscription increases.</p>
+<p>That's a different kind of cost profile - higher upfront, lower ongoing - and a fundamentally different risk profile.</p>
+<hr>
+<p>The question I'd ask about any AI tool your business relies on: if this vendor didn't exist tomorrow, what would you do?</p>
+<p>If the answer is "we'd be significantly disrupted and it would take months to recover," that's a dependency worth managing down. Diversify across vendors. Explore local alternatives. Document your workflows so they can be rebuilt if needed. Don't let a single external platform sit at the critical path of your business without a recovery plan.</p>
+<p>If the answer is "we'd find an alternative in a week," fine. That's a healthy level of dependency on a useful tool.</p>
+<p>The goal isn't to avoid AI tools - that's commercially self-defeating. It's to use them without creating dependencies that someone else will eventually be able to charge you a fortune for.</p>
+<p>Ownership matters. In every other part of your business, you know what you own and what you rent. Your AI stack deserves the same clarity.</p>
+            </div>
+
+            <div class="article-attribution">
+                <p class="attribution-text">The ideas, opinions, and frameworks in this article are original to Cameron J. Moir.<br><span style="font-size:0.65rem;opacity:0.7;">Written with the assistance of AI.</span></p>
+            </div>
+        </div>
+        <div class="article-next">
+            <span class="next-label">// Next</span>
+            <a href="11-multi-agent-ai-what-it-actually-means.html" class="next-article-link">
+                <span class="next-article-text">
+                    <span class="next-article-title">Multi-Agent AI: What It Actually Means for Your Business</span>
+                    <span class="next-article-teaser">One AI assistant is useful. A coordinated team of AI agents working under your authority is something else entirely.</span>
+                </span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+            </a>
+        </div>
+        <div class="article-cta">
+            <p class="cta-text">Interested in working together?</p>
+            <a href="https://streamables.live/#contact" class="cta-link">Get in touch →</a>
+        </div>
+
+        <footer class="article-footer">
+            © 2026 Streamables.live | Brisbane, Australia<br>
+            <a href="https://streamables.live/">← Back to main site</a> &nbsp;·&nbsp; <a href="https://streamables.live/#articles">More articles</a>
+        </footer>
+    </div>
+
+    <script>
+        // Matrix rain
+        function createMatrixRain() {
+            const container = document.getElementById('matrixRain');
+            container.innerHTML = '';
+            const canvas = document.createElement('canvas');
+            canvas.style.width = '100%';
+            canvas.style.height = '100%';
+            container.appendChild(canvas);
+            const ctx = canvas.getContext('2d');
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize);
+            const matrixChars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const fontSize = 14;
+            const isMobile = window.innerWidth <= 768;
+            const columns = Math.floor(canvas.width / (isMobile ? 40 : 30));
+            const drops = [];
+            for (let i = 0; i < columns; i++) drops[i] = Math.floor(Math.random() * -50);
+            let lastTime = 0, rafId = null;
+            function draw(t) {
+                if (document.hidden) { rafId = null; return; }
+                if (t - lastTime < 80) { rafId = requestAnimationFrame(draw); return; }
+                lastTime = t;
+                ctx.fillStyle = 'rgba(0,0,0,0.08)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.font = fontSize + 'px "JetBrains Mono", monospace';
+                for (let i = 0; i < columns; i++) {
+                    if (Math.random() > 0.75) continue;
+                    const char = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+                    ctx.fillStyle = '#00ffff';
+                    ctx.fillText(char, i * (isMobile ? 40 : 30), drops[i] * fontSize);
+                    drops[i]++;
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.85) drops[i] = Math.floor(Math.random() * -30);
+                }
+                rafId = requestAnimationFrame(draw);
+            }
+            document.addEventListener('visibilitychange', () => {
+                if (!document.hidden && !rafId) rafId = requestAnimationFrame(draw);
+            });
+            rafId = requestAnimationFrame(draw);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (!prefersReducedMotion) setTimeout(createMatrixRain, 200);
+            document.body.style.opacity = '1';
+        });
+    </script>
+</body>
+</html>

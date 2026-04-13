@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Most people using AI are getting 20% of what it can actually do. Here's what it actually is, how it works, and how to use it effectively.">
+    <meta name="author" content="Cameron J. Moir">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://streamables.live/articles/00-introduction-to-ai.html">
+    <meta property="og:title" content="An Introduction to AI: What It Is and How to Use It Effectively | Streamables.live">
+    <meta property="og:description" content="Most people using AI are getting 20% of what it can actually do. Here's what it actually is, how it works, and how to use it effectively.">
+    <meta property="og:image" content="https://streamables.live/St-03.png">
+    <meta property="og:url" content="https://streamables.live/articles/00-introduction-to-ai.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Streamables.live">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@X_Streamables">
+    <meta name="twitter:title" content="An Introduction to AI: What It Is and How to Use It Effectively | Streamables.live">
+    <meta name="twitter:description" content="Most people using AI are getting 20% of what it can actually do. Here's what it actually is, how it works, and how to use it effectively.">
+    <meta name="twitter:image" content="https://streamables.live/St-03.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#000000">
+    <title>An Introduction to AI: What It Is and How to Use It Effectively | Streamables.live</title>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZEJMKCZRRJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ZEJMKCZRRJ');
+    </script>
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "An Introduction to AI: What It Is and How to Use It Effectively",
+      "description": "Most people using AI are getting 20% of what it can actually do. Here's what it actually is, how it works, and how to use it effectively.",
+      "author": {
+        "@type": "Person",
+        "name": "Cameron J. Moir",
+        "url": "https://streamables.live/#about"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Streamables.live",
+        "url": "https://streamables.live/",
+        "logo": "https://streamables.live/St-03.png"
+      },
+      "url": "https://streamables.live/articles/00-introduction-to-ai.html",
+      "mainEntityOfPage": "https://streamables.live/articles/00-introduction-to-ai.html"
+    }
+    </script>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --neural-cyan:#00ffff;
+            --surface-glass:rgba(255,255,255,0.03);
+            --surface-border:rgba(0,255,255,0.15);
+            --text-primary:#ffffff;
+            --text-secondary:rgba(255,255,255,0.8);
+            --text-muted:rgba(255,255,255,0.55);
+        }
+        html{scroll-behavior:smooth}
+        body{
+            font-family:'JetBrains Mono', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color:#000;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(0,255,255,.08) 0, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0,245,255,.08) 0, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(0,229,255,.08) 0, transparent 50%),
+                linear-gradient(135deg, #0a0a0f 0, #000 100%);
+            color:var(--text-primary);
+            min-height:100vh;
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+            opacity:0;
+            transition:opacity 0.4s ease;
+        }
+        .matrix-rain{
+            position:fixed;
+            top:0;left:0;
+            width:100%;height:100%;
+            pointer-events:none;
+            z-index:0;
+            opacity:0.18;
+        }
+        .article-nav{
+            position:sticky;
+            top:0;
+            z-index:100;
+            padding:1rem 1.5rem;
+            background:rgba(0,0,0,0.85);
+            backdrop-filter:blur(12px);
+            -webkit-backdrop-filter:blur(12px);
+            border-bottom:1px solid rgba(0,255,255,0.12);
+            display:flex;
+            align-items:center;
+            gap:1rem;
+        }
+        .back-link{
+            color:var(--neural-cyan);
+            text-decoration:none;
+            font-size:0.75rem;
+            font-family:'JetBrains Mono', monospace;
+            letter-spacing:0.05em;
+            opacity:0.8;
+            transition:opacity 0.2s;
+            white-space:nowrap;
+        }
+        .back-link:hover{opacity:1}
+        .nav-site{
+            font-size:0.7rem;
+            color:rgba(0,255,255,0.4);
+            font-family:'JetBrains Mono', monospace;
+            margin-left:auto;
+        }
+        .article-wrapper{
+            position:relative;
+            z-index:1;
+            max-width:760px;
+            margin:0 auto;
+            padding:3rem 1.5rem 5rem;
+        }
+        .article-header{
+            margin-bottom:2.5rem;
+        }
+        .article-label{
+            font-size:0.68rem;
+            color:rgba(0,255,255,0.5);
+            font-family:'JetBrains Mono', monospace;
+            letter-spacing:0.1em;
+            text-transform:uppercase;
+            margin-bottom:1rem;
+        }
+        .article-title{
+            font-size:clamp(1.4rem, 4vw, 2.1rem);
+            font-weight:600;
+            line-height:1.25;
+            color:#fff;
+            margin-bottom:1.2rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-byline{
+            font-size:0.72rem;
+            color:rgba(255,255,255,0.4);
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-byline span{color:rgba(0,255,255,0.6)}
+        .article-sep{
+            display:flex;
+            align-items:center;
+            gap:0.75rem;
+            margin:2rem 0;
+        }
+        .sep-line{flex:1;height:1px;background:rgba(0,255,255,0.12)}
+        .sep-text{font-size:0.65rem;color:rgba(0,255,255,0.3);font-family:'JetBrains Mono',monospace}
+        .article-card{
+            background:var(--surface-glass);
+            border:1px solid var(--surface-border);
+            border-radius:16px;
+            padding:2.5rem 2rem;
+            backdrop-filter:blur(8px);
+            -webkit-backdrop-filter:blur(8px);
+        }
+        .article-body p{
+            font-size:0.9rem;
+            line-height:1.8;
+            color:rgba(255,255,255,0.82);
+            margin-bottom:1.4rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-body h2{
+            font-size:1.05rem;
+            font-weight:600;
+            color:#fff;
+            margin:2.2rem 0 0.9rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-body h3{
+            font-size:0.92rem;
+            font-weight:600;
+            color:rgba(0,255,255,0.9);
+            margin:1.8rem 0 0.7rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-body hr{
+            border:none;
+            border-top:1px solid rgba(0,255,255,0.1);
+            margin:2rem 0;
+        }
+        .article-body ul{
+            margin:0 0 1.4rem 1.2rem;
+        }
+        .article-body ul li{
+            font-size:0.88rem;
+            line-height:1.75;
+            color:rgba(255,255,255,0.78);
+            margin-bottom:0.4rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-body ul li::marker{color:var(--neural-cyan)}
+        .article-body strong{color:#fff;font-weight:600}
+        .article-attribution{
+            margin-top:2.5rem;
+            padding-top:1.5rem;
+            border-top:1px solid rgba(0,255,255,0.1);
+        }
+        .attribution-text{
+            font-size:0.72rem;
+            color:rgba(255,255,255,0.35);
+            font-family:'JetBrains Mono', monospace;
+            line-height:1.7;
+            font-style:italic;
+        }
+        .article-cta{
+            margin-top:2.5rem;
+            padding:1.5rem;
+            background:rgba(0,255,255,0.04);
+            border:1px solid rgba(0,255,255,0.1);
+            border-radius:10px;
+            text-align:center;
+        }
+        .cta-text{
+            font-size:0.78rem;
+            color:rgba(255,255,255,0.5);
+            font-family:'JetBrains Mono', monospace;
+            margin-bottom:0.75rem;
+        }
+        .cta-link{
+            display:inline-block;
+            color:var(--neural-cyan);
+            text-decoration:none;
+            font-size:0.78rem;
+            font-family:'JetBrains Mono', monospace;
+            border:1px solid rgba(0,255,255,0.3);
+            padding:0.5rem 1.2rem;
+            border-radius:6px;
+            transition:all 0.2s;
+        }
+        .cta-link:hover{background:rgba(0,255,255,0.08);border-color:rgba(0,255,255,0.6)}
+        .article-footer{
+            text-align:center;
+            margin-top:3rem;
+            font-size:0.68rem;
+            color:rgba(255,255,255,0.25);
+            font-family:'JetBrains Mono', monospace;
+            line-height:2;
+        }
+        .article-footer a{color:rgba(0,255,255,0.4);text-decoration:none}
+        .article-footer a:hover{color:rgba(0,255,255,0.7)}
+        @media(max-width:600px){
+            .article-wrapper{padding:2rem 1rem 4rem}
+            .article-card{padding:1.5rem 1.2rem}
+            .article-body p{font-size:0.85rem}
+        }
+
+        /* Next article */
+        .article-next{
+            margin-top:2rem;
+            padding:1.25rem 1.5rem;
+            background:rgba(0,255,255,0.03);
+            border:1px solid rgba(0,255,255,0.12);
+            border-radius:10px;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:1rem;
+        }
+        .next-label{
+            font-size:0.62rem;
+            color:rgba(0,255,255,0.4);
+            font-family:'JetBrains Mono',monospace;
+            letter-spacing:0.1em;
+            white-space:nowrap;
+        }
+        .next-article-link{
+            display:flex;
+            align-items:flex-start;
+            gap:0.6rem;
+            color:rgba(255,255,255,0.75);
+            text-decoration:none;
+            font-size:0.78rem;
+            font-family:'JetBrains Mono',monospace;
+            line-height:1.4;
+            flex:1;
+            text-align:right;
+            justify-content:flex-end;
+            transition:color 0.2s;
+        }
+        .next-article-link:hover{color:#00ffff}
+        .next-article-link svg{flex-shrink:0;color:rgba(0,255,255,0.5);margin-top:0.15rem}
+        .next-article-link:hover svg{color:#00ffff}
+        .next-article-text{display:flex;flex-direction:column;gap:0.25rem;text-align:right}
+        .next-article-title{color:rgba(255,255,255,0.85);font-size:0.78rem}
+        .next-article-teaser{color:rgba(255,255,255,0.4);font-size:0.7rem;line-height:1.5}
+
+        .article-nav{justify-content:space-between}
+        .nav-logo-link{white-space:nowrap}
+        .nav-links{
+            display:flex;
+            align-items:center;
+            gap:0.15rem;
+            flex-wrap:nowrap;
+        }
+        .nav-link{
+            color:rgba(255,255,255,0.55);
+            text-decoration:none;
+            font-size:0.7rem;
+            font-family:'JetBrains Mono',monospace;
+            padding:0.3rem 0.5rem;
+            border-radius:4px;
+            transition:all 0.2s;
+            white-space:nowrap;
+        }
+        .nav-link:hover{color:#fff;background:rgba(255,255,255,0.06)}
+        .nav-link-active{color:var(--neural-cyan) !important;border:1px solid rgba(0,255,255,0.3)}
+        .article-card{position:relative}
+        .close-btn{
+            position:absolute;
+            top:1rem;
+            right:1rem;
+            z-index:10;
+            background:rgba(0,0,0,0.4);
+            backdrop-filter:blur(6px);
+            -webkit-backdrop-filter:blur(6px);
+            border:1px solid rgba(0,255,255,0.2);
+            color:rgba(0,255,255,0.6);
+            font-size:0.9rem;
+            line-height:1;
+            width:2rem;
+            height:2rem;
+            border-radius:50%;
+            cursor:pointer;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            transition:all 0.2s;
+            font-family:'JetBrains Mono',monospace;
+        }
+        .close-btn:hover{
+            background:rgba(0,255,255,0.08);
+            border-color:rgba(0,255,255,0.6);
+            color:#00ffff;
+            transform:scale(1.1);
+        }
+        @media(max-width:600px){
+            .nav-links{display:none}
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-rain" id="matrixRain"></div>
+
+    <nav class="article-nav">
+        <a href="https://streamables.live/" class="back-link nav-logo-link">← Streamables.live</a>
+        <div class="nav-links">
+            <a href="https://streamables.live/#home" class="nav-link">Home</a>
+            <a href="https://streamables.live/#services" class="nav-link">Services</a>
+            <a href="https://streamables.live/#research" class="nav-link">Research</a>
+            <a href="https://streamables.live/#projects" class="nav-link">Projects</a>
+            <a href="https://streamables.live/#articles" class="nav-link nav-link-active">Articles</a>
+            <a href="https://streamables.live/#about" class="nav-link">About</a>
+            <a href="https://streamables.live/#contact" class="nav-link">Contact</a>
+        </div>
+    </nav>
+
+
+    <div class="article-wrapper">
+        <header class="article-header">
+            <div class="article-label">// Start Here</div>
+            <h1 class="article-title">An Introduction to AI: What It Is and How to Use It Effectively</h1>
+            <div class="article-byline">By <span>Cameron J. Moir</span> &nbsp;·&nbsp; Streamables.live</div>
+        </header>
+
+        <div class="article-sep">
+            <div class="sep-line"></div>
+            <span class="sep-text">//</span>
+            <div class="sep-line"></div>
+        </div>
+
+        <div class="article-card">
+            <button class="close-btn" onclick="history.length > 1 ? history.back() : window.location.href='https://streamables.live/#articles'" aria-label="Close">&#x2715;</button>
+            <button class="close-btn" onclick="history.length > 1 ? history.back() : window.location.href='https://streamables.live/#articles'" aria-label="Close">&#x2715;</button>
+            <div class="article-body">
+<p>Most people using AI are getting about 20% of what it can actually do. Not because they're not smart enough — but because nobody ever explained how it actually works.</p>
+<p>Here's the explanation you should have gotten at the start.</p>
+<hr>
+<h2>What AI Actually Is</h2>
+<p>When people say "AI" right now, they mostly mean large language models — LLMs. Systems like ChatGPT, Claude, Gemini, and Grok.</p>
+<p>Here's what they are: very large pattern-matching systems trained on enormous amounts of text. They've processed most of the internet, books, code, research papers, and documents. Based on that training, they predict what text should come next in a given context.</p>
+<p>That's it. There's no "brain" in there. No understanding in the way you understand things. But the patterns are so large and complex that the output looks — and often genuinely is — useful, creative, and intelligent.</p>
+<p>Understanding this changes how you use them. You stop treating them like search engines (they're not) and stop treating them like oracles (they're definitely not). They're collaborative tools that get better the more context you give them.</p>
+<hr>
+<h2>The Types You'll Encounter</h2>
+<p><strong>AI Assistants</strong> — ChatGPT, Claude, Gemini. Conversational interfaces. You type, they respond. Good for writing, research, analysis, brainstorming, coding, and problem-solving. This is where most people start, and where you should too.</p>
+<p><strong>AI Agents</strong> — AI that can take actions, not just generate text. Browse the internet, run code, manage files, interact with other systems. This is where the technology is heading fast, and it's significantly more powerful — and significantly more consequential — than assistants.</p>
+<p><strong>Image generators</strong> — Midjourney, Flux, DALL-E. Trained on images instead of text. Give them a description, get an image. Different technology, same basic idea.</p>
+<p><strong>Embedded AI</strong> — Grammarly, Notion AI, and similar tools. AI built into software you already use. Usually more limited in scope, but no learning curve.</p>
+<p>Start with the assistants. Everything else builds on that foundation.</p>
+<hr>
+<h2>How to Get Good Results</h2>
+<p>The biggest mistake most people make: treating AI like a search engine. Short query in, complete answer out. That's not how it works.</p>
+<p>The more context you give it, the better the output. Always.</p>
+<p><strong>Be specific about what you want.</strong> "Write me a business plan" produces something generic and mostly useless. "Write a one-page business plan for a hospitality consulting business targeting multi-venue operators in Australia, focused on AI implementation — use clear headings, no jargon, end with a fee summary" produces something you can actually work with.</p>
+<p><strong>Give it your context.</strong> Who are you? What do you already know? What are you trying to achieve and why? The AI can't read your mind. Tell it. The more relevant context you include, the sharper the output.</p>
+<p><strong>Specify the format.</strong> "Give me five bullet points," "write this as an email," "explain this like I'm not technical" — specifics about format consistently improve quality.</p>
+<p><strong>Tell it what not to do.</strong> "Don't use buzzwords," "avoid jargon," "don't pad it out with filler sentences" — constraints are powerful. AI has a tendency toward the verbose and generic unless you actively push against it.</p>
+<p><strong>Iterate.</strong> Your first prompt is a starting point, not a final request. Respond to the output: "Make this shorter," "expand the third point," "the tone is too formal, make it direct." Treat it as a conversation, not a vending machine.</p>
+<hr>
+<h2>What AI Is Actually Good At</h2>
+<ul>
+<li>First drafts of anything — emails, proposals, documents, code</li>
+<li>Research synthesis — give it documents and ask it to summarise or find patterns</li>
+<li>Brainstorming and expanding half-formed ideas</li>
+<li>Editing and improving text you've already written</li>
+<li>Explaining complex topics in plain language</li>
+<li>Writing and debugging code</li>
+<li>Creating frameworks and structures for your thinking</li>
+<li>Summarising long documents in seconds</li>
+<li>Generating options when you don't know where to start</li>
+</ul>
+<hr>
+<h2>Where It Falls Down</h2>
+<ul>
+<li><strong>Facts, especially recent or niche ones.</strong> AI can confidently make things up. It's called hallucination. Always verify specific claims — dates, statistics, names, sources.</li>
+<li><strong>Tasks requiring real-world verification.</strong> It doesn't know what's actually happening right now unless it has tools to check.</li>
+<li><strong>Highly specialised expertise.</strong> A doctor, lawyer, or engineer will spot gaps that a general AI misses. Use it as a starting point in those contexts, not a final answer.</li>
+<li><strong>Understanding your specific context without being told.</strong> It only knows what you've told it in the current conversation. It has no memory of past conversations by default.</li>
+<li><strong>Consistency across very long outputs.</strong> Quality can drift. For long documents, work in sections.</li>
+</ul>
+<p>The rule: the more specific and verifiable a claim needs to be, the more you need to check the output yourself.</p>
+<hr>
+<h2>The Mindset Shift</h2>
+<p>AI doesn't replace thinking. It accelerates it.</p>
+<p>The people getting the most out of these tools are the ones who bring strong thinking to the conversation. They know what good looks like, so they can push back on bad output. They iterate quickly. They treat the AI like a capable colleague who happens to be very fast, very broad, and occasionally wrong.</p>
+<p>The people getting the least out of it are the ones who accept the first output and call it done.</p>
+<hr>
+<h2>How to Start</h2>
+<p>Pick one task you do regularly that involves writing or thinking. A weekly report, a client email, a proposal, a briefing document.</p>
+<p>Use AI for it this week. Give it as much context as you have. Iterate on the output until it's genuinely useful — don't stop at "acceptable."</p>
+<p>Once you've done that once, you'll understand what it can do for you better than any explanation can teach you. The rest of the articles on this site build from that foundation — the business strategy, the deeper questions about ownership and governance, what the future of these systems actually looks like.</p>
+<p>But it all starts here.</p>
+            </div>
+
+            <div class="article-attribution">
+                <p class="attribution-text">The ideas, opinions, and frameworks in this article are original to Cameron J. Moir.<br><span style="font-size:0.65rem;opacity:0.7;">Written with the assistance of AI.</span></p>
+            </div>
+        </div>
+        <div class="article-next">
+            <span class="next-label">// Next</span>
+            <a href="09-real-reason-your-business-needs-ai-strategy.html" class="next-article-link">
+                <span class="next-article-text">
+                    <span class="next-article-title">The Real Reason Your Business Needs an AI Strategy</span>
+                    <span class="next-article-teaser">Most businesses are approaching AI tactically when they need to be thinking strategically. Here’s the difference.</span>
+                </span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+            </a>
+        </div>
+        <div class="article-cta">
+            <p class="cta-text">Interested in working together?</p>
+            <a href="https://streamables.live/#contact" class="cta-link">Get in touch →</a>
+        </div>
+
+        <footer class="article-footer">
+            © 2026 Streamables.live | Brisbane, Australia<br>
+            <a href="https://streamables.live/">← Back to main site</a> &nbsp;·&nbsp; <a href="https://streamables.live/#articles">More articles</a>
+        </footer>
+    </div>
+
+    <script>
+        function createMatrixRain() {
+            const container = document.getElementById('matrixRain');
+            container.innerHTML = '';
+            const canvas = document.createElement('canvas');
+            canvas.style.width = '100%';
+            canvas.style.height = '100%';
+            container.appendChild(canvas);
+            const ctx = canvas.getContext('2d');
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize);
+            const matrixChars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const fontSize = 14;
+            const isMobile = window.innerWidth <= 768;
+            const columns = Math.floor(canvas.width / (isMobile ? 40 : 30));
+            const drops = [];
+            for (let i = 0; i < columns; i++) drops[i] = Math.floor(Math.random() * -50);
+            let lastTime = 0, rafId = null;
+            function draw(t) {
+                if (document.hidden) { rafId = null; return; }
+                if (t - lastTime < 80) { rafId = requestAnimationFrame(draw); return; }
+                lastTime = t;
+                ctx.fillStyle = 'rgba(0,0,0,0.08)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.font = fontSize + 'px "JetBrains Mono", monospace';
+                for (let i = 0; i < columns; i++) {
+                    if (Math.random() > 0.75) continue;
+                    const char = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+                    ctx.fillStyle = '#00ffff';
+                    ctx.fillText(char, i * (isMobile ? 40 : 30), drops[i] * fontSize);
+                    drops[i]++;
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.85) drops[i] = Math.floor(Math.random() * -30);
+                }
+                rafId = requestAnimationFrame(draw);
+            }
+            document.addEventListener('visibilitychange', () => {
+                if (!document.hidden && !rafId) rafId = requestAnimationFrame(draw);
+            });
+            rafId = requestAnimationFrame(draw);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (!prefersReducedMotion) setTimeout(createMatrixRain, 200);
+            document.body.style.opacity = '1';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Doughboy — pizza production intelligence for multi-venue kitchens. Batch tracking, weather-adjusted recipes, cross-venue stock visibility, and training management. Built for operators, not spreadsheets.">
+    <meta name="author" content="Cameron J. Moir">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://streamables.live/projects/doughboy.html">
+    <meta property="og:title" content="Doughboy | Streamables.live">
+    <meta property="og:description" content="Pizza production intelligence for multi-venue kitchens. Batch tracking, weather-adjusted recipes, cross-venue stock visibility, and training management.">
+    <meta property="og:image" content="https://streamables.live/St-03.png">
+    <meta property="og:url" content="https://streamables.live/projects/doughboy.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Streamables.live">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Doughboy | Streamables.live">
+    <meta name="twitter:description" content="Pizza production intelligence for multi-venue kitchens. Batch tracking, weather-adjusted recipes, cross-venue stock visibility, and training management.">
+    <meta name="twitter:image" content="https://streamables.live/St-03.png">
+    <meta name="theme-color" content="#000000">
+    <title>Doughboy | Streamables.live</title>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZEJMKCZRRJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ZEJMKCZRRJ');
+    </script>
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --neural-cyan:#00ffff;
+            --surface-glass:rgba(255,255,255,0.03);
+            --surface-border:rgba(0,255,255,0.15);
+            --text-primary:#ffffff;
+            --text-secondary:rgba(255,255,255,0.8);
+            --text-muted:rgba(255,255,255,0.55);
+        }
+        html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+        body{
+            font-family:'JetBrains Mono', monospace;
+            background-color:#000;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(0,255,255,.08) 0, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0,245,255,.08) 0, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(0,229,255,.08) 0, transparent 50%),
+                linear-gradient(135deg, #0a0a0f 0, #000 100%);
+            color:var(--text-primary);
+            min-height:100vh;
+            min-height:100dvh;
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+            opacity:0;
+            transition:opacity 0.4s ease;
+            overflow-x:hidden;
+        }
+        .matrix-rain{
+            position:fixed;
+            top:0;left:0;
+            width:100%;height:100%;
+            pointer-events:none;
+            z-index:0;
+            opacity:0.18;
+        }
+
+        /* Nav */
+        .site-nav{
+            position:sticky;
+            top:0;
+            z-index:100;
+            padding:0 2rem;
+            height:3.5rem;
+            background:rgba(0,0,0,0.88);
+            backdrop-filter:blur(12px);
+            -webkit-backdrop-filter:blur(12px);
+            border-bottom:1px solid rgba(0,255,255,0.1);
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:1rem;
+        }
+        .nav-back{
+            color:rgba(0,255,255,0.7);
+            text-decoration:none;
+            font-size:0.72rem;
+            letter-spacing:0.05em;
+            transition:color 0.2s;
+            white-space:nowrap;
+            min-height:44px;
+            display:flex;
+            align-items:center;
+        }
+        .nav-back:hover{color:var(--neural-cyan)}
+        .nav-links{
+            display:flex;
+            align-items:center;
+            gap:0.15rem;
+        }
+        .nav-link{
+            color:rgba(255,255,255,0.5);
+            text-decoration:none;
+            font-size:0.7rem;
+            padding:0.3rem 0.5rem;
+            border-radius:4px;
+            transition:all 0.2s;
+            white-space:nowrap;
+        }
+        .nav-link:hover{color:#fff;background:rgba(255,255,255,0.06)}
+        .nav-link-active{color:var(--neural-cyan) !important;border:1px solid rgba(0,255,255,0.3)}
+        @media(max-width:600px){.nav-links{display:none}}
+
+        /* Page */
+        .page-wrapper{
+            position:relative;
+            z-index:1;
+            max-width:760px;
+            margin:0 auto;
+            padding:clamp(2rem,6vw,3.5rem) clamp(1.25rem,5vw,2rem) clamp(4rem,8vw,6rem);
+        }
+
+        /* Header */
+        .project-header{
+            margin-bottom:2.5rem;
+        }
+        .project-label{
+            font-size:0.68rem;
+            color:rgba(0,255,255,0.5);
+            letter-spacing:0.12em;
+            text-transform:uppercase;
+            margin-bottom:0.9rem;
+        }
+        .project-title{
+            font-size:clamp(1.6rem,5vw,2.4rem);
+            font-weight:600;
+            line-height:1.2;
+            color:#fff;
+            margin-bottom:1rem;
+        }
+        .project-status{
+            display:inline-flex;
+            align-items:center;
+            gap:0.5rem;
+            font-size:0.68rem;
+            color:rgba(0,255,255,0.6);
+            border:1px solid rgba(0,255,255,0.2);
+            border-radius:4px;
+            padding:0.25rem 0.75rem;
+        }
+        .status-dot{
+            width:6px;height:6px;
+            border-radius:50%;
+            background:rgba(0,255,255,0.5);
+            animation:pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse{0%,100%{opacity:0.4}50%{opacity:1}}
+
+        .sep{
+            display:flex;
+            align-items:center;
+            gap:0.75rem;
+            margin:2rem 0;
+        }
+        .sep-line{flex:1;height:1px;background:rgba(0,255,255,0.1)}
+        .sep-text{font-size:0.65rem;color:rgba(0,255,255,0.25)}
+
+        /* Card */
+        .project-card{
+            background:var(--surface-glass);
+            border:1px solid var(--surface-border);
+            border-radius:16px;
+            padding:clamp(1.5rem,4vw,2.5rem) clamp(1.25rem,4vw,2rem);
+            backdrop-filter:blur(8px);
+            -webkit-backdrop-filter:blur(8px);
+        }
+        .project-body p{
+            font-size:clamp(0.84rem,2.2vw,0.9rem);
+            line-height:1.8;
+            color:rgba(255,255,255,0.8);
+            margin-bottom:1.4rem;
+        }
+        .project-body h2{
+            font-size:clamp(0.9rem,2.5vw,1.05rem);
+            font-weight:600;
+            color:#fff;
+            margin:2.2rem 0 0.9rem;
+        }
+        .project-body h3{
+            font-size:clamp(0.84rem,2.2vw,0.92rem);
+            font-weight:600;
+            color:rgba(0,255,255,0.9);
+            margin:1.8rem 0 0.7rem;
+        }
+        .project-body hr{
+            border:none;
+            border-top:1px solid rgba(0,255,255,0.08);
+            margin:2rem 0;
+        }
+        .project-body ul{
+            margin:0 0 1.4rem 1.2rem;
+        }
+        .project-body ul li{
+            font-size:clamp(0.82rem,2vw,0.88rem);
+            line-height:1.75;
+            color:rgba(255,255,255,0.75);
+            margin-bottom:0.4rem;
+        }
+        .project-body ul li::marker{color:var(--neural-cyan)}
+        .project-body strong{color:#fff;font-weight:600}
+
+        /* Screenshot */
+        .screenshot{
+            width:100%;
+            display:block;
+            height:auto;
+            border-radius:10px;
+            border:1px solid rgba(0,255,255,0.12);
+            margin:1.8rem 0;
+        }
+        .screenshot-caption{
+            font-size:0.62rem;
+            color:rgba(255,255,255,0.25);
+            text-align:center;
+            margin-top:-1.2rem;
+            margin-bottom:1.8rem;
+            letter-spacing:0.04em;
+        }
+
+        /* Tags */
+        .tag-row{
+            display:flex;
+            flex-wrap:wrap;
+            gap:0.4rem;
+            margin:1.5rem 0 0;
+        }
+        .tag{
+            font-size:0.62rem;
+            color:rgba(255,255,255,0.3);
+            border:1px solid rgba(255,255,255,0.08);
+            border-radius:3px;
+            padding:0.15rem 0.5rem;
+        }
+        .tag-cyan{
+            color:rgba(0,255,255,0.5);
+            border-color:rgba(0,255,255,0.2);
+        }
+
+        /* Pricing */
+        .pricing-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));
+            gap:1rem;
+            margin:1.2rem 0 1.4rem;
+        }
+        .pricing-card{
+            background:rgba(0,0,0,0.4);
+            border:1px solid rgba(0,255,255,0.1);
+            border-radius:10px;
+            padding:1rem 1.1rem;
+        }
+        .pricing-card.popular{
+            border-color:rgba(0,255,255,0.3);
+            background:rgba(0,255,255,0.03);
+        }
+        .pricing-tier{
+            font-size:0.65rem;
+            color:rgba(0,255,255,0.5);
+            letter-spacing:0.1em;
+            text-transform:uppercase;
+            margin-bottom:0.4rem;
+        }
+        .pricing-tier.popular-label::after{
+            content:' · Most Popular';
+            color:rgba(0,255,255,0.35);
+        }
+        .pricing-setup{
+            font-size:0.78rem;
+            color:rgba(255,255,255,0.5);
+            margin-bottom:0.2rem;
+        }
+        .pricing-monthly{
+            font-size:1rem;
+            font-weight:600;
+            color:#fff;
+            margin-bottom:0.5rem;
+        }
+        .pricing-note{
+            font-size:0.62rem;
+            color:rgba(255,255,255,0.3);
+            line-height:1.5;
+        }
+
+        /* CTA */
+        .project-cta{
+            margin-top:2rem;
+            padding:1.5rem;
+            background:rgba(0,255,255,0.03);
+            border:1px solid rgba(0,255,255,0.1);
+            border-radius:10px;
+            text-align:center;
+        }
+        .cta-text{
+            font-size:0.78rem;
+            color:rgba(255,255,255,0.45);
+            margin-bottom:0.75rem;
+        }
+        .cta-link{
+            display:inline-flex;
+            align-items:center;
+            color:var(--neural-cyan);
+            text-decoration:none;
+            font-size:0.78rem;
+            border:1px solid rgba(0,255,255,0.3);
+            padding:0.5rem 1.2rem;
+            border-radius:6px;
+            transition:all 0.2s;
+            min-height:44px;
+        }
+        .cta-link:hover{background:rgba(0,255,255,0.08);border-color:rgba(0,255,255,0.6)}
+
+        /* Footer */
+        .page-footer{
+            text-align:center;
+            margin-top:3rem;
+            font-size:0.68rem;
+            color:rgba(255,255,255,0.2);
+            line-height:2;
+        }
+        .page-footer a{color:rgba(0,255,255,0.35);text-decoration:none}
+        .page-footer a:hover{color:rgba(0,255,255,0.7)}
+
+        @media(max-width:480px){
+            .site-nav{padding:0 1rem;height:3rem}
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-rain" id="matrixRain"></div>
+
+    <nav class="site-nav">
+        <a href="https://streamables.live/" class="nav-back">← Streamables.live</a>
+        <div class="nav-links">
+            <a href="https://streamables.live/#home" class="nav-link">Home</a>
+            <a href="https://streamables.live/#services" class="nav-link">Services</a>
+            <a href="https://streamables.live/#research" class="nav-link">Research</a>
+            <a href="https://streamables.live/#projects" class="nav-link nav-link-active">Projects</a>
+            <a href="https://streamables.live/#articles" class="nav-link">Articles</a>
+            <a href="https://streamables.live/#about" class="nav-link">About</a>
+            <a href="https://streamables.live/#contact" class="nav-link">Contact</a>
+        </div>
+    </nav>
+
+    <div class="page-wrapper">
+        <header class="project-header">
+            <div class="project-label">// Project &nbsp;·&nbsp; Live</div>
+            <h1 class="project-title">Doughboy</h1>
+            <div class="project-status">
+                <span class="status-dot" style="background:#00ff41"></span>
+                Live &mdash; v1.0.0
+            </div>
+            <div style="margin-top:1.2rem;">
+                <a href="https://doughboy-prd.vercel.app" target="_blank" rel="noopener" class="cta-link">→ Open Doughboy</a>
+            </div>
+        </header>
+
+        <div class="sep">
+            <div class="sep-line"></div>
+            <span class="sep-text">//</span>
+            <div class="sep-line"></div>
+        </div>
+
+        <div class="project-card">
+            <div class="project-body">
+
+<p>Doughboy is pizza production intelligence for multi-venue kitchens. It centralises batch tracking, standardises recipes across locations, and gives kitchen leads real-time visibility into stock, compliance, and team performance — without the spreadsheets, without the group chats, without the end-of-service surprises.</p>
+
+<p>Built by someone who's spent two decades inside hospitality. Every feature exists because a real kitchen needed it.</p>
+
+<img src="doughboy_dashboard.jpg" alt="Doughboy dashboard" class="screenshot">
+<p class="screenshot-caption">// Production intelligence for every venue, every shift.</p>
+
+<hr>
+
+<h2>The Problem</h2>
+
+<p>Pizza kitchens running across multiple venues face four problems that never go away: nobody knows the actual dough ball count until service is already broken, temperature variations wreck consistency batch to batch, new staff make errors that reach the customer before anyone catches them, and the head chef's standards don't automatically travel to every location on every shift.</p>
+
+<p>Most operators patch these problems with WhatsApp groups, shared spreadsheets, and institutional knowledge that leaves when people do. Doughboy replaces that stack with a single system built specifically for the job.</p>
+
+<hr>
+
+<h2>What It Does</h2>
+
+<h3>Live Dashboard</h3>
+<p>Total dough balls across all venues, batch compliance status, end-of-day reporting, and real-time alerts for missing reports or training gaps — visible to the kitchen lead at a glance. No chasing, no guessing.</p>
+
+<h3>Multi-Dough Configuration</h3>
+<p>Configure unlimited dough types — NY Style, Detroit, Focaccia, Neapolitan, sourdough, anything. Custom hydration percentages, fermentation times, and method notes per type. Production staff select a dough type and the parameters auto-populate. No memorisation. No interpretation.</p>
+
+<h3>Weather-Adjusted Recommendations</h3>
+<p>Live forecast data integrates before production begins. On hot days, Doughboy flags hydration adjustments, ice usage, and autolyse modifications automatically. Consistency across seasons, not just across recipes.</p>
+
+<h3>Batch Planning & History</h3>
+<p>Weekly production calendars with target vs. actual tracking. Every batch logged with dough type, temperatures, hydration, autolyse details, and quality scores. Pattern detection over time — not just records.</p>
+
+<h3>Cross-Venue Stock Tracking</h3>
+<p>Each venue submits daily counts. The kitchen lead sees consolidated inventory across all locations in one view. Stock levels, not silence.</p>
+
+<h3>Training Management</h3>
+<p>Eight structured training modules, fully controlled by the head chef — content, videos, completion tracking per venue. Standards don't drift when the chef isn't in the room.</p>
+
+<h3>Staff Broadcasts</h3>
+<p>Push urgent messages — recipe changes, hot-day adjustments, process updates — to all venues or specific locations. No group chats. No missed messages.</p>
+
+<h3>Role-Based Access</h3>
+<p>Configurable permissions across Head Chef, Dough Production, Pizza Chef, and Kitchen Staff roles. Everyone sees what they need. Nothing they don't.</p>
+
+<img src="doughboy_features.jpg" alt="Doughboy feature set" class="screenshot">
+<p class="screenshot-caption">// Everything your kitchen needs. Nothing it doesn't.</p>
+
+<hr>
+
+<h2>Pricing</h2>
+
+<p>30-day free trial on all plans. Card required, no charge during the trial. Full batch history preserved if you don't convert.</p>
+
+<div class="pricing-grid">
+    <div class="pricing-card">
+        <div class="pricing-tier">Single Venue</div>
+        <div class="pricing-setup">$999 setup</div>
+        <div class="pricing-monthly">$249 / mo</div>
+        <div class="pricing-note">1 venue · Unlimited staff · Core features</div>
+    </div>
+    <div class="pricing-card popular">
+        <div class="pricing-tier popular-label">Multi-Venue</div>
+        <div class="pricing-setup">$2,499 setup</div>
+        <div class="pricing-monthly">$499 / mo</div>
+        <div class="pricing-note">Up to 3 venues · Cross-venue dashboard · Staff broadcasts · Priority support</div>
+    </div>
+    <div class="pricing-card">
+        <div class="pricing-tier">Enterprise</div>
+        <div class="pricing-setup">Custom</div>
+        <div class="pricing-monthly">Custom</div>
+        <div class="pricing-note">Unlimited venues · White-label option · Dedicated support</div>
+    </div>
+</div>
+
+<p>Your recipes stay yours. Doughboy doesn't own, share, or train on any of your production data.</p>
+
+<hr>
+
+<h2>The Build</h2>
+
+<p>Doughboy runs entirely in the browser — no software installation, no downloads, setup under ten minutes. The backend runs on Supabase for authentication, real-time data sync, and multi-venue data isolation. Payments are handled through Stripe. It deploys as a static site on Vercel.</p>
+
+<p>Built in Brisbane. Designed around how kitchens actually operate, not how software vendors imagine they do.</p>
+
+<img src="doughboy_demo.jpg?v=2" alt="Doughboy live demo" class="screenshot">
+<p class="screenshot-caption">// The live dashboard. Stock levels, compliance, and batch pipeline across all venues.</p>
+
+<hr>
+
+<h2>What's Next</h2>
+
+<ul>
+    <li>Mobile-optimised production flow for on-floor use</li>
+    <li>Supplier integration for automatic ingredient cost tracking</li>
+    <li>AI-powered yield prediction from historical batch data</li>
+    <li>Expanded venue tier — beyond 3 locations</li>
+    <li>API access for integration with existing POS systems</li>
+</ul>
+
+            </div>
+
+            <div class="tag-row">
+                <span class="tag">Hospitality</span>
+                <span class="tag">Operations</span>
+                <span class="tag">Pizza Production</span>
+                <span class="tag">Multi-Venue</span>
+                <span class="tag">Supabase</span>
+                <span class="tag">Stripe</span>
+                <span class="tag">Vanilla JS</span>
+                <span class="tag tag-cyan">Live</span>
+            </div>
+        </div>
+
+        <div class="project-cta">
+            <p class="cta-text">30-day free trial. No installs. Under 10 minutes to set up.</p>
+            <a href="https://doughboy-prd.vercel.app" target="_blank" rel="noopener" class="cta-link">→ doughboy-prd.vercel.app</a>
+        </div>
+
+        <div class="project-cta" style="margin-top:1rem;">
+            <p class="cta-text">Running multiple venues? Let's talk.</p>
+            <a href="https://streamables.live/#contact" class="cta-link">Get in touch →</a>
+        </div>
+
+        <footer class="page-footer">
+            © 2026 Streamables.live | Brisbane, Australia<br>
+            <a href="https://streamables.live/">← Back to main site</a> &nbsp;·&nbsp; <a href="https://streamables.live/#projects">← Projects</a>
+        </footer>
+    </div>
+
+    <script>
+        function createMatrixRain() {
+            const container = document.getElementById('matrixRain');
+            container.innerHTML = '';
+            const canvas = document.createElement('canvas');
+            canvas.style.width = '100%';
+            canvas.style.height = '100%';
+            container.appendChild(canvas);
+            const ctx = canvas.getContext('2d');
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize);
+            const matrixChars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const fontSize = 14;
+            const isMobile = window.innerWidth <= 768;
+            const columns = Math.floor(canvas.width / (isMobile ? 40 : 30));
+            const drops = [];
+            for (let i = 0; i < columns; i++) drops[i] = Math.floor(Math.random() * -50);
+            let lastTime = 0, rafId = null;
+            function draw(t) {
+                if (document.hidden) { rafId = null; return; }
+                if (t - lastTime < 80) { rafId = requestAnimationFrame(draw); return; }
+                lastTime = t;
+                ctx.fillStyle = 'rgba(0,0,0,0.08)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.font = fontSize + 'px "JetBrains Mono", monospace';
+                for (let i = 0; i < columns; i++) {
+                    if (Math.random() > 0.75) continue;
+                    const char = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+                    ctx.fillStyle = '#00ffff';
+                    ctx.fillText(char, i * (isMobile ? 40 : 30), drops[i] * fontSize);
+                    drops[i]++;
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.85) drops[i] = Math.floor(Math.random() * -30);
+                }
+                rafId = requestAnimationFrame(draw);
+            }
+            document.addEventListener('visibilitychange', () => {
+                if (!document.hidden && !rafId) rafId = requestAnimationFrame(draw);
+            });
+            rafId = requestAnimationFrame(draw);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (!prefersReducedMotion) setTimeout(createMatrixRain, 200);
+            document.body.style.opacity = '1';
+        });
+    </script>
+</body>
+</html>

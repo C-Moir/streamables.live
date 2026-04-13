@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Ask who has faced meaningful personal consequences for a harmful AI deployment. The honest answer, across a decade of significant incidents, is almost nobody.">
+    <meta name="author" content="Cameron J. Moir">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://streamables.live/articles/05-accountability-vacuum-ai-governance.html">
+    <meta property="og:title" content="The Accountability Vacuum at the Heart of AI | Streamables.live">
+    <meta property="og:description" content="Ask who has faced meaningful personal consequences for a harmful AI deployment. The honest answer, across a decade of significant incidents, is almost nobody.">
+    <meta property="og:image" content="https://streamables.live/St-03.png">
+    <meta property="og:url" content="https://streamables.live/articles/05-accountability-vacuum-ai-governance.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Streamables.live">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@X_Streamables">
+    <meta name="twitter:title" content="The Accountability Vacuum at the Heart of AI | Streamables.live">
+    <meta name="twitter:description" content="Ask who has faced meaningful personal consequences for a harmful AI deployment. The honest answer, across a decade of significant incidents, is almost nobody.">
+    <meta name="twitter:image" content="https://streamables.live/St-03.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#000000">
+    <title>The Accountability Vacuum at the Heart of AI | Streamables.live</title>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZEJMKCZRRJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ZEJMKCZRRJ');
+    </script>
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "The Accountability Vacuum at the Heart of AI",
+      "description": "Ask who has faced meaningful personal consequences for a harmful AI deployment. The honest answer, across a decade of significant incidents, is almost nobody.",
+      "author": {
+        "@type": "Person",
+        "name": "Cameron J. Moir",
+        "url": "https://streamables.live/#about"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Streamables.live",
+        "url": "https://streamables.live/",
+        "logo": "https://streamables.live/St-03.png"
+      },
+      "url": "https://streamables.live/articles/05-accountability-vacuum-ai-governance.html",
+      "mainEntityOfPage": "https://streamables.live/articles/05-accountability-vacuum-ai-governance.html"
+    }
+    </script>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --neural-cyan:#00ffff;
+            --surface-glass:rgba(255,255,255,0.03);
+            --surface-border:rgba(0,255,255,0.15);
+            --text-primary:#ffffff;
+            --text-secondary:rgba(255,255,255,0.8);
+            --text-muted:rgba(255,255,255,0.55);
+        }
+        html{scroll-behavior:smooth}
+        body{
+            font-family:'JetBrains Mono', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color:#000;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(0,255,255,.08) 0, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0,245,255,.08) 0, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(0,229,255,.08) 0, transparent 50%),
+                linear-gradient(135deg, #0a0a0f 0, #000 100%);
+            color:var(--text-primary);
+            min-height:100vh;
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+            opacity:0;
+            transition:opacity 0.4s ease;
+        }
+        /* Matrix canvas */
+        .matrix-rain{
+            position:fixed;
+            top:0;left:0;
+            width:100%;height:100%;
+            pointer-events:none;
+            z-index:0;
+            opacity:0.18;
+        }
+        /* Nav */
+        .article-nav{
+            position:sticky;
+            top:0;
+            z-index:100;
+            padding:1rem 1.5rem;
+            background:rgba(0,0,0,0.85);
+            backdrop-filter:blur(12px);
+            -webkit-backdrop-filter:blur(12px);
+            border-bottom:1px solid rgba(0,255,255,0.12);
+            display:flex;
+            align-items:center;
+            gap:1rem;
+        }
+        .back-link{
+            color:var(--neural-cyan);
+            text-decoration:none;
+            font-size:0.75rem;
+            font-family:'JetBrains Mono', monospace;
+            letter-spacing:0.05em;
+            opacity:0.8;
+            transition:opacity 0.2s;
+            white-space:nowrap;
+        }
+        .back-link:hover{opacity:1}
+        .nav-site{
+            font-size:0.7rem;
+            color:rgba(0,255,255,0.4);
+            font-family:'JetBrains Mono', monospace;
+            margin-left:auto;
+        }
+        /* Main layout */
+        .article-wrapper{
+            position:relative;
+            z-index:1;
+            max-width:760px;
+            margin:0 auto;
+            padding:3rem 1.5rem 5rem;
+        }
+        /* Header */
+        .article-header{
+            margin-bottom:2.5rem;
+        }
+        .article-label{
+            font-size:0.68rem;
+            color:rgba(0,255,255,0.5);
+            font-family:'JetBrains Mono', monospace;
+            letter-spacing:0.1em;
+            text-transform:uppercase;
+            margin-bottom:1rem;
+        }
+        .article-title{
+            font-size:clamp(1.4rem, 4vw, 2.1rem);
+            font-weight:600;
+            line-height:1.25;
+            color:#fff;
+            margin-bottom:1.2rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-byline{
+            font-size:0.72rem;
+            color:rgba(255,255,255,0.4);
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-byline span{color:rgba(0,255,255,0.6)}
+        /* Separator */
+        .article-sep{
+            display:flex;
+            align-items:center;
+            gap:0.75rem;
+            margin:2rem 0;
+        }
+        .sep-line{flex:1;height:1px;background:rgba(0,255,255,0.12)}
+        .sep-text{font-size:0.65rem;color:rgba(0,255,255,0.3);font-family:'JetBrains Mono',monospace}
+        /* Card */
+        .article-card{
+            background:var(--surface-glass);
+            border:1px solid var(--surface-border);
+            border-radius:16px;
+            padding:2.5rem 2rem;
+            backdrop-filter:blur(8px);
+            -webkit-backdrop-filter:blur(8px);
+        }
+        /* Article body */
+        .article-body p{
+            font-size:0.9rem;
+            line-height:1.8;
+            color:rgba(255,255,255,0.82);
+            margin-bottom:1.4rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-body h2{
+            font-size:1.05rem;
+            font-weight:600;
+            color:#fff;
+            margin:2.2rem 0 0.9rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-body h3{
+            font-size:0.92rem;
+            font-weight:600;
+            color:rgba(0,255,255,0.9);
+            margin:1.8rem 0 0.7rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-body hr{
+            border:none;
+            border-top:1px solid rgba(0,255,255,0.1);
+            margin:2rem 0;
+        }
+        .article-body ul{
+            margin:0 0 1.4rem 1.2rem;
+        }
+        .article-body ul li{
+            font-size:0.88rem;
+            line-height:1.75;
+            color:rgba(255,255,255,0.78);
+            margin-bottom:0.4rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-body ul li::marker{color:var(--neural-cyan)}
+        .article-body strong{color:#fff;font-weight:600}
+        /* Attribution */
+        .article-attribution{
+            margin-top:2.5rem;
+            padding-top:1.5rem;
+            border-top:1px solid rgba(0,255,255,0.1);
+        }
+        .attribution-text{
+            font-size:0.72rem;
+            color:rgba(255,255,255,0.35);
+            font-family:'JetBrains Mono', monospace;
+            line-height:1.7;
+            font-style:italic;
+        }
+        /* CTA */
+        .article-cta{
+            margin-top:2.5rem;
+            padding:1.5rem;
+            background:rgba(0,255,255,0.04);
+            border:1px solid rgba(0,255,255,0.1);
+            border-radius:10px;
+            text-align:center;
+        }
+        .cta-text{
+            font-size:0.78rem;
+            color:rgba(255,255,255,0.5);
+            font-family:'JetBrains Mono', monospace;
+            margin-bottom:0.75rem;
+        }
+        .cta-link{
+            display:inline-block;
+            color:var(--neural-cyan);
+            text-decoration:none;
+            font-size:0.78rem;
+            font-family:'JetBrains Mono', monospace;
+            border:1px solid rgba(0,255,255,0.3);
+            padding:0.5rem 1.2rem;
+            border-radius:6px;
+            transition:all 0.2s;
+        }
+        .cta-link:hover{background:rgba(0,255,255,0.08);border-color:rgba(0,255,255,0.6)}
+        /* Footer */
+        .article-footer{
+            text-align:center;
+            margin-top:3rem;
+            font-size:0.68rem;
+            color:rgba(255,255,255,0.25);
+            font-family:'JetBrains Mono', monospace;
+            line-height:2;
+        }
+        .article-footer a{color:rgba(0,255,255,0.4);text-decoration:none}
+        .article-footer a:hover{color:rgba(0,255,255,0.7)}
+        @media(max-width:600px){
+            .article-wrapper{padding:2rem 1rem 4rem}
+            .article-card{padding:1.5rem 1.2rem}
+            .article-body p{font-size:0.85rem}
+        }
+
+        /* Next article */
+        .article-next{
+            margin-top:2rem;
+            padding:1.25rem 1.5rem;
+            background:rgba(0,255,255,0.03);
+            border:1px solid rgba(0,255,255,0.12);
+            border-radius:10px;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:1rem;
+        }
+        .next-label{
+            font-size:0.62rem;
+            color:rgba(0,255,255,0.4);
+            font-family:'JetBrains Mono',monospace;
+            letter-spacing:0.1em;
+            white-space:nowrap;
+        }
+        .next-article-link{
+            display:flex;
+            align-items:flex-start;
+            gap:0.6rem;
+            color:rgba(255,255,255,0.75);
+            text-decoration:none;
+            font-size:0.78rem;
+            font-family:'JetBrains Mono',monospace;
+            line-height:1.4;
+            flex:1;
+            text-align:right;
+            justify-content:flex-end;
+            transition:color 0.2s;
+        }
+        .next-article-link:hover{color:#00ffff}
+        .next-article-link svg{flex-shrink:0;color:rgba(0,255,255,0.5);margin-top:0.15rem}
+        .next-article-link:hover svg{color:#00ffff}
+        .next-article-text{display:flex;flex-direction:column;gap:0.25rem;text-align:right}
+        .next-article-title{color:rgba(255,255,255,0.85);font-size:0.78rem}
+        .next-article-teaser{color:rgba(255,255,255,0.4);font-size:0.7rem;line-height:1.5}
+
+        .article-nav{justify-content:space-between}
+        .nav-logo-link{white-space:nowrap}
+        .nav-links{
+            display:flex;
+            align-items:center;
+            gap:0.15rem;
+            flex-wrap:nowrap;
+        }
+        .nav-link{
+            color:rgba(255,255,255,0.55);
+            text-decoration:none;
+            font-size:0.7rem;
+            font-family:'JetBrains Mono',monospace;
+            padding:0.3rem 0.5rem;
+            border-radius:4px;
+            transition:all 0.2s;
+            white-space:nowrap;
+        }
+        .nav-link:hover{color:#fff;background:rgba(255,255,255,0.06)}
+        .nav-link-active{color:var(--neural-cyan) !important;border:1px solid rgba(0,255,255,0.3)}
+        .article-card{position:relative}
+        .close-btn{
+            position:absolute;
+            top:1rem;
+            right:1rem;
+            z-index:10;
+            background:rgba(0,0,0,0.4);
+            backdrop-filter:blur(6px);
+            -webkit-backdrop-filter:blur(6px);
+            border:1px solid rgba(0,255,255,0.2);
+            color:rgba(0,255,255,0.6);
+            font-size:0.9rem;
+            line-height:1;
+            width:2rem;
+            height:2rem;
+            border-radius:50%;
+            cursor:pointer;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            transition:all 0.2s;
+            font-family:'JetBrains Mono',monospace;
+        }
+        .close-btn:hover{
+            background:rgba(0,255,255,0.08);
+            border-color:rgba(0,255,255,0.6);
+            color:#00ffff;
+            transform:scale(1.1);
+        }
+        @media(max-width:600px){
+            .nav-links{display:none}
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-rain" id="matrixRain"></div>
+
+    <nav class="article-nav">
+        <a href="https://streamables.live/" class="back-link nav-logo-link">← Streamables.live</a>
+        <div class="nav-links">
+            <a href="https://streamables.live/#home" class="nav-link">Home</a>
+            <a href="https://streamables.live/#services" class="nav-link">Services</a>
+            <a href="https://streamables.live/#research" class="nav-link">Research</a>
+            <a href="https://streamables.live/#projects" class="nav-link">Projects</a>
+            <a href="https://streamables.live/#articles" class="nav-link nav-link-active">Articles</a>
+            <a href="https://streamables.live/#about" class="nav-link">About</a>
+            <a href="https://streamables.live/#contact" class="nav-link">Contact</a>
+        </div>
+    </nav>
+
+
+    <div class="article-wrapper">
+        <header class="article-header">
+            <div class="article-label">// Article</div>
+            <h1 class="article-title">The Accountability Vacuum at the Heart of AI</h1>
+            <div class="article-byline">By <span>Cameron J. Moir</span> &nbsp;·&nbsp; Streamables.live</div>
+        </header>
+
+        <div class="article-sep">
+            <div class="sep-line"></div>
+            <span class="sep-text">//</span>
+            <div class="sep-line"></div>
+        </div>
+
+        <div class="article-card">
+            <button class="close-btn" onclick="history.length > 1 ? history.back() : window.location.href='https://streamables.live/#articles'" aria-label="Close">&#x2715;</button>
+            <button class="close-btn" onclick="history.length > 1 ? history.back() : window.location.href='https://streamables.live/#articles'" aria-label="Close">&#x2715;</button>
+            <div class="article-body">
+<p>Ask yourself who has faced meaningful personal consequences for a harmful AI deployment. The honest answer, across a decade of significant incidents, is almost nobody.</p>
+<p>There have been AI systems that discriminated in hiring. Facial recognition that got innocent people arrested. Content moderation algorithms that amplified extremist content at scale. Predictive policing tools that compounded racial bias. Loan assessment models that denied credit to people based on their postcode. Chatbots that gave dangerous medical advice to vulnerable users.</p>
+<p>In every case, someone built the thing. Someone deployed it. Someone kept it running after the problems became apparent. And in almost every case, nobody - not one specific human being - faced a consequence proportional to the harm caused.</p>
+<p>A company might pay a fine. The fine gets treated as a cost of doing business. Leadership issues a statement about taking these concerns seriously. The product gets tweaked at the edges. It keeps running.</p>
+<hr>
+<p>This isn't unique to AI - it's the same structural pattern that produced financial crises, pharmaceutical safety failures, and social media platforms that knowingly amplified harmful content for engagement. The accountability gap in large organisations is structural. The people who make decisions are insulated from the consequences of those decisions by layers of corporate structure, legal teams, PR departments, and sheer scale.</p>
+<p>What's different about AI is the speed, the scope, and the fact that we're in the design phase right now. The decisions being made today about how AI systems are built, governed, and held accountable will set patterns that are very hard to undo later. The cement is wet. And the people pouring it are not primarily accountable to the public.</p>
+<hr>
+<p>The governance frameworks being put forward are mostly inadequate. Not because the people writing them are bad - many of them are genuinely trying. But the structures have fundamental weaknesses.</p>
+<p>Voluntary commitments don't work. We've seen this in every industry. Companies sign responsible AI pledges and then deploy products that violate their stated principles as soon as the commercial pressure is high enough. This isn't a character failing - it's what happens when you have a fiduciary duty to shareholders and voluntary commitments don't affect the share price.</p>
+<p>Regulatory frameworks lag years behind the technology. By the time legislation catches up to what's actually being deployed, the harm has already happened and the industry has moved on to the next thing. The EU's AI Act took years to pass and is already struggling to address foundation models that didn't exist when the drafting started.</p>
+<p>Technical audits and safety evaluations help but they're point-in-time assessments of systems that evolve continuously. A model that passes a safety evaluation today might behave differently after fine-tuning, after deployment at scale, after users find the edge cases that the evaluators didn't test.</p>
+<p>External oversight bodies are only as good as their access and their independence, and both tend to erode over time. Industry-funded AI safety institutes are a good example - structurally, the companies being assessed have too much influence over the assessment process.</p>
+<hr>
+<p>What's actually missing is consequence at the individual level.</p>
+<p>Not company fines. Not regulatory guidelines. Not industry self-regulation. The specific human beings who designed, approved, and deployed a harmful AI system bearing personal costs when it causes harm.</p>
+<p>This sounds radical but it's how we hold professionals accountable in other high-stakes domains. Doctors, engineers, lawyers, accountants - they have personal liability for professional negligence. That liability doesn't eliminate mistakes, but it does create a strong individual incentive to take safety seriously rather than delegating it to a compliance function.</p>
+<p>The argument against this for AI is that it's too complex, causation is too hard to establish, and you'd slow down innovation. These arguments are also made, every time, by every industry that doesn't want its practitioners held personally accountable. And every time, after enough harm accumulates, society overrides them.</p>
+<p>The question is how much harm we let accumulate first.</p>
+<hr>
+<p>There's also a deeper problem that liability frameworks don't fully solve: the AI systems increasingly making consequential decisions aren't easily legible to the humans nominally responsible for them. When a model makes a lending decision through a process that 's genuinely opaque even to its builders, who's accountable?</p>
+<p>This is the interpretability problem, and it's getting more urgent as models get more capable. You can't hold someone accountable for a decision they can't explain, and you can't explain a decision you don't understand. The gap between "we deployed this" and "we understand what it's doing" is growing faster than our ability to close it.</p>
+<p>The honest answer from the frontier labs is that they're deploying systems they can't fully explain, hoping that empirical safety testing catches the problems they can't theoretically predict. That's a reasonable engineering philosophy for a research environment. It's a concerning governance philosophy for systems affecting billions of people.</p>
+<hr>
+<p>I don't think the answer is to slow down AI development. That's not realistic, and there are real benefits being delivered. But I do think the gap between AI capability and AI accountability is one of the most important problems of the next decade, and it's not being treated with the urgency it deserves.</p>
+<p>The people building the most powerful AI systems in history are largely self-governing, largely unaccountable, and largely operating faster than any external oversight structure can keep up with.</p>
+<p>That's not a stable arrangement. At some point, something fails badly enough that the accountability question becomes unavoidable. The question is whether we design the answer before that happens, or after.</p>
+            </div>
+
+            <div class="article-attribution">
+                <p class="attribution-text">The ideas, opinions, and frameworks in this article are original to Cameron J. Moir.<br><span style="font-size:0.65rem;opacity:0.7;">Written with the assistance of AI.</span></p>
+            </div>
+        </div>
+        <div class="article-next">
+            <span class="next-label">// Next</span>
+            <a href="06-reputation-will-replace-credentials.html" class="next-article-link">
+                <span class="next-article-text">
+                    <span class="next-article-title">Reputation Will Replace Credentials</span>
+                    <span class="next-article-teaser">Part of what makes accountability so hard is that we verify people through credentials that are easy to fake and impossible to update.</span>
+                </span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+            </a>
+        </div>
+        <div class="article-cta">
+            <p class="cta-text">Interested in working together?</p>
+            <a href="https://streamables.live/#contact" class="cta-link">Get in touch →</a>
+        </div>
+
+        <footer class="article-footer">
+            © 2026 Streamables.live | Brisbane, Australia<br>
+            <a href="https://streamables.live/">← Back to main site</a> &nbsp;·&nbsp; <a href="https://streamables.live/#articles">More articles</a>
+        </footer>
+    </div>
+
+    <script>
+        // Matrix rain
+        function createMatrixRain() {
+            const container = document.getElementById('matrixRain');
+            container.innerHTML = '';
+            const canvas = document.createElement('canvas');
+            canvas.style.width = '100%';
+            canvas.style.height = '100%';
+            container.appendChild(canvas);
+            const ctx = canvas.getContext('2d');
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize);
+            const matrixChars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const fontSize = 14;
+            const isMobile = window.innerWidth <= 768;
+            const columns = Math.floor(canvas.width / (isMobile ? 40 : 30));
+            const drops = [];
+            for (let i = 0; i < columns; i++) drops[i] = Math.floor(Math.random() * -50);
+            let lastTime = 0, rafId = null;
+            function draw(t) {
+                if (document.hidden) { rafId = null; return; }
+                if (t - lastTime < 80) { rafId = requestAnimationFrame(draw); return; }
+                lastTime = t;
+                ctx.fillStyle = 'rgba(0,0,0,0.08)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.font = fontSize + 'px "JetBrains Mono", monospace';
+                for (let i = 0; i < columns; i++) {
+                    if (Math.random() > 0.75) continue;
+                    const char = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+                    ctx.fillStyle = '#00ffff';
+                    ctx.fillText(char, i * (isMobile ? 40 : 30), drops[i] * fontSize);
+                    drops[i]++;
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.85) drops[i] = Math.floor(Math.random() * -30);
+                }
+                rafId = requestAnimationFrame(draw);
+            }
+            document.addEventListener('visibilitychange', () => {
+                if (!document.hidden && !rafId) rafId = requestAnimationFrame(draw);
+            });
+            rafId = requestAnimationFrame(draw);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (!prefersReducedMotion) setTimeout(createMatrixRain, 200);
+            document.body.style.opacity = '1';
+        });
+    </script>
+</body>
+</html>

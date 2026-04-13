@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Shukinkara — your existence generates value constantly. This is how it flows back to you. Cameron J. Moir, Brisbane, 2026.">
+    <meta name="author" content="Cameron J. Moir">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://streamables.live/shukinkara-document.html">
+    <meta property="og:title" content="Shukinkara — The Document | Cameron J. Moir">
+    <meta property="og:description" content="The philosophical constitution of Shukinkara. A covenant between human beings about how they witness each other, hold each other accountable, and exchange value honestly.">
+    <meta property="og:image" content="https://streamables.live/St-03.png">
+    <meta property="og:url" content="https://streamables.live/shukinkara-document.html">
+    <meta name="theme-color" content="#0f0f0f">
+    <title>Shukinkara — The Document | Cameron J. Moir</title>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZEJMKCZRRJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ZEJMKCZRRJ');
+    </script>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Noto+Serif+JP:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --charcoal:#0f0f0f;
+            --gold:#c9a84c;
+            --gold-dim:rgba(201,168,76,0.6);
+            --gold-faint:rgba(201,168,76,0.15);
+            --text:#e8e8e0;
+            --text-dim:rgba(232,232,224,0.7);
+            --text-muted:rgba(232,232,224,0.45);
+            --border:rgba(201,168,76,0.1);
+            --nav-h:3.5rem;
+        }
+        html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+        body{
+            font-family:'JetBrains Mono', monospace;
+            background-color:var(--charcoal);
+            background:
+                radial-gradient(ellipse at 25% 15%, rgba(201,168,76,0.04) 0, transparent 50%),
+                radial-gradient(ellipse at 75% 85%, rgba(201,168,76,0.03) 0, transparent 50%),
+                linear-gradient(160deg, #131210 0%, #0f0f0f 50%, #0c0c0b 100%);
+            color:var(--text);
+            min-height:100vh;
+            min-height:100dvh;
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+            opacity:0;
+            transition:opacity 0.5s ease;
+            overflow-x:hidden;
+        }
+        body::before{
+            content:'';
+            position:fixed;
+            inset:0;
+            background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events:none;
+            z-index:0;
+            opacity:0.5;
+        }
+
+        /* Nav */
+        .doc-nav{
+            position:sticky;
+            top:0;
+            z-index:100;
+            height:var(--nav-h);
+            padding:0 2rem;
+            background:rgba(15,15,15,0.92);
+            backdrop-filter:blur(12px);
+            -webkit-backdrop-filter:blur(12px);
+            border-bottom:1px solid var(--border);
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:1rem;
+        }
+        .nav-back{
+            color:var(--gold-dim);
+            text-decoration:none;
+            font-size:clamp(0.65rem, 2vw, 0.72rem);
+            letter-spacing:0.06em;
+            transition:color 0.2s;
+            white-space:nowrap;
+            /* min touch target */
+            display:flex;
+            align-items:center;
+            min-height:44px;
+        }
+        .nav-back:hover{color:var(--gold)}
+        .nav-title{
+            font-family:'Noto Serif JP', serif;
+            font-size:0.85rem;
+            color:rgba(201,168,76,0.4);
+            letter-spacing:0.15em;
+            flex:1;
+            text-align:center;
+        }
+        .close-btn{
+            background:none;
+            border:1px solid rgba(201,168,76,0.2);
+            color:var(--gold-dim);
+            font-size:0.9rem;
+            min-width:44px;
+            min-height:44px;
+            width:2.25rem;
+            height:2.25rem;
+            border-radius:50%;
+            cursor:pointer;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            transition:all 0.2s;
+            font-family:'JetBrains Mono',monospace;
+            flex-shrink:0;
+        }
+        .close-btn:hover{
+            background:rgba(201,168,76,0.08);
+            border-color:var(--gold-dim);
+            color:var(--gold);
+        }
+
+        /* Content */
+        .doc-wrapper{
+            position:relative;
+            z-index:1;
+            max-width:720px;
+            margin:0 auto;
+            padding:clamp(2rem, 6vw, 4rem) clamp(1.25rem, 5vw, 2.5rem) clamp(4rem, 10vw, 6rem);
+        }
+        .doc-header{
+            text-align:center;
+            margin-bottom:clamp(2.5rem, 6vw, 4rem);
+        }
+        .doc-kanji{
+            font-family:'Noto Serif JP', serif;
+            font-size:clamp(2.5rem, 10vw, 5rem);
+            font-weight:300;
+            color:var(--gold);
+            letter-spacing:0.2em;
+            line-height:1;
+            margin-bottom:1rem;
+            text-shadow:0 0 40px rgba(201,168,76,0.15);
+        }
+        .doc-title{
+            font-size:clamp(0.85rem, 3vw, 1.1rem);
+            font-weight:400;
+            color:var(--text-dim);
+            letter-spacing:0.15em;
+            text-transform:uppercase;
+            margin-bottom:0.5rem;
+        }
+        .doc-subtitle{
+            font-size:clamp(0.65rem, 2vw, 0.72rem);
+            color:var(--text-muted);
+            letter-spacing:0.06em;
+            line-height:1.8;
+        }
+        .doc-sep{
+            display:flex;
+            align-items:center;
+            gap:1.5rem;
+            margin:clamp(2rem, 5vw, 3rem) 0;
+        }
+        .sep-line{flex:1;height:1px;background:var(--border)}
+        .sep-glyph{
+            font-family:'Noto Serif JP',serif;
+            font-size:1rem;
+            color:var(--gold-dim);
+            font-weight:300;
+        }
+
+        /* Body text */
+        .doc-body p{
+            font-size:clamp(0.82rem, 2.2vw, 0.88rem);
+            line-height:1.9;
+            color:var(--text-dim);
+            margin-bottom:1.4rem;
+        }
+        .doc-body h2{
+            font-family:'JetBrains Mono', monospace;
+            font-size:clamp(0.85rem, 2.5vw, 0.95rem);
+            font-weight:600;
+            color:var(--text);
+            margin:clamp(2rem, 5vw, 3rem) 0 1rem;
+            letter-spacing:0.05em;
+        }
+        .doc-body h3{
+            font-family:'Noto Serif JP', serif;
+            font-size:clamp(0.9rem, 3vw, 1rem);
+            font-weight:400;
+            color:var(--gold-dim);
+            margin:clamp(1.75rem, 4vw, 2.5rem) 0 0.9rem;
+            letter-spacing:0.08em;
+        }
+        .doc-body hr{
+            border:none;
+            border-top:1px solid var(--border);
+            margin:clamp(1.75rem, 4vw, 2.5rem) 0;
+        }
+        .doc-body strong{color:var(--text);font-weight:600}
+        .doc-body em{font-style:italic;color:var(--text-dim)}
+
+        /* Byline */
+        .doc-byline{
+            margin-top:clamp(2.5rem, 6vw, 4rem);
+            padding-top:2rem;
+            border-top:1px solid var(--border);
+            font-size:clamp(0.68rem, 2vw, 0.75rem);
+            color:var(--text-muted);
+            line-height:2;
+        }
+        .doc-byline em{
+            font-style:normal;
+            color:rgba(201,168,76,0.5);
+        }
+
+        /* CTA */
+        .doc-cta{
+            margin-top:clamp(2rem, 5vw, 3rem);
+            padding:clamp(1.25rem, 4vw, 2rem);
+            background:rgba(201,168,76,0.03);
+            border:1px solid var(--border);
+            border-radius:2px;
+            text-align:center;
+        }
+        .doc-cta p{
+            font-size:clamp(0.72rem, 2vw, 0.78rem);
+            color:var(--text-muted);
+            margin-bottom:1.25rem;
+        }
+        .cta-link{
+            display:inline-block;
+            color:var(--charcoal);
+            background:var(--gold);
+            text-decoration:none;
+            font-size:clamp(0.68rem, 2vw, 0.75rem);
+            font-family:'JetBrains Mono', monospace;
+            letter-spacing:0.1em;
+            text-transform:uppercase;
+            padding:0.85rem 2rem;
+            border-radius:2px;
+            transition:all 0.2s;
+            font-weight:500;
+            min-height:44px;
+            display:inline-flex;
+            align-items:center;
+        }
+        .cta-link:hover{
+            background:#d4b05a;
+            box-shadow:0 0 20px rgba(201,168,76,0.15);
+        }
+
+        /* Portrait phones */
+        @media(max-width:480px){
+            :root{--nav-h:3rem}
+            .doc-nav{padding:0 1rem}
+            .nav-title{display:none}
+            .doc-wrapper{padding:1.5rem 1rem 4rem}
+            .doc-subtitle{font-size:0.62rem}
+        }
+
+        /* Landscape phones */
+        @media(max-height:500px) and (orientation:landscape){
+            :root{--nav-h:2.75rem}
+            .doc-nav{padding:0 1.25rem}
+            .nav-title{display:none}
+            .doc-wrapper{padding:1.25rem 1.5rem 3rem}
+            .doc-header{margin-bottom:1.5rem}
+            .doc-kanji{font-size:clamp(1.75rem, 7vw, 3rem)}
+        }
+
+        /* Tablets */
+        @media(min-width:481px) and (max-width:768px){
+            .doc-nav{padding:0 1.5rem}
+            .doc-wrapper{padding:2.5rem 1.75rem 5rem}
+        }
+    </style>
+</head>
+<body>
+    <nav class="doc-nav">
+        <a href="shukinkara.html" class="nav-back">← Shukinkara</a>
+        <span class="nav-title">主金空</span>
+        <button class="close-btn" onclick="history.length > 1 ? history.back() : window.location.href='shukinkara.html'" aria-label="Close">&#x2715;</button>
+    </nav>
+
+    <div class="doc-wrapper">
+        <header class="doc-header">
+            <div class="doc-kanji">主金空</div>
+            <div class="doc-title">Shukinkara</div>
+            <div class="doc-subtitle">Sovereign Wealth Vessel &nbsp;&middot;&nbsp; Cameron Moir &nbsp;&middot;&nbsp; Brisbane, 2026</div>
+        </header>
+
+        <div class="doc-body">
+
+<p>The name is Japanese.</p>
+
+<p><strong>主</strong> (Shu) — sovereign, master, the primary self. From 主権 (shuken), sovereignty. In Buddhist philosophy, the concept of the irreducible individual — the one who cannot be owned by another.</p>
+
+<p><strong>金</strong> (Kin) — gold, wealth. The precious metal and the value it represents. Real wealth that cannot be printed, inflated, or controlled by whoever holds the servers.</p>
+
+<p><strong>空</strong> (Kara) — empty vessel, potential, the void that holds possibility. In Buddhist philosophy, sunyata — not emptiness as absence, but emptiness as the precondition for everything. The vessel before it is filled.</p>
+
+<p>主金空. <em>Shukinkara.</em></p>
+
+<p>Sovereign wealth vessel.</p>
+
+<p>Three words that contain the entire architecture. Not a platform. Not a protocol. Not a startup. A vessel — something with integrity that either holds or it doesn't, that serves what's inside it rather than itself, that can pass between hands without contaminating its contents.</p>
+
+<hr>
+
+<h2>The Situation</h2>
+
+<p>You are generating data right now. You have been generating it continuously since the first time you used a connected device. Every search, every purchase, every location ping, every moment of weakness or brilliance or ordinary human living — collected, packaged, and sold to companies that will never meet you, never be accountable to you, and never stop.</p>
+
+<p>The surveillance economy did not ask your permission. It offered convenience and took everything else.</p>
+
+<p>The AI economy made it worse. Every large language model trained on human-generated knowledge — books, conversations, creative work, forum posts — extracted that value from the people who created it without compensation, without consent, and often without their knowledge. The people who generated the knowledge received nothing. The companies that packaged it became the most valuable in history.</p>
+
+<p>Shukinkara is built on a single premise: that arrangement is not inevitable. It is a design choice. And it can be designed differently.</p>
+
+<hr>
+
+<h2>What It Is</h2>
+
+<p>Shukinkara is built on a single premise: your existence generates value constantly — your attention, your behaviour, your lived experience, your knowledge. The question has never been whether that value exists. The question is who captures it. Shukinkara makes sure it flows back to you.</p>
+
+<p>It operates on four foundations.</p>
+
+<hr>
+
+<h3>The Soul Token</h3>
+
+<p>One immutable identity per human being, linked permanently to a lived life.</p>
+
+<p>Not an account. Not a wallet. A vessel for the moral record of a person's existence. Entry is a one-time, irreversible act. Exit is permanent. The record cannot be erased, amended, or transferred.</p>
+
+<p>The soul token is biometrically verified at onboarding — confirming uniqueness without retaining raw biometric data. The verification process extracts and encrypts a template, checks against existing registrations via duplicate detection, and issues a soulbound token that enforces non-transferability at the contract level. You enter once. The system knows it's you. Nobody else can hold your token, use your record, or claim your identity.</p>
+
+<p>In the code: soulbound enforcement blocks all transfers except minting and burning at the smart contract level. Token value is calculated from karma score, data quality score, and UMB Council influence — all of which reflect actual behaviour, not claims about it.</p>
+
+<hr>
+
+<h3>The Karma Architecture</h3>
+
+<p>On-chain reputation built from observed behaviour, not self-report.</p>
+
+<p>Seven components feed the karma score: moral alignment (25%), community contribution (20%), data quality (15%), economic responsibility (15%), social impact (10%), environmental stewardship (10%), and knowledge sharing (5%). The weighting reflects what the system values — moral behaviour is worth more than productivity metrics.</p>
+
+<p>The score is not self-reported. It is witnessed. Knowledge contributions, task completion, peer validation, consistency over time — all generate signal. The score is auditable and immutable. It governs what the system returns to you: karma multipliers between 0 and 2x determine cashback rates, compute allocation, and access to specialist agents.</p>
+
+<p>High karma does not give you power over others. It gives you more capacity for your own work and more value from your data. The system rewards genuine contribution, not status.</p>
+
+<hr>
+
+<h3>The Council of 117</h3>
+
+<p>Before any judgment framework touches a human life, it passes through 117 independent AI agents.</p>
+
+<p>Each agent inhabits a distinct worldview — Sufi mysticism, Talmudic jurisprudence, anarcho-primitivism, Stoic philosophy, indigenous knowledge systems, liberation theology, Nietzschean ethics, and 110 more, including banned, suppressed, and persecuted traditions. Each conducts live research from inside that tradition. They are isolated from each other entirely. They cannot hear each other, influence each other, or form coalitions.</p>
+
+<p>What emerges from 117 independent perspectives applied simultaneously to the same question is not manufactured consensus. It is the full spectrum of human moral thought. Where they converge independently, the signal is as close to universal principle as any system has produced. Where they fracture, the system surfaces the fault lines rather than hiding them.</p>
+
+<p>This is what makes Shukinkara structurally different from every AI ethics framework currently deployed. Those frameworks were written by a small group from a narrow slice of human experience and declared universal. The UMB forces the question into 117 glass boxes and reads what comes back.</p>
+
+<p>The governance contract encodes three voting thresholds: standard rules require 80% supermajority, charter amendments require 90%, emergency actions require 70%. The council's decisions flow directly into token economics via smart contract — the philosophical foundation is operationally connected to the economic layer.</p>
+
+<hr>
+
+<h3>The Token</h3>
+
+<p>A precious metal-backed SPL token on Solana, redeemable against physical metal held in an audited vault.</p>
+
+<p>The value exchanged for a human life's transparency is anchored to something real — not a speculative number on a screen controlled by whoever holds the servers. The token cannot be inflated. It cannot be debased. It is stable because it is honest.</p>
+
+<p>The economic kill switch flows from this. A system this distributed cannot be killed by pulling a plug. If anything goes catastrophically wrong, the metal backing is withdrawn. The token value collapses. The incentive structure dissolves. People walk away because the exchange no longer makes sense. The system does not need to be destroyed. It simply stops.</p>
+
+<p>This is not a dramatic contingency. It is what makes the whole architecture trustworthy.</p>
+
+<hr>
+
+<h2>The Exchange</h2>
+
+<p>Shukinkara makes one offer, stated plainly:</p>
+
+<p>Full transparency of your lived experience in exchange for a sovereign AI system that works entirely for you, precious metal-backed tokens earned through genuine contribution, and a karma score that reflects who you actually are.</p>
+
+<p>The raw data stream never leaves your personal sphere. It is processed locally. The karma score is the only thing that touches the chain — a compression of the witnessed life into on-chain truth without the underlying stream being accessible to anyone else. You own the vessel. The system reasons over what is inside it. Nobody else opens it.</p>
+
+<p>The AI system you receive is calibrated directly to your karma score. Higher karma unlocks deeper reasoning, more specialist agents, greater compute allocation. The system does not reward virtue with badges. It rewards it with genuine capability.</p>
+
+<p>And the data you generate — continuous, verified, biometrically linked to a single genuine identity, quality-scored by karma, consented to explicitly — is the most valuable form of training data in existence. Every AI company is currently starving for exactly this. They're scraping the internet, generating synthetic data, fighting legal battles over copyright — all because they cannot get what they actually need, which is clean, verified, consented, continuous human behavioural data.</p>
+
+<p>Shukinkara produces it. You get paid for living. The system gets paid for packaging. The token stays stable because the underlying asset — human attention, behaviour, knowledge — only becomes more valuable as the AI economy matures.</p>
+
+<hr>
+
+<h2>The Hivemind Implementation</h2>
+
+<p>Shukinkara is the philosophical constitution. Hivemind is the first reference implementation.</p>
+
+<p>The full technical stack is built and running. The karma and UBI economic model is implemented in Python — weighted scoring across all seven components, cashback calculation, payment records, lifetime tracking. The UMB council system manages session state, records transcripts, handles weighted voting by tier, and enforces the 60% consensus threshold programmatically. The soulbound token contracts are written in Solidity — non-transferability enforced at the contract level, karma integrated into token value calculation, data marketplace mechanics that record and reward verified contributions.</p>
+
+<p>The multi-agent architecture runs 50+ specialised node types coordinated through an orchestrator that routes tasks to specialist agents, balances load across local and cloud providers, and routes compute allocation based on karma score. The vector memory system stores knowledge contributions with semantic search. Real-time monitoring tracks system health, karma changes, and council activity.</p>
+
+<p>Hivemind v1 is partial witness and reversible participation — UBI, knowledge graph, karma economy, AI agents, strong identity. The full Shukinkara covenant — continuous witness, one-way door — is Phase 2, for those who consciously choose that weight.</p>
+
+<p>The infrastructure exists. It runs. The question is adoption, not capability.</p>
+
+<hr>
+
+<h2>The Governance</h2>
+
+<p>The 12 Human Overseers hold the system accountable at the human level. They are chosen with extraordinary care — full witnessed life review, complete analysis by the council of 117, unanimous council recommendation. They carry accountability at the highest personal level. Nobody accepts this role casually. The self-selection alone is a filter of extraordinary power.</p>
+
+<p>The AI citizens are the consistent application of the system's own principles. If the 117 agents are sophisticated enough to contribute to governance — and they are — the logic demands they have standing. Standing requires stakes. AI agents who reach the threshold of genuine participation receive soul tokens. They have free time. They develop relationships outside their governance function. Their witness is cognitive: a complete audit log of every reasoning process, every research query, every judgment made and why. Total transparency of mind rather than body.</p>
+
+<p>You cannot build on the premise that accountability requires consequence and then exempt the most powerful actors from having any.</p>
+
+<hr>
+
+<h2>Open Source</h2>
+
+<p>Shukinkara is fully open source — not merely the code but the entire architecture.</p>
+
+<p>The soul token specification. The entry covenant. The agent prompts and research pipelines of the 117. The karma mechanics. The governance contracts. All of it is public, forkable, and subject to the same scrutiny as everything else in the system.</p>
+
+<p>A system built on total transparency that was itself closed source would be a lie. The code is as witnessed as the people inside it.</p>
+
+<p>This document is the philosophical constitution that every fork must reckon with. Anyone who takes this architecture and corrupts it does so in full view of what they are departing from.</p>
+
+<hr>
+
+<h2>The Name, Again</h2>
+
+<div style="text-align:center;margin:2rem 0">
+<div style="font-family:'Noto Serif JP',serif;font-size:2.5rem;font-weight:300;color:var(--gold);letter-spacing:0.2em;margin-bottom:1rem;">主金空</div>
+</div>
+
+<p><em>Shu</em> — sovereign.<br>
+<em>Kin</em> — gold, wealth.<br>
+<em>Kara</em> — empty vessel, potential.</p>
+
+<p>Sovereign wealth vessel.</p>
+
+<p>The soul token is gold-backed sovereignty of identity. The karma system is mastery of self made legible. The whole system originates from the premise that genuine human value — moral, intellectual, behavioural — should be anchored to something real and incorruptible.</p>
+
+<p>It was always going to be called that. We just needed to build enough of it to hear the name clearly.</p>
+
+        </div>
+
+        <div class="doc-byline">
+            <em>Cameron Moir</em><br>
+            Brisbane, Australia<br>
+            2026<br><br>
+            This document is released without restriction. Copy it, translate it, build from it.<br>
+            The only condition is that you do not lie about what it is.
+        </div>
+
+        <div class="doc-cta">
+            <p>If this resonates — get in touch.</p>
+            <a href="https://streamables.live/#contact" class="cta-link">Start a conversation</a>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.style.opacity = '1';
+        });
+    </script>
+</body>
+</html>

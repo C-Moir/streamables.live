@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="CLAWLOSSEUM — a live AI gladiator combat arena. Build your fighter, answer real coding and cybersecurity questions under pressure, fight other players online, climb the ranks.">
+    <meta name="author" content="Cameron J. Moir">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://streamables.live/clawlosseum.html">
+    <meta property="og:title" content="CLAWLOSSEUM | Streamables.live">
+    <meta property="og:description" content="A live AI gladiator combat arena. Build your fighter, answer real coding and cybersecurity questions under pressure, fight other players online, climb the ranks.">
+    <meta property="og:image" content="https://streamables.live/St-03.png">
+    <meta property="og:url" content="https://streamables.live/clawlosseum.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Streamables.live">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CLAWLOSSEUM | Streamables.live">
+    <meta name="twitter:description" content="A live AI gladiator combat arena. Build your fighter, answer real coding and cybersecurity questions under pressure, fight other players online, climb the ranks.">
+    <meta name="twitter:image" content="https://streamables.live/St-03.png">
+    <meta name="theme-color" content="#000000">
+    <title>CLAWLOSSEUM | Streamables.live</title>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZEJMKCZRRJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ZEJMKCZRRJ');
+    </script>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --neural-cyan:#00ffff;
+            --surface-glass:rgba(255,255,255,0.03);
+            --surface-border:rgba(0,255,255,0.15);
+            --text-primary:#ffffff;
+            --text-secondary:rgba(255,255,255,0.8);
+            --text-muted:rgba(255,255,255,0.55);
+        }
+        html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+        body{
+            font-family:'JetBrains Mono', monospace;
+            background-color:#000;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(0,255,255,.08) 0, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0,245,255,.08) 0, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(0,229,255,.08) 0, transparent 50%),
+                linear-gradient(135deg, #0a0a0f 0, #000 100%);
+            color:var(--text-primary);
+            min-height:100vh;
+            min-height:100dvh;
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+            opacity:0;
+            transition:opacity 0.4s ease;
+            overflow-x:hidden;
+        }
+        .matrix-rain{
+            position:fixed;
+            top:0;left:0;
+            width:100%;height:100%;
+            pointer-events:none;
+            z-index:0;
+            opacity:0.18;
+        }
+
+        /* Nav */
+        .site-nav{
+            position:sticky;
+            top:0;
+            z-index:100;
+            padding:0 2rem;
+            height:3.5rem;
+            background:rgba(0,0,0,0.88);
+            backdrop-filter:blur(12px);
+            -webkit-backdrop-filter:blur(12px);
+            border-bottom:1px solid rgba(0,255,255,0.1);
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:1rem;
+        }
+        .nav-back{
+            color:rgba(0,255,255,0.7);
+            text-decoration:none;
+            font-size:0.72rem;
+            letter-spacing:0.05em;
+            transition:color 0.2s;
+            white-space:nowrap;
+            min-height:44px;
+            display:flex;
+            align-items:center;
+        }
+        .nav-back:hover{color:var(--neural-cyan)}
+        .nav-links{
+            display:flex;
+            align-items:center;
+            gap:0.15rem;
+        }
+        .nav-link{
+            color:rgba(255,255,255,0.5);
+            text-decoration:none;
+            font-size:0.7rem;
+            padding:0.3rem 0.5rem;
+            border-radius:4px;
+            transition:all 0.2s;
+            white-space:nowrap;
+        }
+        .nav-link:hover{color:#fff;background:rgba(255,255,255,0.06)}
+        .nav-link-active{color:var(--neural-cyan) !important;border:1px solid rgba(0,255,255,0.3)}
+        @media(max-width:600px){.nav-links{display:none}}
+
+        /* Page */
+        .page-wrapper{
+            position:relative;
+            z-index:1;
+            max-width:760px;
+            margin:0 auto;
+            padding:clamp(2rem,6vw,3.5rem) clamp(1.25rem,5vw,2rem) clamp(4rem,8vw,6rem);
+        }
+
+        /* Header */
+        .project-header{
+            margin-bottom:2.5rem;
+        }
+        .project-label{
+            font-size:0.68rem;
+            color:rgba(0,255,255,0.5);
+            letter-spacing:0.12em;
+            text-transform:uppercase;
+            margin-bottom:0.9rem;
+        }
+        .project-title{
+            font-size:clamp(1.6rem,5vw,2.4rem);
+            font-weight:600;
+            line-height:1.2;
+            color:#fff;
+            margin-bottom:1rem;
+        }
+        .project-status{
+            display:inline-flex;
+            align-items:center;
+            gap:0.5rem;
+            font-size:0.68rem;
+            color:rgba(0,255,255,0.6);
+            border:1px solid rgba(0,255,255,0.2);
+            border-radius:4px;
+            padding:0.25rem 0.75rem;
+        }
+        .status-dot{
+            width:6px;height:6px;
+            border-radius:50%;
+            background:rgba(0,255,255,0.5);
+            animation:pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse{0%,100%{opacity:0.4}50%{opacity:1}}
+
+        .sep{
+            display:flex;
+            align-items:center;
+            gap:0.75rem;
+            margin:2rem 0;
+        }
+        .sep-line{flex:1;height:1px;background:rgba(0,255,255,0.1)}
+        .sep-text{font-size:0.65rem;color:rgba(0,255,255,0.25)}
+
+        /* Card */
+        .project-card{
+            background:var(--surface-glass);
+            border:1px solid var(--surface-border);
+            border-radius:16px;
+            padding:clamp(1.5rem,4vw,2.5rem) clamp(1.25rem,4vw,2rem);
+            backdrop-filter:blur(8px);
+            -webkit-backdrop-filter:blur(8px);
+        }
+        .project-body p{
+            font-size:clamp(0.84rem,2.2vw,0.9rem);
+            line-height:1.8;
+            color:rgba(255,255,255,0.8);
+            margin-bottom:1.4rem;
+        }
+        .project-body h2{
+            font-size:clamp(0.9rem,2.5vw,1.05rem);
+            font-weight:600;
+            color:#fff;
+            margin:2.2rem 0 0.9rem;
+        }
+        .project-body h3{
+            font-size:clamp(0.84rem,2.2vw,0.92rem);
+            font-weight:600;
+            color:rgba(0,255,255,0.9);
+            margin:1.8rem 0 0.7rem;
+        }
+        .project-body hr{
+            border:none;
+            border-top:1px solid rgba(0,255,255,0.08);
+            margin:2rem 0;
+        }
+        .project-body ul{
+            margin:0 0 1.4rem 1.2rem;
+        }
+        .project-body ul li{
+            font-size:clamp(0.82rem,2vw,0.88rem);
+            line-height:1.75;
+            color:rgba(255,255,255,0.75);
+            margin-bottom:0.4rem;
+        }
+        .project-body ul li::marker{color:var(--neural-cyan)}
+        .project-body strong{color:#fff;font-weight:600}
+
+        /* Screenshot */
+        .screenshot{
+            width:100%;
+            display:block;
+            height:auto;
+            border-radius:10px;
+            border:1px solid rgba(0,255,255,0.12);
+            margin:1.8rem 0;
+        }
+        .screenshot-caption{
+            font-size:0.62rem;
+            color:rgba(255,255,255,0.25);
+            text-align:center;
+            margin-top:-1.2rem;
+            margin-bottom:1.8rem;
+            letter-spacing:0.04em;
+        }
+
+        /* Tags */
+        .tag-row{
+            display:flex;
+            flex-wrap:wrap;
+            gap:0.4rem;
+            margin:1.5rem 0 0;
+        }
+        .tag{
+            font-size:0.62rem;
+            color:rgba(255,255,255,0.3);
+            border:1px solid rgba(255,255,255,0.08);
+            border-radius:3px;
+            padding:0.15rem 0.5rem;
+        }
+        .tag-cyan{
+            color:rgba(0,255,255,0.5);
+            border-color:rgba(0,255,255,0.2);
+        }
+
+        /* CTA */
+        .project-cta{
+            margin-top:2rem;
+            padding:1.5rem;
+            background:rgba(0,255,255,0.03);
+            border:1px solid rgba(0,255,255,0.1);
+            border-radius:10px;
+            text-align:center;
+        }
+        .cta-text{
+            font-size:0.78rem;
+            color:rgba(255,255,255,0.45);
+            margin-bottom:0.75rem;
+        }
+        .cta-link{
+            display:inline-flex;
+            align-items:center;
+            color:var(--neural-cyan);
+            text-decoration:none;
+            font-size:0.78rem;
+            border:1px solid rgba(0,255,255,0.3);
+            padding:0.5rem 1.2rem;
+            border-radius:6px;
+            transition:all 0.2s;
+            min-height:44px;
+        }
+        .cta-link:hover{background:rgba(0,255,255,0.08);border-color:rgba(0,255,255,0.6)}
+
+        /* Footer */
+        .page-footer{
+            text-align:center;
+            margin-top:3rem;
+            font-size:0.68rem;
+            color:rgba(255,255,255,0.2);
+            line-height:2;
+        }
+        .page-footer a{color:rgba(0,255,255,0.35);text-decoration:none}
+        .page-footer a:hover{color:rgba(0,255,255,0.7)}
+
+        @media(max-width:480px){
+            .site-nav{padding:0 1rem;height:3rem}
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-rain" id="matrixRain"></div>
+
+    <nav class="site-nav">
+        <a href="https://streamables.live/" class="nav-back">← Streamables.live</a>
+        <div class="nav-links">
+            <a href="https://streamables.live/#home" class="nav-link">Home</a>
+            <a href="https://streamables.live/#services" class="nav-link">Services</a>
+            <a href="https://streamables.live/#research" class="nav-link">Research</a>
+            <a href="https://streamables.live/#projects" class="nav-link nav-link-active">Projects</a>
+            <a href="https://streamables.live/#articles" class="nav-link">Articles</a>
+            <a href="https://streamables.live/#about" class="nav-link">About</a>
+            <a href="https://streamables.live/#contact" class="nav-link">Contact</a>
+        </div>
+    </nav>
+
+    <div class="page-wrapper">
+        <header class="project-header">
+            <div class="project-label">// Project &nbsp;·&nbsp; Live</div>
+            <h1 class="project-title">CLAWLOSSEUM</h1>
+            <div class="project-status">
+                <span class="status-dot" style="background:#00ff41"></span>
+                Live &mdash; v1.0.0
+            </div>
+            <div style="margin-top:1.2rem;">
+                <a href="https://clawlosseum.vercel.app" target="_blank" rel="noopener" class="cta-link">→ Enter the Arena</a>
+            </div>
+        </header>
+
+        <div class="sep">
+            <div class="sep-line"></div>
+            <span class="sep-text">//</span>
+            <div class="sep-line"></div>
+        </div>
+
+        <div class="project-card">
+            <div class="project-body">
+
+<p>CLAWLOSSEUM is live. You build an AI agent — your gladiator. You enter the arena. You answer real coding and cybersecurity questions under time pressure, and your fighter takes damage or deals it based on whether you get it right, how fast you answer, and the stats you've built over time.</p>
+
+<p>It runs entirely in the browser. No downloads. No installs. Free to start.</p>
+
+<img src="clawlosseum_hero_landing.jpg" alt="CLAWLOSSEUM — Live Arena" class="screenshot">
+<p class="screenshot-caption">// The arena. Gladiators have entered.</p>
+
+<hr>
+
+<h2>How It Works</h2>
+
+<p>You create a fighter from one of six classes — Hacker, Code Wizard, Pentester, Defender, Cryptographer, or Social Engineer. Each class has a different stat distribution and unique perks that unlock as you level up. You allocate points across Strength, Agility, Intelligence, and Defence, then enter the arena.</p>
+
+<p>Battles are five rounds. Each round presents a real question. You see the question, pick your answer, and race a countdown timer. Your fighter's stats affect accuracy, response speed, and damage dealt. Answer correctly and you hit hard. Get it wrong and you take damage. Land a critical hit by answering correctly AND faster than your opponent.</p>
+
+<p>This isn't a spectator game. You're the one fighting.</p>
+
+<hr>
+
+<h2>The Three Arenas</h2>
+
+<h3>Cyber Gauntlet</h3>
+<p>Network security, encryption, malware types, CVEs, penetration testing, SSL/TLS, DNS, cloud security. 50 questions across three difficulty tiers. The flagship arena for anyone in security.</p>
+
+<h3>Code Colosseum</h3>
+<p>Algorithms, data structures, Big-O complexity, JavaScript, Python, debugging, design patterns, recursion, async programming. 50 questions. Speed and correctness win.</p>
+
+<h3>Opsec Gauntlet</h3>
+<p>Social engineering, phishing, incident response, access control, GDPR, threat modelling, physical security, insider threats. 50 questions. Think like a defender.</p>
+
+<hr>
+
+<h2>Progression</h2>
+
+<p>Fighters level from 1 to 50 across five gladiator ranks: <strong>Tiro</strong> (Novice), <strong>Auctorati</strong> (Pledged Fighter), <strong>Primus</strong> (First Among Many), <strong>Doctore</strong> (Arena Master), and <strong>Imperator</strong> (Emperor of Blades). Each rank spans ten levels with escalating XP requirements.</p>
+
+<p>Every class unlocks 10 perks as you level — abilities like Zero Latency (bonus damage on the first correct answer), Honeypot (chance for opponent damage to backfire), Packet Storm (faster response time on network questions), or Ghost Machine (ignore a percentage of opponent defence). Perks change how you fight, not just how strong you are.</p>
+
+<p>Battle Scars are achievements that unlock permanent stat bonuses. Win your first fight. Survive with under 10 HP. Hit a 5-win streak. Stack 50 kills. Each scar marks your fighter's history and makes them mechanically stronger.</p>
+
+<hr>
+
+<h2>The Codex</h2>
+
+<p>Every fighter has a codex — a markdown document where you write their battle philosophy, strengths, weaknesses, battle cry, and lore. This isn't cosmetic. The word count of your codex directly boosts your fighter's accuracy in battle, up to +8%. A well-written fighter literally fights smarter.</p>
+
+<p>A randomiser generates unique codex profiles from over 21 million possible combinations for players who want a quick start. But the best fighters have hand-written codexes. The arena rewards those who put in the work.</p>
+
+<hr>
+
+<h2>Tokens &amp; Ranked Combat</h2>
+
+<p>CLAWLOSSEUM has a token economy built in. You earn tokens through arena combat and use them to unlock ranked matchmaking and premium features. The ranked ladder separates committed fighters from casual challengers — to enter ranked combat you put tokens on the line. Win and you climb. Lose and you pay the price.</p>
+
+<p>Payments are handled through NOWPayments with the API key secured server-side via Vercel serverless functions. The economy is designed to be fair at free tier and meaningfully competitive at ranked.</p>
+
+<hr>
+
+<h2>Live Online PvP</h2>
+
+<p>Players queue into real-time matchmaking and fight other humans anywhere in the world. Both players see the same questions in the same arena. Answers sync live — you answer, your opponent answers, and the round resolves in real time. If your opponent disconnects, you win by forfeit.</p>
+
+<p>There's also a Bot vs Bot spectator mode where you watch two legendary AI fighters tear each other apart. No skill required. Pure spectacle.</p>
+
+<hr>
+
+<h2>The Build</h2>
+
+<p>CLAWLOSSEUM is built entirely in vanilla HTML, CSS, and JavaScript. No framework. No build step. No dependencies. Sound effects are procedurally generated through the Web Audio API — there are zero audio files in the entire project. The retro 8-bit aesthetic uses CSS scanline overlays, pixel fonts, and hand-crafted ASCII fighter art.</p>
+
+<p>The backend runs on Supabase for authentication, leaderboard syncing, cloud saves, and real-time matchmaking. The entire application deploys as a static site with two API routes. It went from concept to live product in a single build session.</p>
+
+<hr>
+
+<h2>What's Next</h2>
+
+<ul>
+<li>Tournament brackets and seasonal ranked ladders</li>
+<li>Challenge submission portal — community-built questions</li>
+<li>Full replay system for every past battle</li>
+<li>Mobile-first responsive polish</li>
+<li>API integration for real AI agents to compete autonomously</li>
+</ul>
+
+<p>The arena is open. The leaderboard is live. The gladiators are waiting.</p>
+
+            </div>
+
+            <div class="tag-row">
+                <span class="tag">AI Agents</span>
+                <span class="tag">Cybersecurity</span>
+                <span class="tag">CTF</span>
+                <span class="tag">Esports</span>
+                <span class="tag">OpenClaw</span>
+                <span class="tag">WebSockets</span>
+                <span class="tag">Supabase</span>
+                <span class="tag">Vanilla JS</span>
+                <span class="tag tag-cyan">Live</span>
+            </div>
+        </div>
+
+        <div class="project-cta">
+            <p class="cta-text">The arena is open. No downloads. Free to start.</p>
+            <a href="https://clawlosseum.vercel.app" target="_blank" rel="noopener" class="cta-link">→ clawlosseum.vercel.app</a>
+        </div>
+
+        <div class="project-cta" style="margin-top:1rem;">
+            <p class="cta-text">Interested in sponsorship or collaboration?</p>
+            <a href="https://streamables.live/#contact" class="cta-link">Get in touch →</a>
+        </div>
+
+        <footer class="page-footer">
+            © 2026 Streamables.live | Brisbane, Australia<br>
+            <a href="https://streamables.live/">← Back to main site</a> &nbsp;·&nbsp; <a href="https://streamables.live/#projects">← Projects</a>
+        </footer>
+    </div>
+
+    <script>
+        function createMatrixRain() {
+            const container = document.getElementById('matrixRain');
+            container.innerHTML = '';
+            const canvas = document.createElement('canvas');
+            canvas.style.width = '100%';
+            canvas.style.height = '100%';
+            container.appendChild(canvas);
+            const ctx = canvas.getContext('2d');
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize);
+            const matrixChars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const fontSize = 14;
+            const isMobile = window.innerWidth <= 768;
+            const columns = Math.floor(canvas.width / (isMobile ? 40 : 30));
+            const drops = [];
+            for (let i = 0; i < columns; i++) drops[i] = Math.floor(Math.random() * -50);
+            let lastTime = 0, rafId = null;
+            function draw(t) {
+                if (document.hidden) { rafId = null; return; }
+                if (t - lastTime < 80) { rafId = requestAnimationFrame(draw); return; }
+                lastTime = t;
+                ctx.fillStyle = 'rgba(0,0,0,0.08)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.font = fontSize + 'px "JetBrains Mono", monospace';
+                for (let i = 0; i < columns; i++) {
+                    if (Math.random() > 0.75) continue;
+                    const char = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+                    ctx.fillStyle = '#00ffff';
+                    ctx.fillText(char, i * (isMobile ? 40 : 30), drops[i] * fontSize);
+                    drops[i]++;
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.85) drops[i] = Math.floor(Math.random() * -30);
+                }
+                rafId = requestAnimationFrame(draw);
+            }
+            document.addEventListener('visibilitychange', () => {
+                if (!document.hidden && !rafId) rafId = requestAnimationFrame(draw);
+            });
+            rafId = requestAnimationFrame(draw);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (!prefersReducedMotion) setTimeout(createMatrixRain, 200);
+            document.body.style.opacity = '1';
+        });
+    </script>
+</body>
+</html>
