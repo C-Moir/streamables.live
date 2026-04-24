@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="How I built ClipTips - a live video session marketplace with real-time AI translation - as a solo founder using Claude Code. Stack decisions, what accelerated, what broke, what I'd do differently.">
+    <meta name="author" content="Cameron J. Moir">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://streamables.live/articles/28-how-i-built-cliptips-with-claude-code.html">
+    <meta property="og:title" content="How I Built ClipTips with Claude Code | Streamables.live">
+    <meta property="og:description" content="Six weeks, one developer, Claude Code as the IDE. Shipping a live video marketplace with real-time AI translation - what worked, what broke, and what the AI-augmented solo stack actually looks like in 2026.">
+    <meta property="og:image" content="https://streamables.live/St-03.png">
+    <meta property="og:url" content="https://streamables.live/articles/28-how-i-built-cliptips-with-claude-code.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Streamables.live">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@X_Streamables">
+    <meta name="twitter:title" content="How I Built ClipTips with Claude Code | Streamables.live">
+    <meta name="twitter:description" content="Six weeks, one developer, Claude Code as the IDE. Live video marketplace with real-time AI translation - what the AI-augmented solo stack actually looks like.">
+    <meta name="twitter:image" content="https://streamables.live/St-03.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#000000">
+    <title>How I Built ClipTips with Claude Code | Streamables.live</title>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZEJMKCZRRJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ZEJMKCZRRJ');
+    </script>
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "How I Built ClipTips with Claude Code",
+      "description": "Six weeks, one developer, Claude Code as the IDE. Shipping a live video marketplace with real-time AI translation - what worked, what broke, and what the AI-augmented solo stack actually looks like in 2026.",
+      "author": {
+        "@type": "Person",
+        "name": "Cameron J. Moir",
+        "url": "https://streamables.live/#about"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Streamables.live",
+        "url": "https://streamables.live/",
+        "logo": "https://streamables.live/St-03.png"
+      },
+      "url": "https://streamables.live/articles/28-how-i-built-cliptips-with-claude-code.html",
+      "mainEntityOfPage": "https://streamables.live/articles/28-how-i-built-cliptips-with-claude-code.html"
+    }
+    </script>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --neural-cyan:#00ffff;
+            --surface-glass:rgba(255,255,255,0.03);
+            --surface-border:rgba(0,255,255,0.15);
+            --text-primary:#ffffff;
+            --text-secondary:rgba(255,255,255,0.8);
+            --text-muted:rgba(255,255,255,0.55);
+        }
+        html{scroll-behavior:smooth}
+        body{
+            font-family:'JetBrains Mono', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color:#000;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(0,255,255,.08) 0, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0,245,255,.08) 0, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(0,229,255,.08) 0, transparent 50%),
+                linear-gradient(135deg, #0a0a0f 0, #000 100%);
+            color:var(--text-primary);
+            min-height:100vh;
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+            opacity:0;
+            transition:opacity 0.4s ease;
+        }
+        .matrix-rain{
+            position:fixed;
+            top:0;left:0;
+            width:100%;height:100%;
+            pointer-events:none;
+            z-index:0;
+            opacity:0.18;
+        }
+        .article-nav{
+            position:sticky;
+            top:0;
+            z-index:100;
+            padding:1rem 1.5rem;
+            background:rgba(0,0,0,0.85);
+            backdrop-filter:blur(12px);
+            -webkit-backdrop-filter:blur(12px);
+            border-bottom:1px solid rgba(0,255,255,0.12);
+            display:flex;
+            align-items:center;
+            gap:1rem;
+        }
+        .back-link{
+            color:var(--neural-cyan);
+            text-decoration:none;
+            font-size:0.75rem;
+            font-family:'JetBrains Mono', monospace;
+            letter-spacing:0.05em;
+            opacity:0.8;
+            transition:opacity 0.2s;
+            white-space:nowrap;
+        }
+        .back-link:hover{opacity:1}
+        .nav-logo-link{white-space:nowrap}
+        .nav-links{
+            display:flex;
+            align-items:center;
+            gap:0.15rem;
+            flex-wrap:nowrap;
+        }
+        .nav-link{
+            color:rgba(255,255,255,0.55);
+            text-decoration:none;
+            font-size:0.7rem;
+            font-family:'JetBrains Mono',monospace;
+            padding:0.3rem 0.5rem;
+            border-radius:4px;
+            transition:all 0.2s;
+            white-space:nowrap;
+        }
+        .nav-link:hover{color:#fff;background:rgba(255,255,255,0.06)}
+        .nav-link-active{color:var(--neural-cyan) !important;border:1px solid rgba(0,255,255,0.3)}
+        .article-nav{justify-content:space-between}
+        @media(max-width:600px){.nav-links{display:none}}
+        .article-wrapper{
+            position:relative;
+            z-index:1;
+            max-width:760px;
+            margin:0 auto;
+            padding:3rem 1.5rem 5rem;
+        }
+        .article-header{margin-bottom:2.5rem}
+        .article-label{
+            font-size:0.68rem;
+            color:rgba(0,255,255,0.5);
+            font-family:'JetBrains Mono', monospace;
+            letter-spacing:0.1em;
+            text-transform:uppercase;
+            margin-bottom:1rem;
+        }
+        .article-title{
+            font-size:clamp(1.4rem, 4vw, 2.1rem);
+            font-weight:600;
+            line-height:1.25;
+            color:#fff;
+            margin-bottom:1.2rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-byline{
+            font-size:0.72rem;
+            color:rgba(255,255,255,0.4);
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-byline span{color:rgba(0,255,255,0.6)}
+        .article-sep{
+            display:flex;
+            align-items:center;
+            gap:0.75rem;
+            margin:2rem 0;
+        }
+        .sep-line{flex:1;height:1px;background:rgba(0,255,255,0.12)}
+        .sep-text{font-size:0.65rem;color:rgba(0,255,255,0.3);font-family:'JetBrains Mono',monospace}
+        .article-card{
+            background:var(--surface-glass);
+            border:1px solid var(--surface-border);
+            border-radius:16px;
+            padding:2.5rem 2rem;
+            backdrop-filter:blur(8px);
+            -webkit-backdrop-filter:blur(8px);
+            position:relative;
+        }
+        .close-btn{
+            position:absolute;
+            top:1rem;
+            right:1rem;
+            z-index:10;
+            background:rgba(0,0,0,0.4);
+            backdrop-filter:blur(6px);
+            -webkit-backdrop-filter:blur(6px);
+            border:1px solid rgba(0,255,255,0.2);
+            color:rgba(0,255,255,0.6);
+            font-size:0.9rem;
+            line-height:1;
+            width:2rem;
+            height:2rem;
+            border-radius:50%;
+            cursor:pointer;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            transition:all 0.2s;
+            font-family:'JetBrains Mono',monospace;
+        }
+        .close-btn:hover{
+            background:rgba(0,255,255,0.08);
+            border-color:rgba(0,255,255,0.6);
+            color:#00ffff;
+            transform:scale(1.1);
+        }
+        .article-body p{
+            font-size:0.9rem;
+            line-height:1.8;
+            color:rgba(255,255,255,0.82);
+            margin-bottom:1.4rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-body h2{
+            font-size:1.05rem;
+            font-weight:600;
+            color:#fff;
+            margin:2.2rem 0 0.9rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-body h3{
+            font-size:0.92rem;
+            font-weight:600;
+            color:rgba(0,255,255,0.9);
+            margin:1.8rem 0 0.7rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-body hr{
+            border:none;
+            border-top:1px solid rgba(0,255,255,0.1);
+            margin:2rem 0;
+        }
+        .article-body ul{margin:0 0 1.4rem 1.2rem}
+        .article-body ul li{
+            font-size:0.88rem;
+            line-height:1.75;
+            color:rgba(255,255,255,0.78);
+            margin-bottom:0.4rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-body ul li::marker{color:var(--neural-cyan)}
+        .article-body strong{color:#fff;font-weight:600}
+        .article-body code{
+            font-family:'JetBrains Mono',monospace;
+            font-size:0.82em;
+            color:rgba(0,255,255,0.85);
+            background:rgba(0,255,255,0.06);
+            padding:0.1em 0.4em;
+            border-radius:3px;
+        }
+        .article-attribution{
+            margin-top:2.5rem;
+            padding-top:1.5rem;
+            border-top:1px solid rgba(0,255,255,0.1);
+        }
+        .attribution-text{
+            font-size:0.72rem;
+            color:rgba(255,255,255,0.35);
+            font-family:'JetBrains Mono', monospace;
+            line-height:1.7;
+            font-style:italic;
+        }
+        .article-cta{
+            margin-top:2.5rem;
+            padding:1.5rem;
+            background:rgba(0,255,255,0.04);
+            border:1px solid rgba(0,255,255,0.1);
+            border-radius:10px;
+            text-align:center;
+        }
+        .cta-text{
+            font-size:0.78rem;
+            color:rgba(255,255,255,0.5);
+            font-family:'JetBrains Mono', monospace;
+            margin-bottom:0.75rem;
+        }
+        .cta-link{
+            display:inline-block;
+            color:var(--neural-cyan);
+            text-decoration:none;
+            font-size:0.78rem;
+            font-family:'JetBrains Mono', monospace;
+            border:1px solid rgba(0,255,255,0.3);
+            padding:0.5rem 1.2rem;
+            border-radius:6px;
+            transition:all 0.2s;
+        }
+        .cta-link:hover{background:rgba(0,255,255,0.08);border-color:rgba(0,255,255,0.6)}
+        .article-next{
+            margin-top:2rem;
+            padding:1.25rem 1.5rem;
+            background:rgba(0,255,255,0.03);
+            border:1px solid rgba(0,255,255,0.12);
+            border-radius:10px;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:1rem;
+        }
+        .next-label{
+            font-size:0.62rem;
+            color:rgba(0,255,255,0.4);
+            font-family:'JetBrains Mono',monospace;
+            letter-spacing:0.1em;
+            white-space:nowrap;
+        }
+        .next-article-link{
+            display:flex;
+            align-items:flex-start;
+            gap:0.6rem;
+            color:rgba(255,255,255,0.75);
+            text-decoration:none;
+            font-size:0.78rem;
+            font-family:'JetBrains Mono',monospace;
+            line-height:1.4;
+            flex:1;
+            text-align:right;
+            justify-content:flex-end;
+            transition:color 0.2s;
+        }
+        .next-article-link:hover{color:#00ffff}
+        .next-article-link svg{flex-shrink:0;color:rgba(0,255,255,0.5);margin-top:0.15rem}
+        .next-article-link:hover svg{color:#00ffff}
+        .next-article-text{display:flex;flex-direction:column;gap:0.25rem;text-align:right}
+        .next-article-title{color:rgba(255,255,255,0.85);font-size:0.78rem}
+        .next-article-teaser{color:rgba(255,255,255,0.4);font-size:0.7rem;line-height:1.5}
+        .article-footer{
+            text-align:center;
+            margin-top:3rem;
+            font-size:0.68rem;
+            color:rgba(255,255,255,0.25);
+            font-family:'JetBrains Mono', monospace;
+            line-height:2;
+        }
+        .article-footer a{color:rgba(0,255,255,0.4);text-decoration:none}
+        .article-footer a:hover{color:rgba(0,255,255,0.7)}
+        @media(max-width:600px){
+            .article-wrapper{padding:2rem 1rem 4rem}
+            .article-card{padding:1.5rem 1.2rem}
+            .article-body p{font-size:0.85rem}
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-rain" id="matrixRain"></div>
+
+    <nav class="article-nav">
+        <a href="https://streamables.live/" class="back-link nav-logo-link">&larr; Streamables.live</a>
+        <div class="nav-links">
+            <a href="https://streamables.live/#home" class="nav-link">Home</a>
+            <a href="https://streamables.live/#services" class="nav-link">Services</a>
+            <a href="https://streamables.live/#research" class="nav-link">Research</a>
+            <a href="https://streamables.live/#projects" class="nav-link">Projects</a>
+            <a href="https://streamables.live/#articles" class="nav-link nav-link-active">Articles</a>
+            <a href="https://streamables.live/#about" class="nav-link">About</a>
+            <a href="https://streamables.live/#contact" class="nav-link">Contact</a>
+        </div>
+    </nav>
+
+    <div class="article-wrapper">
+        <header class="article-header">
+            <div class="article-label">// Article &nbsp;&middot;&nbsp; Build Log</div>
+            <h1 class="article-title">How I Built ClipTips with Claude Code</h1>
+            <div class="article-byline">By <span>Cameron J. Moir</span> &nbsp;&middot;&nbsp; Streamables.live</div>
+        </header>
+
+        <div class="article-sep">
+            <div class="sep-line"></div>
+            <span class="sep-text">//</span>
+            <div class="sep-line"></div>
+        </div>
+
+        <div class="article-card">
+            <button class="close-btn" onclick="history.length > 1 ? history.back() : window.location.href='https://streamables.live/#articles'" aria-label="Close">&#x2715;</button>
+            <div class="article-body">
+
+<p>ClipTips is a live video marketplace where you book a verified expert by the minute, ask your question on camera, and hear the answer in your own language in real time. A Spanish chef can take a session from a Japanese asker. A Queensland lawyer can answer a Mandarin-speaking small-business owner without either of them typing a word.</p>
+
+<p>I built it solo over six weeks. Forty-plus API routes, a Postgres schema with a couple dozen tables, Stripe Connect, Stripe Identity, Clerk, Daily.co video rooms, a translation pipeline through Sieve and HeyGen, an admin dashboard, a Knowledge Nexus 3D map, a Knowledge Repository for published sessions, and about fifteen thousand lines of TypeScript.</p>
+
+<p>Claude Code was my IDE for effectively all of it. I'm going to walk through what that actually looked like, because the conversations I keep having about AI-augmented building are either breathless or dismissive, and neither matches what it's like on the inside.</p>
+
+<hr>
+
+<h2>Why ClipTips exists</h2>
+
+<p>I spent twenty years in professional kitchens. The best chefs I learned from weren't the ones with the fattest English vocabularies. Some of the most important cooking I picked up came from a Cantonese head chef at a venue where I was the only native English speaker, and from a Japanese pastry chef who communicated mostly through hands, pointing, and whatever kanji I could read off recipes. The knowledge was there. The language was the bottleneck.</p>
+
+<p>Multiply that out across every profession. A Brazilian surgeon knows something a Portuguese-only speaker in Angola needs. A Korean textile dyer has answers a Turkish student would pay for. A Rajasthani stonemason's technique solves a problem an Italian heritage restorer is stuck on. These people exist right now. They are online right now. They cannot reach each other because the internet's default expectation is English.</p>
+
+<p>AI translation has quietly gotten good enough to close that gap for live conversation. Voice cloning plus real-time transcription plus decent MT models is a mature enough pipeline in 2026 that you can have a natural-sounding dubbed session with a sub-second buffer. What wasn't built was the marketplace around that pipeline. Verification, payments, trust, bounty economics, matchmaking, dispute resolution. The dev-facing problem is trivially understood but expensive to actually ship. Nobody solo was going to do it three years ago.</p>
+
+<p>In 2026, solo is the default shape for this kind of work.</p>
+
+<hr>
+
+<h2>The decision to go solo + Claude-assisted</h2>
+
+<p>I could have raised. I chose not to. Two reasons.</p>
+
+<p>First, the surface area of the product is exactly the size of the surface area of my thinking on it. Every design decision in ClipTips has a reason that traces back to something I learned in hospitality or something I observed about how marketplaces actually work. Adding another founder or raising money means dilating that surface area to match the new input. For a product that depends on taste judgements about trust and verification and payout fairness, that dilation is a cost, not a benefit. At the seed stage, at least.</p>
+
+<p>Second, AI-augmented solo development is not slower than a small team any more. It's different-faster. Where a two-person team might ship features in parallel but pay coordination tax, a solo with Claude Code ships sequentially but skips every single sync meeting, every PR review back-and-forth, every "wait, what did you mean by that" Slack thread. The tradeoff tips a certain way depending on the domain. For ClipTips, where the decision quality of each feature matters more than the raw count of features, solo tips the right way.</p>
+
+<p>Claude Code specifically, as opposed to Cursor or Copilot or any of the adjacent tools, because its agent mode has enough autonomy to take a 40-task plan and execute against it while I'm sleeping. I've had it write + test + commit fifteen files overnight while I was watching my daughter's swim practice the next morning. That's not a productivity bump. That's a different shape of work.</p>
+
+<hr>
+
+<h2>The stack</h2>
+
+<p>Default picks for 2026 solo-shipped SaaS:</p>
+
+<ul>
+<li><strong>Next.js 15 App Router</strong>, TypeScript throughout. Thin route wrappers over a well-designed Postgres schema.</li>
+<li><strong>Supabase</strong> for Postgres + Realtime + Storage. Row Level Security everywhere. Supabase's SQL tooling cuts migration friction dramatically.</li>
+<li><strong>Clerk</strong> for auth and session management. One of the few places I paid for a hosted SaaS instead of rolling it myself. Worth every cent for the time saved on edge cases.</li>
+<li><strong>Stripe</strong> for top-ups, <strong>Stripe Connect Express</strong> for expert payouts, <strong>Stripe Identity</strong> for one-passport-one-account verification.</li>
+<li><strong>Daily.co</strong> for the live video rooms. Their SDK is unreasonably good for how little code it takes.</li>
+<li><strong>Sieve + HeyGen</strong> for the translation pipeline. HeyGen for voice clone plus dubbing. Sieve as the orchestration layer with fallback to other providers when a language pair isn't supported by the primary.</li>
+<li><strong>Playwright</strong> for E2E testing of the critical flows (signup, session booking, wallet, Connect onboarding).</li>
+<li><strong>PostHog</strong> for product analytics once sessions started happening.</li>
+<li><strong>Resend</strong> for transactional email.</li>
+<li><strong>Vercel</strong> for hosting + cron.</li>
+</ul>
+
+<p>Nothing exotic. Modern tools used with intent. Every one of them has good documentation Claude Code can ingest and reason over. That last point is a selection criterion I only consciously noticed halfway through the build.</p>
+
+<hr>
+
+<h2>What Claude Code accelerated hardest</h2>
+
+<p>The places where it was absurdly fast:</p>
+
+<p><strong>Boilerplate-heavy CRUD features.</strong> An admin dashboard with listing/detail/edit for a dozen entity types is something it'll produce in a single session if the schema is clean. My admin tool has views for users, credentials, Gold verification applications, tier management, session disputes, and expert suggestions. I would have hated writing those by hand. I didn't. Claude Code did, I reviewed, I tweaked copy and spacing, shipped.</p>
+
+<p><strong>Schema migrations.</strong> Give it the current SQL state and the desired end state and it'll write the migration, including the data backfill, including the rollback script. It doesn't forget to add the indexes. It doesn't skip the RLS policy updates. This is the work that most solo devs cut corners on because it's tedious. With Claude Code it's no longer tedious, so the corners don't get cut.</p>
+
+<p><strong>Route consistency.</strong> Forty API routes in a codebase will drift stylistically when written by a human over six weeks. Claude Code maintains voice across hundreds of files. Every route returns its errors the same way. Every route validates its inputs in the same position. This matters later when something breaks and you need to reason about a route you haven't touched in a month.</p>
+
+<p><strong>Integration glue.</strong> Wiring HeyGen into a Sieve pipeline into a Supabase storage row into a session record that triggers a Daily.co room creation on spec is the kind of task where the domain knowledge of each tool matters more than the code. Claude Code has read every piece of documentation for every mature tool in my stack. I don't have to context-switch to read their docs. I ask it to wire X into Y, and it does, and it knows where the edge cases live.</p>
+
+<hr>
+
+<h2>What it didn't help with</h2>
+
+<p>The places where I had to do the work myself:</p>
+
+<p><strong>Taste.</strong> Claude Code will produce a functionally correct landing page in ten minutes. That landing page will look like every other landing page that Claude Code has produced for every other founder this year. Making it feel like <em>mine</em> took me a full day of fiddling with typography, spacing, colour, and microcopy. The model can generate infinitely. Only I can tell it which of the generations actually lands.</p>
+
+<p><strong>Product decisions that depend on operator intuition.</strong> Should Scholar Experts earn Teaching Credits that stay on-platform, or should they just cash out like everyone else? Should the Gold Verification badge stay attached if an expert's re-application is rejected? Should we show CLIP token prices in local currency, and if so, should we convert at spot rate or a stickier cached rate? Those decisions needed me, holding the product in my head, thinking about what the asker feels when they see each of these paths.</p>
+
+<p><strong>Hard bugs in live traffic.</strong> A webhook retry loop where Stripe was double-firing the checkout.session.completed event for a specific edge case where a coupon was applied after payment method capture. Took me eleven hours to isolate the cause by manually running Stripe CLI event triggers against a bisected commit history. Claude Code couldn't see the live production system. It can speculate. It can't watch.</p>
+
+<p><strong>Judgement calls under time pressure.</strong> Things that look like bugs might be misconfiguration. Things that look like misconfiguration might be the provider being down. A model can help triage but the final call about whether to rollback, hotfix, or sit tight is human.</p>
+
+<hr>
+
+<h2>The three problems I'm proudest of solving</h2>
+
+<h3>The translation pipeline</h3>
+
+<p>Live dubbing has three failure modes and any one of them burns the session. The voice clone can drift, especially on unusual names or technical vocabulary. The machine translation can miss technical context (the word &ldquo;bread&rdquo; in a pizza kitchen means something specific). The synchronisation between speaker lip movement and dubbed audio can get out of sync enough that people disengage.</p>
+
+<p>My fix: run the voice and text layers independently, with a small intentional buffer delay. Subtitles land immediately so the asker gets the literal translation. Dubbed audio lands 1.5 seconds later with a matched voice clone. Post-session, the final artefact is re-generated from the complete transcript with higher-quality translation and re-dubbed cleanly, replacing the live version in the session record. The asker sees live translation that's good-enough to have the conversation, and gets the higher-quality recording to reference afterwards.</p>
+
+<h3>Webhook idempotency</h3>
+
+<p>Every marketplace eventually hits the problem where a webhook handler gets called twice for the same event, and if you're not careful, you credit the wallet twice or deduct the fee twice. The typical fix is a "processed events" table with a unique constraint. I got aggressive and put the unique constraint on the business record directly. The transactions table has a unique index on <code>stripe_payment_intent_id</code>. The attempt to insert a second transaction row for the same payment intent fails with a 23505 constraint violation. We catch that and return 200 to Stripe as idempotent-success. The wallet credit only runs after the transaction row commits. Double-fires become no-ops at the database level, not at the application level.</p>
+
+<p>Writing this felt trivial once I'd thought of it. Every marketplace I've looked at since has solved the same problem in a messier way.</p>
+
+<h3>Gold Verification state machine</h3>
+
+<p>The deeper-tier verification flow has six valid states (pending_payment, paid_pending_review, in_review, approved, rejected, refunded) and about ten invalid transitions. Getting this right meant that a rejected application couldn't revoke a previously-approved badge. Meant that a pending application couldn't be approved before payment confirmation. Meant that admins claiming a review couldn't accidentally step on each other.</p>
+
+<p>I modelled the whole thing in SQL with a CHECK constraint on valid status values and conditional updates that only fire from specific prior states. The TypeScript layer validates intent. The database enforces reality. Belt and braces. Zero buggy state transitions in production so far. </p>
+
+<hr>
+
+<h2>The honest time and cost accounting</h2>
+
+<p>Six weeks of elapsed time. I was not working on ClipTips full-time. Most weeks I did four to six hours a day on it, with occasional weekend sprints. Call it 150 to 180 hours total.</p>
+
+<p>Tool costs during the build, roughly:</p>
+
+<ul>
+<li>Claude Max subscription: ~$200/month, so roughly $300 across the build.</li>
+<li>Supabase Pro: $25/month.</li>
+<li>Clerk Pro: $25/month when I crossed the free tier.</li>
+<li>Vercel Pro: $20/month.</li>
+<li>Stripe: zero until revenue lands.</li>
+<li>Daily.co: pay-per-use, ~$40 during testing.</li>
+<li>HeyGen + Sieve: trial tier during dev, ~$100 mostly on Sieve compute for pipeline experiments.</li>
+</ul>
+
+<p>Total infrastructure and tooling to get to a deployed, verified, end-to-end-testable product: under $800. Hosting a three-person team to do the same work for six weeks would have cost somewhere north of $50,000 in salary alone.</p>
+
+<p>That's not the full accounting. The 150-180 hours of my time is a real cost. But it's worth flagging because the default conversation about solo AI-augmented dev treats it as if the model does everything. It doesn't. It amplifies what I was going to do anyway. I am not less busy. I'm doing more with the hours I already had.</p>
+
+<hr>
+
+<h2>What I would do differently</h2>
+
+<p>Three things, in priority order:</p>
+
+<p><strong>Test coverage earlier.</strong> I wrote tests reactively whenever a bug scared me. Should have written them for the critical-path flows from day one. The wallet, session booking, and Connect onboarding each have enough edge cases that I've now written the tests retroactively. Would have saved me a good ten hours of debugging in the second half of the build.</p>
+
+<p><strong>Real user feedback earlier.</strong> I built the whole platform end-to-end before putting it in front of any real asker or expert. Should have run a Wizard-of-Oz version of just the session-booking + translation flow two weeks into the build. Would have caught the currency-conversion-UX issue a month before I did, and probably redesigned the Gold Verification workflow differently.</p>
+
+<p><strong>Simpler currency handling.</strong> I overengineered the exchange-rate cache for multi-currency display. Should have shipped in USD only, added local currency when someone asked. The model encouraged me into the cleaner-looking solution when the MVP solution would have been fine.</p>
+
+<p>That last point generalises. Claude Code is biased toward producing clean code. Sometimes the right move is dirty code you'll delete later. Knowing when to push back on the model's default instinct is its own skill.</p>
+
+<hr>
+
+<h2>What this says about solo builders in 2026</h2>
+
+<p>Every era of software development has a dominant unit of production. In the 1980s it was the lone hacker. In the 2000s it was the two-to-three-person startup team. In the 2010s it was the tightly-aligned engineering org of ten to fifty. In 2026 the dominant unit is the solo builder with an agent.</p>
+
+<p>That's not a prediction. That's just where the cost curves crossed. The friction of coordination is still real. The friction of using a capable model as your IDE is effectively zero. When coordination is more expensive than model usage, you pick the model. For most product categories, we're past that crossover.</p>
+
+<p>What it rewards is a specific profile. Operators who have felt a problem viscerally. People who can write well enough to direct a model precisely. People with enough taste to reject 80% of what the model produces. People patient enough to hold a full product in their head across a long build. Hospitality trained me for three of those four by accident. The writing I learned from running sites like this one.</p>
+
+<p>ClipTips is the first thing I've shipped where I felt the full speed of this mode. It won't be the last. And I suspect over the next eighteen months we'll see a lot more solo-built platforms of the same shape show up in categories that historically needed teams of ten to launch.</p>
+
+<p>If you're an operator sitting on a problem and wondering whether you can ship the solution yourself in 2026, the answer is almost certainly yes. The tooling is there. The model is good enough. The only real question is whether you're willing to do the 150 hours.</p>
+
+<p>ClipTips is live at <strong>cliptips-mvp.vercel.app</strong>. The full project writeup is on <a href="../projects/cliptips.html" style="color:rgba(0,255,255,0.7);text-decoration:none;border-bottom:1px dotted rgba(0,255,255,0.4);">streamables.live/projects/cliptips.html</a> if you want the feature-level breakdown.</p>
+
+            </div>
+
+            <div class="article-attribution">
+                <p class="attribution-text">The ideas, opinions, and frameworks in this article are original to Cameron J. Moir.<br><span style="font-size:0.65rem;opacity:0.7;">Written with the assistance of AI.</span></p>
+            </div>
+        </div>
+
+        <div class="article-next">
+            <span class="next-label">// Next</span>
+            <a href="26-running-your-own-ai-stack.html" class="next-article-link">
+                <span class="next-article-text">
+                    <span class="next-article-title">I Run My Own AI Stack</span>
+                    <span class="next-article-teaser">Running a central AI brain with moral laws hard-coded into its foundation. Why local deployment is the play for sensitive work.</span>
+                </span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+            </a>
+        </div>
+
+        <div class="article-cta">
+            <p class="cta-text">Building something similar or want to collaborate on ClipTips?</p>
+            <a href="https://streamables.live/#contact" class="cta-link">Get in touch &rarr;</a>
+        </div>
+
+        <footer class="article-footer">
+            &copy; 2026 Streamables.live | Brisbane, Australia<br>
+            <a href="https://streamables.live/">&larr; Back to main site</a> &nbsp;&middot;&nbsp; <a href="https://streamables.live/#articles">More articles</a>
+        </footer>
+    </div>
+
+    <script>
+        function createMatrixRain() {
+            const container = document.getElementById('matrixRain');
+            container.replaceChildren();
+            const canvas = document.createElement('canvas');
+            canvas.style.width = '100%';
+            canvas.style.height = '100%';
+            container.appendChild(canvas);
+            const ctx = canvas.getContext('2d');
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize);
+            const matrixChars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const fontSize = 14;
+            const isMobile = window.innerWidth <= 768;
+            const columns = Math.floor(canvas.width / (isMobile ? 40 : 30));
+            const drops = [];
+            for (let i = 0; i < columns; i++) drops[i] = Math.floor(Math.random() * -50);
+            let lastTime = 0, rafId = null;
+            function draw(t) {
+                if (document.hidden) { rafId = null; return; }
+                if (t - lastTime < 80) { rafId = requestAnimationFrame(draw); return; }
+                lastTime = t;
+                ctx.fillStyle = 'rgba(0,0,0,0.08)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.font = fontSize + 'px "JetBrains Mono", monospace';
+                for (let i = 0; i < columns; i++) {
+                    if (Math.random() > 0.75) continue;
+                    const char = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+                    ctx.fillStyle = '#00ffff';
+                    ctx.fillText(char, i * (isMobile ? 40 : 30), drops[i] * fontSize);
+                    drops[i]++;
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.85) drops[i] = Math.floor(Math.random() * -30);
+                }
+                rafId = requestAnimationFrame(draw);
+            }
+            document.addEventListener('visibilitychange', () => {
+                if (!document.hidden && !rafId) rafId = requestAnimationFrame(draw);
+            });
+            rafId = requestAnimationFrame(draw);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (!prefersReducedMotion) setTimeout(createMatrixRain, 200);
+            document.body.style.opacity = '1';
+        });
+    </script>
+</body>
+</html>
