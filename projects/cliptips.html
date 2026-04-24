@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="ClipTips - live paid video sessions with verified experts, translated in real time. Ask a question in English, get an answer from a Japanese chef, hear it in your own language. 100+ languages, voice + text, paid by the minute.">
+    <meta name="author" content="Cameron J. Moir">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://streamables.live/projects/cliptips.html">
+    <meta property="og:title" content="ClipTips | Streamables.live">
+    <meta property="og:description" content="Live paid video sessions with verified experts, translated in real time. The person who can answer your question exists. They just don't speak your language.">
+    <meta property="og:image" content="https://streamables.live/St-03.png">
+    <meta property="og:url" content="https://streamables.live/projects/cliptips.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Streamables.live">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ClipTips | Streamables.live">
+    <meta name="twitter:description" content="Live paid video sessions with verified experts, translated in real time. 100+ languages. Paid by the minute.">
+    <meta name="twitter:image" content="https://streamables.live/St-03.png">
+    <meta name="theme-color" content="#000000">
+    <title>ClipTips | Streamables.live</title>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZEJMKCZRRJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ZEJMKCZRRJ');
+    </script>
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --neural-cyan:#00ffff;
+            --surface-glass:rgba(255,255,255,0.03);
+            --surface-border:rgba(0,255,255,0.15);
+            --text-primary:#ffffff;
+            --text-secondary:rgba(255,255,255,0.8);
+            --text-muted:rgba(255,255,255,0.55);
+        }
+        html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+        body{
+            font-family:'JetBrains Mono', monospace;
+            background-color:#000;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(0,255,255,.08) 0, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0,245,255,.08) 0, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(0,229,255,.08) 0, transparent 50%),
+                linear-gradient(135deg, #0a0a0f 0, #000 100%);
+            color:var(--text-primary);
+            min-height:100vh;
+            min-height:100dvh;
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+            opacity:0;
+            transition:opacity 0.4s ease;
+            overflow-x:hidden;
+        }
+        .matrix-rain{
+            position:fixed;
+            top:0;left:0;
+            width:100%;height:100%;
+            pointer-events:none;
+            z-index:0;
+            opacity:0.18;
+        }
+
+        /* Nav */
+        .site-nav{
+            position:sticky;
+            top:0;
+            z-index:100;
+            padding:0 2rem;
+            height:3.5rem;
+            background:rgba(0,0,0,0.88);
+            backdrop-filter:blur(12px);
+            -webkit-backdrop-filter:blur(12px);
+            border-bottom:1px solid rgba(0,255,255,0.1);
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:1rem;
+        }
+        .nav-back{
+            color:rgba(0,255,255,0.7);
+            text-decoration:none;
+            font-size:0.72rem;
+            letter-spacing:0.05em;
+            transition:color 0.2s;
+            white-space:nowrap;
+            min-height:44px;
+            display:flex;
+            align-items:center;
+        }
+        .nav-back:hover{color:var(--neural-cyan)}
+        .nav-links{
+            display:flex;
+            align-items:center;
+            gap:0.15rem;
+        }
+        .nav-link{
+            color:rgba(255,255,255,0.5);
+            text-decoration:none;
+            font-size:0.7rem;
+            padding:0.3rem 0.5rem;
+            border-radius:4px;
+            transition:all 0.2s;
+            white-space:nowrap;
+        }
+        .nav-link:hover{color:#fff;background:rgba(255,255,255,0.06)}
+        .nav-link-active{color:var(--neural-cyan) !important;border:1px solid rgba(0,255,255,0.3)}
+        @media(max-width:600px){.nav-links{display:none}}
+
+        /* Page */
+        .page-wrapper{
+            position:relative;
+            z-index:1;
+            max-width:760px;
+            margin:0 auto;
+            padding:clamp(2rem,6vw,3.5rem) clamp(1.25rem,5vw,2rem) clamp(4rem,8vw,6rem);
+        }
+
+        /* Header */
+        .project-header{
+            margin-bottom:2.5rem;
+        }
+        .project-label{
+            font-size:0.68rem;
+            color:rgba(0,255,255,0.5);
+            letter-spacing:0.12em;
+            text-transform:uppercase;
+            margin-bottom:0.9rem;
+        }
+        .project-title{
+            font-size:clamp(1.6rem,5vw,2.4rem);
+            font-weight:600;
+            line-height:1.2;
+            color:#fff;
+            margin-bottom:1rem;
+        }
+        .project-status{
+            display:inline-flex;
+            align-items:center;
+            gap:0.5rem;
+            font-size:0.68rem;
+            color:rgba(0,255,255,0.6);
+            border:1px solid rgba(0,255,255,0.2);
+            border-radius:4px;
+            padding:0.25rem 0.75rem;
+        }
+        .status-dot{
+            width:6px;height:6px;
+            border-radius:50%;
+            background:rgba(0,255,255,0.5);
+            animation:pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse{0%,100%{opacity:0.4}50%{opacity:1}}
+
+        .sep{
+            display:flex;
+            align-items:center;
+            gap:0.75rem;
+            margin:2rem 0;
+        }
+        .sep-line{flex:1;height:1px;background:rgba(0,255,255,0.1)}
+        .sep-text{font-size:0.65rem;color:rgba(0,255,255,0.25)}
+
+        /* Card */
+        .project-card{
+            background:var(--surface-glass);
+            border:1px solid var(--surface-border);
+            border-radius:16px;
+            padding:clamp(1.5rem,4vw,2.5rem) clamp(1.25rem,4vw,2rem);
+            backdrop-filter:blur(8px);
+            -webkit-backdrop-filter:blur(8px);
+        }
+        .project-body p{
+            font-size:clamp(0.84rem,2.2vw,0.9rem);
+            line-height:1.8;
+            color:rgba(255,255,255,0.8);
+            margin-bottom:1.4rem;
+        }
+        .project-body h2{
+            font-size:clamp(0.9rem,2.5vw,1.05rem);
+            font-weight:600;
+            color:#fff;
+            margin:2.2rem 0 0.9rem;
+        }
+        .project-body h3{
+            font-size:clamp(0.84rem,2.2vw,0.92rem);
+            font-weight:600;
+            color:rgba(0,255,255,0.9);
+            margin:1.8rem 0 0.7rem;
+        }
+        .project-body hr{
+            border:none;
+            border-top:1px solid rgba(0,255,255,0.08);
+            margin:2rem 0;
+        }
+        .project-body ul{
+            margin:0 0 1.4rem 1.2rem;
+        }
+        .project-body ul li{
+            font-size:clamp(0.82rem,2vw,0.88rem);
+            line-height:1.75;
+            color:rgba(255,255,255,0.75);
+            margin-bottom:0.4rem;
+        }
+        .project-body ul li::marker{color:var(--neural-cyan)}
+        .project-body strong{color:#fff;font-weight:600}
+
+        /* Screenshot */
+        .screenshot{
+            width:100%;
+            display:block;
+            height:auto;
+            border-radius:10px;
+            border:1px solid rgba(0,255,255,0.12);
+            margin:1.8rem 0;
+        }
+        .screenshot-caption{
+            font-size:0.62rem;
+            color:rgba(255,255,255,0.25);
+            text-align:center;
+            margin-top:-1.2rem;
+            margin-bottom:1.8rem;
+            letter-spacing:0.04em;
+        }
+
+        /* Tags */
+        .tag-row{
+            display:flex;
+            flex-wrap:wrap;
+            gap:0.4rem;
+            margin:1.5rem 0 0;
+        }
+        .tag{
+            font-size:0.62rem;
+            color:rgba(255,255,255,0.3);
+            border:1px solid rgba(255,255,255,0.08);
+            border-radius:3px;
+            padding:0.15rem 0.5rem;
+        }
+        .tag-cyan{
+            color:rgba(0,255,255,0.5);
+            border-color:rgba(0,255,255,0.2);
+        }
+
+        /* CTA */
+        .project-cta{
+            margin-top:2rem;
+            padding:1.5rem;
+            background:rgba(0,255,255,0.03);
+            border:1px solid rgba(0,255,255,0.1);
+            border-radius:10px;
+            text-align:center;
+        }
+        .cta-text{
+            font-size:0.78rem;
+            color:rgba(255,255,255,0.45);
+            margin-bottom:0.75rem;
+        }
+        .cta-link{
+            display:inline-flex;
+            align-items:center;
+            color:var(--neural-cyan);
+            text-decoration:none;
+            font-size:0.78rem;
+            border:1px solid rgba(0,255,255,0.3);
+            padding:0.5rem 1.2rem;
+            border-radius:6px;
+            transition:all 0.2s;
+            min-height:44px;
+        }
+        .cta-link:hover{background:rgba(0,255,255,0.08);border-color:rgba(0,255,255,0.6)}
+
+        /* Footer */
+        .page-footer{
+            text-align:center;
+            margin-top:3rem;
+            font-size:0.68rem;
+            color:rgba(255,255,255,0.2);
+            line-height:2;
+        }
+        .page-footer a{color:rgba(0,255,255,0.35);text-decoration:none}
+        .page-footer a:hover{color:rgba(0,255,255,0.7)}
+
+        @media(max-width:480px){
+            .site-nav{padding:0 1rem;height:3rem}
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-rain" id="matrixRain"></div>
+
+    <nav class="site-nav">
+        <a href="https://streamables.live/" class="nav-back">&larr; Streamables.live</a>
+        <div class="nav-links">
+            <a href="https://streamables.live/#home" class="nav-link">Home</a>
+            <a href="https://streamables.live/#services" class="nav-link">Services</a>
+            <a href="https://streamables.live/#research" class="nav-link">Research</a>
+            <a href="https://streamables.live/#projects" class="nav-link nav-link-active">Projects</a>
+            <a href="https://streamables.live/#articles" class="nav-link">Articles</a>
+            <a href="https://streamables.live/#about" class="nav-link">About</a>
+            <a href="https://streamables.live/#contact" class="nav-link">Contact</a>
+        </div>
+    </nav>
+
+    <div class="page-wrapper">
+        <header class="project-header">
+            <div class="project-label">// Project &nbsp;&middot;&nbsp; Live</div>
+            <h1 class="project-title">ClipTips</h1>
+            <div class="project-status">
+                <span class="status-dot" style="background:#00ff41"></span>
+                Live &middot; Pre-launch testing
+            </div>
+            <div style="margin-top:1.2rem;">
+                <a href="https://cliptips-mvp.vercel.app" target="_blank" rel="noopener" class="cta-link">&rarr; Open ClipTips</a>
+            </div>
+        </header>
+
+        <div class="sep">
+            <div class="sep-line"></div>
+            <span class="sep-text">//</span>
+            <div class="sep-line"></div>
+        </div>
+
+        <div class="project-card">
+            <div class="project-body">
+
+<p>ClipTips is a knowledge marketplace where you book a verified expert by the minute, ask your question live on video, and have the entire session dubbed and subtitled into your language in real time. The person who can answer your question exists somewhere. They just don&rsquo;t speak your language.</p>
+
+<p>Paid per minute. No subscriptions. No hidden fees. 85% of every session goes to the Expert.</p>
+
+<img src="cliptips-hero.png" alt="ClipTips landing - Learn anything. In 100+ languages." class="screenshot">
+<p class="screenshot-caption">// Landing. The 3D Knowledge Nexus renders live in the background.</p>
+
+<hr>
+
+<h2>The Three-Sided Flow</h2>
+
+<p><strong>Asker.</strong> Signs up, tops up CLIP tokens (1000 CLIP = $10 USD flat), browses verified Experts by domain, books a session. During the call they see subtitles in their language. After the session they can choose to publish the recording into the Knowledge Repository for other askers to learn from.</p>
+
+<p><strong>Expert.</strong> Submits credentials for review (degrees, certifications, licences), passes Stripe Identity verification, connects a bank account via Stripe Connect, sets their own per-minute CLIP rate. Takes sessions live, gets paid into their wallet, cashes out on demand. Has a choice between Pro tier (real money payouts) or Scholar tier (Teaching Credits that stay on-platform, for academics who can&rsquo;t cash out).</p>
+
+<p><strong>Platform.</strong> Takes 15%. Handles escrow, verification, dispute resolution, translation pipeline, and Stripe Connect orchestration.</p>
+
+<hr>
+
+<h2>Browse Experts</h2>
+
+<p>Every Expert has a public profile with their rate, domain, spoken languages, session count, average rating, verified credentials, and a markdown bio they control. Search by skill, filter by availability, sort by trust signals. The &ldquo;Gold Verified&rdquo; badge marks Experts who have passed a deeper background and credential check on top of standard identity verification.</p>
+
+<img src="cliptips-experts.png" alt="ClipTips Browse Experts page with verified expert cards" class="screenshot">
+<p class="screenshot-caption">// Browse Experts. Per-minute rate visible. Verification tier on every card.</p>
+
+<hr>
+
+<h2>The Translation Pipeline</h2>
+
+<p>This is the hardest part of the product and the reason the platform exists at all. ClipTips runs two parallel translation layers during every session:</p>
+
+<p><strong>Voice layer.</strong> The Expert&rsquo;s voice is cloned and re-synthesised into the asker&rsquo;s target language. Not a robotic read. The Expert&rsquo;s own vocal character, speaking the asker&rsquo;s language, with a short buffer delay for accuracy.</p>
+
+<p><strong>Text layer.</strong> Spoken dialogue is transcribed and machine-translated into the same 100+ languages as subtitles. Both sides see the subtitles live. Post-session, the full translated recording is generated automatically and attached to the session record.</p>
+
+<p>The pipeline is orchestrated through Sieve and HeyGen, with fallback paths when a language pair or voice model isn&rsquo;t supported. Async processing gets fired off mid-session so the post-session recording lands within minutes of the call ending, not hours.</p>
+
+<img src="cliptips-how-it-works.png" alt="ClipTips translation pipeline explainer" class="screenshot">
+<p class="screenshot-caption">// Voice + text layers. Runs in parallel during every session.</p>
+
+<hr>
+
+<h2>The CLIP Token Economy</h2>
+
+<p>One CLIP equals one cent USD. Askers buy packages (Starter 1000 CLIP, Standard 5000 CLIP with -10%, Pro 10000 CLIP with -20%). The rate is flat: 1000 CLIP = $10 USD, never expires. Currency detection shows a local-currency approximation under the price for non-US askers.</p>
+
+<p>Experts set their per-minute rate in CLIP. During a session, CLIP is deducted from the asker&rsquo;s wallet each minute and held in escrow. If the session completes cleanly, 85% unlocks to the Expert&rsquo;s wallet. If a dispute is opened, the platform mediates before releasing.</p>
+
+<p>Cashout uses Stripe Connect Express. Experts get paid into their bank account, usually within two business days. Pro Experts can cash out to real money. Scholar Experts keep their earnings as Teaching Credits that can be spent on-platform or donated to academic askers.</p>
+
+<hr>
+
+<h2>Verification and Trust</h2>
+
+<h3>Identity</h3>
+<p>Every user goes through Stripe Identity before they can post questions or take sessions. One passport, one account. Prevents the bot-army and the sock-puppet-review problem that every early marketplace hits.</p>
+
+<h3>Expert credentials</h3>
+<p>Experts submit their actual degrees, professional licences, and certifications. Admin reviews each one. The resulting credential badge is permanently attached to their profile and cannot be edited without re-review. No metrics-as-credentials (follower counts, self-reported experience). A chef with a Michelin star has that star listed. A lawyer with bar admission in Queensland has that admission listed.</p>
+
+<h3>Gold Verification</h3>
+<p>Optional deeper check for Experts who want to signal premium trust. One-time payment triggers a full background + credential audit by the admin team. On approval, the &ldquo;Gold Verified&rdquo; badge lands on the public profile. Rejection refunds minus processing fees. Status is kept truthful even if a previously-approved Expert re-applies: an existing badge isn&rsquo;t revoked by a newer declined application.</p>
+
+<hr>
+
+<h2>The Knowledge Nexus</h2>
+
+<p>The 3D starmap on the landing page isn&rsquo;t decoration. It&rsquo;s a live map of every knowledge domain on the platform, rendered as orbiting spheres with size proportional to session activity. Click a domain to filter experts. Hover to see trending topics. Categories get added by Experts submitting new specialities, gated through an admin review queue so the taxonomy stays clean.</p>
+
+<img src="cliptips-nexus.png" alt="ClipTips Knowledge Nexus - 3D visualisation of knowledge domains" class="screenshot">
+<p class="screenshot-caption">// The Knowledge Nexus. 655 domains mapped. Every sphere is a speciality with live expert counts.</p>
+
+<h3>Publishing and the Knowledge Repository</h3>
+<p>After a session, the asker can choose to publish the full translated recording into the Knowledge Repository. Future askers searching the same question find the recording before they book a new session. The original Expert earns a passing bounty every time someone views the published answer. Translation runs automatically so a recording asked in English becomes a searchable Korean answer for a Korean viewer.</p>
+
+<hr>
+
+<h2>The Build</h2>
+
+<p>ClipTips is Next.js 15 App Router, TypeScript throughout. Supabase for Postgres + realtime + storage + auth (layered under Clerk for the actual identity and session management). Stripe for top-ups, Stripe Connect Express for Expert payouts, Stripe Identity for verification. HeyGen and Sieve power the translation layer. Daily.co handles the live video rooms. Playwright for testing, PostHog for analytics, Resend for transactional email, Vercel for hosting and cron.</p>
+
+<p>The whole application is thin route-wrappers over a Postgres schema with strict Row Level Security. Webhooks are idempotent at the DB level via unique constraints on Stripe payment intent IDs, so retries never double-credit a wallet. The admin tools, Expert dashboard, and the asker-facing product all share one codebase and deploy as a single Vercel project.</p>
+
+<hr>
+
+<h2>What&rsquo;s Next</h2>
+
+<ul>
+<li>Invite Aussie Experts across hospitality, law, medicine, and trades for the initial launch cohort</li>
+<li>Ship mobile app wrapper so sessions work from a phone camera without browser permission fatigue</li>
+<li>Translation quality dashboard so Experts see how well their sessions are being dubbed per language</li>
+<li>Payout schedule automation with tax summary export for Experts at end of financial year</li>
+<li>Group sessions (one Expert, multiple askers) for teaching-at-scale use cases</li>
+<li>Sponsored Expert slots for brands who want to offer free sessions as customer support</li>
+</ul>
+
+<p>The platform is deployed, verified end-to-end, and currently in pre-launch testing with a small invite cohort. Public launch is queued behind the first round of real-user sessions closing cleanly.</p>
+
+            </div>
+
+            <div class="tag-row">
+                <span class="tag">Knowledge Marketplace</span>
+                <span class="tag">AI Translation</span>
+                <span class="tag">Next.js 15</span>
+                <span class="tag">Supabase</span>
+                <span class="tag">Stripe Connect</span>
+                <span class="tag">HeyGen</span>
+                <span class="tag">Sieve</span>
+                <span class="tag">Daily.co</span>
+                <span class="tag">TypeScript</span>
+                <span class="tag tag-cyan">Live</span>
+            </div>
+        </div>
+
+        <div class="project-cta">
+            <p class="cta-text">Open the platform. Free to sign up, CLIP tokens on top-up.</p>
+            <a href="https://cliptips-mvp.vercel.app" target="_blank" rel="noopener" class="cta-link">&rarr; cliptips-mvp.vercel.app</a>
+        </div>
+
+        <div class="project-cta" style="margin-top:1rem;">
+            <p class="cta-text">Interested in becoming an early Expert or partnering on the launch?</p>
+            <a href="https://streamables.live/#contact" class="cta-link">Get in touch &rarr;</a>
+        </div>
+
+        <footer class="page-footer">
+            &copy; 2026 Streamables.live | Brisbane, Australia<br>
+            <a href="https://streamables.live/">&larr; Back to main site</a> &nbsp;&middot;&nbsp; <a href="https://streamables.live/#projects">&larr; Projects</a>
+        </footer>
+    </div>
+
+    <script>
+        function createMatrixRain() {
+            const container = document.getElementById('matrixRain');
+            container.replaceChildren();
+            const canvas = document.createElement('canvas');
+            canvas.style.width = '100%';
+            canvas.style.height = '100%';
+            container.appendChild(canvas);
+            const ctx = canvas.getContext('2d');
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize);
+            const matrixChars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const fontSize = 14;
+            const isMobile = window.innerWidth <= 768;
+            const columns = Math.floor(canvas.width / (isMobile ? 40 : 30));
+            const drops = [];
+            for (let i = 0; i < columns; i++) drops[i] = Math.floor(Math.random() * -50);
+            let lastTime = 0, rafId = null;
+            function draw(t) {
+                if (document.hidden) { rafId = null; return; }
+                if (t - lastTime < 80) { rafId = requestAnimationFrame(draw); return; }
+                lastTime = t;
+                ctx.fillStyle = 'rgba(0,0,0,0.08)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.font = fontSize + 'px "JetBrains Mono", monospace';
+                for (let i = 0; i < columns; i++) {
+                    if (Math.random() > 0.75) continue;
+                    const char = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+                    ctx.fillStyle = '#00ffff';
+                    ctx.fillText(char, i * (isMobile ? 40 : 30), drops[i] * fontSize);
+                    drops[i]++;
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.85) drops[i] = Math.floor(Math.random() * -30);
+                }
+                rafId = requestAnimationFrame(draw);
+            }
+            document.addEventListener('visibilitychange', () => {
+                if (!document.hidden && !rafId) rafId = requestAnimationFrame(draw);
+            });
+            rafId = requestAnimationFrame(draw);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (!prefersReducedMotion) setTimeout(createMatrixRain, 200);
+            document.body.style.opacity = '1';
+        });
+    </script>
+</body>
+</html>

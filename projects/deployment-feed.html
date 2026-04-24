@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="deployment-feed - live ledger of TLS cert activity on free hosting platforms pulled from Certificate Transparency logs. Every card is a deployment that was issued a cert in the last few minutes. Security scanning, AI tool fingerprinting, 3D galaxy map.">
+    <meta name="author" content="Cameron J. Moir">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://streamables.live/projects/deployment-feed.html">
+    <meta property="og:title" content="deployment-feed | Streamables.live">
+    <meta property="og:description" content="Live ledger of TLS cert activity on free hosting platforms pulled from Certificate Transparency logs. Every card is a deployment that was just issued a cert.">
+    <meta property="og:image" content="https://streamables.live/St-03.png">
+    <meta property="og:url" content="https://streamables.live/projects/deployment-feed.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Streamables.live">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="deployment-feed | Streamables.live">
+    <meta name="twitter:description" content="Live ledger of TLS cert activity on free hosting platforms. Every card is a deployment that was just issued a cert.">
+    <meta name="twitter:image" content="https://streamables.live/St-03.png">
+    <meta name="theme-color" content="#000000">
+    <title>deployment-feed | Streamables.live</title>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZEJMKCZRRJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ZEJMKCZRRJ');
+    </script>
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --neural-cyan:#00ffff;
+            --surface-glass:rgba(255,255,255,0.03);
+            --surface-border:rgba(0,255,255,0.15);
+            --text-primary:#ffffff;
+            --text-secondary:rgba(255,255,255,0.8);
+            --text-muted:rgba(255,255,255,0.55);
+        }
+        html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+        body{
+            font-family:'JetBrains Mono', monospace;
+            background-color:#000;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(0,255,255,.08) 0, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0,245,255,.08) 0, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(0,229,255,.08) 0, transparent 50%),
+                linear-gradient(135deg, #0a0a0f 0, #000 100%);
+            color:var(--text-primary);
+            min-height:100vh;
+            min-height:100dvh;
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+            opacity:0;
+            transition:opacity 0.4s ease;
+            overflow-x:hidden;
+        }
+        .matrix-rain{
+            position:fixed;
+            top:0;left:0;
+            width:100%;height:100%;
+            pointer-events:none;
+            z-index:0;
+            opacity:0.18;
+        }
+
+        /* Nav */
+        .site-nav{
+            position:sticky;
+            top:0;
+            z-index:100;
+            padding:0 2rem;
+            height:3.5rem;
+            background:rgba(0,0,0,0.88);
+            backdrop-filter:blur(12px);
+            -webkit-backdrop-filter:blur(12px);
+            border-bottom:1px solid rgba(0,255,255,0.1);
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:1rem;
+        }
+        .nav-back{
+            color:rgba(0,255,255,0.7);
+            text-decoration:none;
+            font-size:0.72rem;
+            letter-spacing:0.05em;
+            transition:color 0.2s;
+            white-space:nowrap;
+            min-height:44px;
+            display:flex;
+            align-items:center;
+        }
+        .nav-back:hover{color:var(--neural-cyan)}
+        .nav-links{
+            display:flex;
+            align-items:center;
+            gap:0.15rem;
+        }
+        .nav-link{
+            color:rgba(255,255,255,0.5);
+            text-decoration:none;
+            font-size:0.7rem;
+            padding:0.3rem 0.5rem;
+            border-radius:4px;
+            transition:all 0.2s;
+            white-space:nowrap;
+        }
+        .nav-link:hover{color:#fff;background:rgba(255,255,255,0.06)}
+        .nav-link-active{color:var(--neural-cyan) !important;border:1px solid rgba(0,255,255,0.3)}
+        @media(max-width:600px){.nav-links{display:none}}
+
+        /* Page */
+        .page-wrapper{
+            position:relative;
+            z-index:1;
+            max-width:760px;
+            margin:0 auto;
+            padding:clamp(2rem,6vw,3.5rem) clamp(1.25rem,5vw,2rem) clamp(4rem,8vw,6rem);
+        }
+
+        /* Header */
+        .project-header{
+            margin-bottom:2.5rem;
+        }
+        .project-label{
+            font-size:0.68rem;
+            color:rgba(0,255,255,0.5);
+            letter-spacing:0.12em;
+            text-transform:uppercase;
+            margin-bottom:0.9rem;
+        }
+        .project-title{
+            font-size:clamp(1.6rem,5vw,2.4rem);
+            font-weight:600;
+            line-height:1.2;
+            color:#fff;
+            margin-bottom:1rem;
+        }
+        .project-status{
+            display:inline-flex;
+            align-items:center;
+            gap:0.5rem;
+            font-size:0.68rem;
+            color:rgba(0,255,255,0.6);
+            border:1px solid rgba(0,255,255,0.2);
+            border-radius:4px;
+            padding:0.25rem 0.75rem;
+        }
+        .status-dot{
+            width:6px;height:6px;
+            border-radius:50%;
+            background:rgba(0,255,255,0.5);
+            animation:pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse{0%,100%{opacity:0.4}50%{opacity:1}}
+
+        .sep{
+            display:flex;
+            align-items:center;
+            gap:0.75rem;
+            margin:2rem 0;
+        }
+        .sep-line{flex:1;height:1px;background:rgba(0,255,255,0.1)}
+        .sep-text{font-size:0.65rem;color:rgba(0,255,255,0.25)}
+
+        /* Card */
+        .project-card{
+            background:var(--surface-glass);
+            border:1px solid var(--surface-border);
+            border-radius:16px;
+            padding:clamp(1.5rem,4vw,2.5rem) clamp(1.25rem,4vw,2rem);
+            backdrop-filter:blur(8px);
+            -webkit-backdrop-filter:blur(8px);
+        }
+        .project-body p{
+            font-size:clamp(0.84rem,2.2vw,0.9rem);
+            line-height:1.8;
+            color:rgba(255,255,255,0.8);
+            margin-bottom:1.4rem;
+        }
+        .project-body h2{
+            font-size:clamp(0.9rem,2.5vw,1.05rem);
+            font-weight:600;
+            color:#fff;
+            margin:2.2rem 0 0.9rem;
+        }
+        .project-body h3{
+            font-size:clamp(0.84rem,2.2vw,0.92rem);
+            font-weight:600;
+            color:rgba(0,255,255,0.9);
+            margin:1.8rem 0 0.7rem;
+        }
+        .project-body hr{
+            border:none;
+            border-top:1px solid rgba(0,255,255,0.08);
+            margin:2rem 0;
+        }
+        .project-body ul{
+            margin:0 0 1.4rem 1.2rem;
+        }
+        .project-body ul li{
+            font-size:clamp(0.82rem,2vw,0.88rem);
+            line-height:1.75;
+            color:rgba(255,255,255,0.75);
+            margin-bottom:0.4rem;
+        }
+        .project-body ul li::marker{color:var(--neural-cyan)}
+        .project-body strong{color:#fff;font-weight:600}
+        .project-body code{
+            font-family:'JetBrains Mono',monospace;
+            font-size:0.78em;
+            color:rgba(0,255,255,0.85);
+            background:rgba(0,255,255,0.06);
+            padding:0.1em 0.4em;
+            border-radius:3px;
+        }
+
+        /* Screenshot */
+        .screenshot{
+            width:100%;
+            display:block;
+            height:auto;
+            border-radius:10px;
+            border:1px solid rgba(0,255,255,0.12);
+            margin:1.8rem 0;
+        }
+        .screenshot-caption{
+            font-size:0.62rem;
+            color:rgba(255,255,255,0.25);
+            text-align:center;
+            margin-top:-1.2rem;
+            margin-bottom:1.8rem;
+            letter-spacing:0.04em;
+        }
+
+        /* Tags */
+        .tag-row{
+            display:flex;
+            flex-wrap:wrap;
+            gap:0.4rem;
+            margin:1.5rem 0 0;
+        }
+        .tag{
+            font-size:0.62rem;
+            color:rgba(255,255,255,0.3);
+            border:1px solid rgba(255,255,255,0.08);
+            border-radius:3px;
+            padding:0.15rem 0.5rem;
+        }
+        .tag-cyan{
+            color:rgba(0,255,255,0.5);
+            border-color:rgba(0,255,255,0.2);
+        }
+
+        /* CTA */
+        .project-cta{
+            margin-top:2rem;
+            padding:1.5rem;
+            background:rgba(0,255,255,0.03);
+            border:1px solid rgba(0,255,255,0.1);
+            border-radius:10px;
+            text-align:center;
+        }
+        .cta-text{
+            font-size:0.78rem;
+            color:rgba(255,255,255,0.45);
+            margin-bottom:0.75rem;
+        }
+        .cta-link{
+            display:inline-flex;
+            align-items:center;
+            color:var(--neural-cyan);
+            text-decoration:none;
+            font-size:0.78rem;
+            border:1px solid rgba(0,255,255,0.3);
+            padding:0.5rem 1.2rem;
+            border-radius:6px;
+            transition:all 0.2s;
+            min-height:44px;
+        }
+        .cta-link:hover{background:rgba(0,255,255,0.08);border-color:rgba(0,255,255,0.6)}
+
+        /* Footer */
+        .page-footer{
+            text-align:center;
+            margin-top:3rem;
+            font-size:0.68rem;
+            color:rgba(255,255,255,0.2);
+            line-height:2;
+        }
+        .page-footer a{color:rgba(0,255,255,0.35);text-decoration:none}
+        .page-footer a:hover{color:rgba(0,255,255,0.7)}
+
+        @media(max-width:480px){
+            .site-nav{padding:0 1rem;height:3rem}
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-rain" id="matrixRain"></div>
+
+    <nav class="site-nav">
+        <a href="https://streamables.live/" class="nav-back">&larr; Streamables.live</a>
+        <div class="nav-links">
+            <a href="https://streamables.live/#home" class="nav-link">Home</a>
+            <a href="https://streamables.live/#services" class="nav-link">Services</a>
+            <a href="https://streamables.live/#research" class="nav-link">Research</a>
+            <a href="https://streamables.live/#projects" class="nav-link nav-link-active">Projects</a>
+            <a href="https://streamables.live/#articles" class="nav-link">Articles</a>
+            <a href="https://streamables.live/#about" class="nav-link">About</a>
+            <a href="https://streamables.live/#contact" class="nav-link">Contact</a>
+        </div>
+    </nav>
+
+    <div class="page-wrapper">
+        <header class="project-header">
+            <div class="project-label">// Project &nbsp;&middot;&nbsp; Open Source</div>
+            <h1 class="project-title">deployment-feed</h1>
+            <div class="project-status">
+                <span class="status-dot" style="background:#00ff41"></span>
+                Self-host &middot; MIT licensed
+            </div>
+            <div style="margin-top:1.2rem;">
+                <a href="https://github.com/C-Moir/deployment-feed" target="_blank" rel="noopener" class="cta-link">&rarr; View on GitHub</a>
+            </div>
+        </header>
+
+        <div class="sep">
+            <div class="sep-line"></div>
+            <span class="sep-text">//</span>
+            <div class="sep-line"></div>
+        </div>
+
+        <div class="project-card">
+            <div class="project-body">
+
+<p>deployment-feed is a real-time ledger of TLS cert activity on free hosting platforms, pulled straight from Certificate Transparency logs. Every time a new deployment on Cloudflare Pages, Workers, Render, Replit, Deno, Railway, Fly.io, or GitHub Pages gets issued a cert, it lands in this feed within seconds.</p>
+
+<p>Cards show a live Playwright screenshot of the site, a framework fingerprint (Next.js, Astro, Svelte, WordPress), and category chips detected from the content (Crypto, AI App, Shop, Game, SaaS, Portfolio, Blog). Suspicious hostnames get escalated to URLScan sandbox scans automatically. The whole thing is a single Node process. Self-host it, point it at your own CT polling schedule, and watch the open internet unfold.</p>
+
+<img src="deployment-feed-live.png" alt="deployment-feed live view with screenshot cards and category filters" class="screenshot">
+<p class="screenshot-caption">// Live feed. Each card is a hostname whose cert was issued in the last minute or two.</p>
+
+<hr>
+
+<h2>What It Actually Watches</h2>
+
+<p>Certificate Transparency is a public append-only log that every CA writes to within seconds of issuing a TLS cert. Anyone can read it. This tool polls three CT logs in parallel and filters for hostnames that belong to tracked free hosting platforms:</p>
+
+<ul>
+<li><strong>Cloudflare Nimbus 2026</strong> every 10 seconds. Primary source for <code>*.pages.dev</code> and <code>*.workers.dev</code>.</li>
+<li><strong>Google Argon 2026h1</strong> every 30 seconds. Broader coverage including Let's Encrypt issuance.</li>
+<li><strong>Google Xenon 2026h1</strong> every 30 seconds. EU-issued certs plus LE redundancy.</li>
+</ul>
+
+<p>Supplemented with <code>crt.sh</code> cross-checks per hostname so the feed can tell genuinely new deployments apart from routine 90-day Let's Encrypt renewals. Cards are tagged <code>new</code> or <code>renewal</code> accordingly, and there's a filter chip to show only brand-new deployments.</p>
+
+<h3>Platforms tracked</h3>
+<ul>
+<li>Cloudflare Pages and Workers (CT logs)</li>
+<li>Render, Replit, Deno Deploy, Railway (CT + crt.sh supplement)</li>
+<li>Fly.io (CT only, crt.sh doesn't cover them)</li>
+<li>GitHub Pages (via the GitHub Events API, no cert route available)</li>
+</ul>
+
+<h3>Platforms not tracked (and why)</h3>
+<p>Vercel, Netlify, Glitch, and Surge issue a single wildcard cert per domain. Individual deployment hostnames never hit CT logs. To see those you'd need per-user API tokens from each platform, which defeats the point of passive observation.</p>
+
+<hr>
+
+<h2>Screenshot + Fingerprint Pipeline</h2>
+
+<p>Every hostname that passes the platform filter hits a queue. Workers pull from the queue and run a fast URLhaus malware check, fetch the live HTML for content fingerprinting, then take a Playwright screenshot of the rendered page. The screenshot cache is persistent so repeated views don't re-render.</p>
+
+<p>Framework detection runs against the raw HTML and response headers. Common frameworks and static generators are identified (Next.js, Astro, SvelteKit, Remix, Gatsby, Hugo, Jekyll, Eleventy). AI tool fingerprints get called out separately: pages built with Lovable, Bolt, v0, Cursor, and their cohort stamp themselves in recognisable ways.</p>
+
+<p>Category chips come from keyword + structural fingerprints on the HTML. An Ethereum dApp pulling web3.js, a Shopify-clone storefront, a chatbot demo with an OpenAI API key in the client bundle - each has distinct signal. The chips aren't exhaustive but they catch the obvious ones for filtering.</p>
+
+<hr>
+
+<h2>The 3D Deploy Map</h2>
+
+<p>Every tracked platform is a planet. Size of the planet scales with today's deployment volume. Deployments that pass scans quietly orbit as green dots. Suspicious ones turn yellow, flagged ones red, in-progress scans blue. Reset at midnight. No personally-identifying data ever renders in the map. It's a live view of what parts of the free-hosting commons are active right now.</p>
+
+<img src="deployment-feed-map.png" alt="3D galaxy map showing planets for each tracked hosting platform" class="screenshot">
+<p class="screenshot-caption">// Deploy Map. Cloudflare Workers dominates volume. Fly.io is quiet. Deno sits in the outer orbit.</p>
+
+<hr>
+
+<h2>Security Signal</h2>
+
+<p>Scams and malware campaigns aggressively abuse free hosting because the cost of burning a hostname is near zero. deployment-feed catches a non-trivial amount of this in passing:</p>
+
+<ul>
+<li><strong>URLhaus check</strong> on every hostname. Known-malicious domains flagged red on the card, pushed into the alert bar at the top.</li>
+<li><strong>Keyword heuristics</strong> for phishing-shaped hostnames (<code>wallet</code>, <code>login</code>, <code>verify</code>, <code>metamask</code>, <code>coinbase</code>). Suspicious hits get escalated to URLScan sandbox scans automatically, so free-tier credits stay focused on the real targets.</li>
+<li><strong>Crowd-sourced abuse reporting</strong> via optional Upstash Redis. Multiple instances can flag the same hostname, building cross-instance consensus before it surfaces as flagged globally.</li>
+<li><strong>Discord/Slack webhooks</strong> for flagged deployments so you can route alerts into the channel you already live in.</li>
+</ul>
+
+<hr>
+
+<h2>History and Archive</h2>
+
+<p>The history view stores every hostname deployment-feed has ever seen, grouped by day with a full-text search. Click a date tab to view everything from that day. Entries never disappear unless you explicitly purge the DB. Handy for post-incident research (&ldquo;we got scanned by this hostname two weeks ago, what else did it do?&rdquo;) or for watching long-term trends in platform usage.</p>
+
+<img src="deployment-feed-history.png" alt="deployment-feed history view with date tabs and search" class="screenshot">
+<p class="screenshot-caption">// History archive. Every hostname ever seen, indexed by day.</p>
+
+<hr>
+
+<h2>The Build</h2>
+
+<p>Pure Node.js. Express for the HTTP surface. Playwright for screenshots. Vanilla HTML + JS for the frontend (no framework, no build step). SQLite for the local cache and history. Optional Upstash Redis when you want to share state across instances. The whole thing clones, installs, and boots in under a minute. No API keys required to run the basics - every integration (URLScan escalation, GitHub Events API, Discord alerts, Upstash consensus) is a strict opt-in via env var.</p>
+
+<p>Designed as a self-host tool on purpose. Hosted version would have to pay for outbound bandwidth to fetch every screenshot and run every URLScan escalation. Self-hosted, you eat your own latency and pay only for what you actually look at.</p>
+
+<hr>
+
+<h2>What's Next</h2>
+
+<ul>
+<li>Vercel and Netlify support via optional per-user API tokens (opt-in, not ambient)</li>
+<li>Historical trend charts on the map page (platform share over time)</li>
+<li>Better framework fingerprints for 2026-generation AI site builders</li>
+<li>Abuse-report export in a format that AbuseIPDB accepts so the consensus data becomes actionable</li>
+<li>Packaged Docker image for one-command deploy</li>
+</ul>
+
+<p>The tool is stable and self-hostable. Current limit is the Playwright worker throughput under sustained Cloudflare Nimbus volume - roughly 15k cards per 24 hours on a 4-core VPS. More aggressive volume needs a worker pool.</p>
+
+            </div>
+
+            <div class="tag-row">
+                <span class="tag">Certificate Transparency</span>
+                <span class="tag">Security Scanning</span>
+                <span class="tag">URLScan</span>
+                <span class="tag">URLhaus</span>
+                <span class="tag">Node.js</span>
+                <span class="tag">Express</span>
+                <span class="tag">Playwright</span>
+                <span class="tag">SQLite</span>
+                <span class="tag">MIT License</span>
+                <span class="tag tag-cyan">Self-host</span>
+            </div>
+        </div>
+
+        <div class="project-cta">
+            <p class="cta-text">Clone and run locally. No API keys required for basic mode.</p>
+            <a href="https://github.com/C-Moir/deployment-feed" target="_blank" rel="noopener" class="cta-link">&rarr; github.com/C-Moir/deployment-feed</a>
+        </div>
+
+        <div class="project-cta" style="margin-top:1rem;">
+            <p class="cta-text">Deploying a hosted version or want a custom fork for a security team?</p>
+            <a href="https://streamables.live/#contact" class="cta-link">Get in touch &rarr;</a>
+        </div>
+
+        <footer class="page-footer">
+            &copy; 2026 Streamables.live | Brisbane, Australia<br>
+            <a href="https://streamables.live/">&larr; Back to main site</a> &nbsp;&middot;&nbsp; <a href="https://streamables.live/#projects">&larr; Projects</a>
+        </footer>
+    </div>
+
+    <script>
+        function createMatrixRain() {
+            const container = document.getElementById('matrixRain');
+            container.replaceChildren();
+            const canvas = document.createElement('canvas');
+            canvas.style.width = '100%';
+            canvas.style.height = '100%';
+            container.appendChild(canvas);
+            const ctx = canvas.getContext('2d');
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize);
+            const matrixChars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const fontSize = 14;
+            const isMobile = window.innerWidth <= 768;
+            const columns = Math.floor(canvas.width / (isMobile ? 40 : 30));
+            const drops = [];
+            for (let i = 0; i < columns; i++) drops[i] = Math.floor(Math.random() * -50);
+            let lastTime = 0, rafId = null;
+            function draw(t) {
+                if (document.hidden) { rafId = null; return; }
+                if (t - lastTime < 80) { rafId = requestAnimationFrame(draw); return; }
+                lastTime = t;
+                ctx.fillStyle = 'rgba(0,0,0,0.08)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.font = fontSize + 'px "JetBrains Mono", monospace';
+                for (let i = 0; i < columns; i++) {
+                    if (Math.random() > 0.75) continue;
+                    const char = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+                    ctx.fillStyle = '#00ffff';
+                    ctx.fillText(char, i * (isMobile ? 40 : 30), drops[i] * fontSize);
+                    drops[i]++;
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.85) drops[i] = Math.floor(Math.random() * -30);
+                }
+                rafId = requestAnimationFrame(draw);
+            }
+            document.addEventListener('visibilitychange', () => {
+                if (!document.hidden && !rafId) rafId = requestAnimationFrame(draw);
+            });
+            rafId = requestAnimationFrame(draw);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (!prefersReducedMotion) setTimeout(createMatrixRain, 200);
+            document.body.style.opacity = '1';
+        });
+    </script>
+</body>
+</html>
