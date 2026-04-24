@@ -368,7 +368,7 @@
 
 <p><strong>Text layer.</strong> Spoken dialogue is transcribed and machine-translated into the same 100+ languages as subtitles. Both sides see the subtitles live. Post-session, the full translated recording is generated automatically and attached to the session record.</p>
 
-<p>The pipeline is orchestrated through Sieve and HeyGen, with fallback paths when a language pair or voice model isn&rsquo;t supported. Async processing gets fired off mid-session so the post-session recording lands within minutes of the call ending, not hours.</p>
+<p>The pipeline runs through HeyGen for voice cloning and dubbing, with machine-translated subtitles running in parallel. Async processing fires off mid-session so the post-session recording lands within minutes of the call ending, not hours.</p>
 
 <img src="cliptips-how-it-works.png" alt="ClipTips translation pipeline explainer" class="screenshot">
 <p class="screenshot-caption">// Voice + text layers. Runs in parallel during every session.</p>
@@ -403,7 +403,7 @@
 <p>The 3D starmap on the landing page isn&rsquo;t decoration. It&rsquo;s a live map of every knowledge domain on the platform, rendered as orbiting spheres with size proportional to session activity. Click a domain to filter experts. Hover to see trending topics. Categories get added by Experts submitting new specialities, gated through an admin review queue so the taxonomy stays clean.</p>
 
 <img src="cliptips-nexus.png" alt="ClipTips Knowledge Nexus - 3D visualisation of knowledge domains" class="screenshot">
-<p class="screenshot-caption">// The Knowledge Nexus. 655 domains mapped. Every sphere is a speciality with live expert counts.</p>
+<p class="screenshot-caption">// The Knowledge Nexus. 141 domains seeded. Every sphere is a speciality with live expert counts.</p>
 
 <h3>Publishing and the Knowledge Repository</h3>
 <p>After a session, the asker can choose to publish the full translated recording into the Knowledge Repository. Future askers searching the same question find the recording before they book a new session. The original Expert earns a passing bounty every time someone views the published answer. Translation runs automatically so a recording asked in English becomes a searchable Korean answer for a Korean viewer.</p>
@@ -412,7 +412,7 @@
 
 <h2>The Build</h2>
 
-<p>ClipTips is Next.js 15 App Router, TypeScript throughout. Supabase for Postgres + realtime + storage + auth (layered under Clerk for the actual identity and session management). Stripe for top-ups, Stripe Connect Express for Expert payouts, Stripe Identity for verification. HeyGen and Sieve power the translation layer. Daily.co handles the live video rooms. Playwright for testing, PostHog for analytics, Resend for transactional email, Vercel for hosting and cron.</p>
+<p>ClipTips is Next.js 15 App Router, TypeScript throughout. Supabase for Postgres + realtime + storage (layered under Clerk for identity and session management). Stripe for top-ups, Stripe Connect Express for Expert payouts, Stripe Identity for verification. HeyGen powers the voice translation layer. Live video currently runs through Jitsi Meet&rsquo;s External API; backend hooks for Daily.co are in place and the migration over is mid-flight. Resend for transactional email, Vercel for hosting and cron, Tailwind 4 + Radix UI for the design system, React Three Fiber for the Knowledge Nexus 3D map.</p>
 
 <p>The whole application is thin route-wrappers over a Postgres schema with strict Row Level Security. Webhooks are idempotent at the DB level via unique constraints on Stripe payment intent IDs, so retries never double-credit a wallet. The admin tools, Expert dashboard, and the asker-facing product all share one codebase and deploy as a single Vercel project.</p>
 
@@ -440,8 +440,7 @@
                 <span class="tag">Supabase</span>
                 <span class="tag">Stripe Connect</span>
                 <span class="tag">HeyGen</span>
-                <span class="tag">Sieve</span>
-                <span class="tag">Daily.co</span>
+                <span class="tag">Jitsi Meet</span>
                 <span class="tag">TypeScript</span>
                 <span class="tag tag-cyan">Live</span>
             </div>

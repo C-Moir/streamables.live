@@ -8,7 +8,7 @@
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://streamables.live/articles/28-how-i-built-cliptips-with-claude-code.html">
     <meta property="og:title" content="How I Built ClipTips with Claude Code | Streamables.live">
-    <meta property="og:description" content="Six weeks, one developer, Claude Code as the IDE. Shipping a live video marketplace with real-time AI translation - what worked, what broke, and what the AI-augmented solo stack actually looks like in 2026.">
+    <meta property="og:description" content="Building solo around a day job, Claude Code as the IDE. A live video marketplace with real-time AI translation - what worked, what broke, and what the AI-augmented solo stack actually looks like in 2026.">
     <meta property="og:image" content="https://streamables.live/St-03.png">
     <meta property="og:url" content="https://streamables.live/articles/28-how-i-built-cliptips-with-claude-code.html">
     <meta property="og:type" content="article">
@@ -16,7 +16,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@X_Streamables">
     <meta name="twitter:title" content="How I Built ClipTips with Claude Code | Streamables.live">
-    <meta name="twitter:description" content="Six weeks, one developer, Claude Code as the IDE. Live video marketplace with real-time AI translation - what the AI-augmented solo stack actually looks like.">
+    <meta name="twitter:description" content="Building solo around a day job, Claude Code as the IDE. Live video marketplace with real-time AI translation - what the AI-augmented solo stack actually looks like.">
     <meta name="twitter:image" content="https://streamables.live/St-03.png">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="theme-color" content="#000000">
@@ -39,7 +39,7 @@
       "@context": "https://schema.org",
       "@type": "Article",
       "headline": "How I Built ClipTips with Claude Code",
-      "description": "Six weeks, one developer, Claude Code as the IDE. Shipping a live video marketplace with real-time AI translation - what worked, what broke, and what the AI-augmented solo stack actually looks like in 2026.",
+      "description": "Building solo around a day job, Claude Code as the IDE. A live video marketplace with real-time AI translation - what worked, what broke, and what the AI-augmented solo stack actually looks like in 2026.",
       "author": {
         "@type": "Person",
         "name": "Cameron J. Moir",
@@ -398,7 +398,9 @@
 
 <p>ClipTips is a live video marketplace where you book a verified expert by the minute, ask your question on camera, and hear the answer in your own language in real time. A Spanish chef can take a session from a Japanese asker. A Queensland lawyer can answer a Mandarin-speaking small-business owner without either of them typing a word.</p>
 
-<p>I built it solo over six weeks. Forty-plus API routes, a Postgres schema with a couple dozen tables, Stripe Connect, Stripe Identity, Clerk, Daily.co video rooms, a translation pipeline through Sieve and HeyGen, an admin dashboard, a Knowledge Nexus 3D map, a Knowledge Repository for published sessions, and about fifteen thousand lines of TypeScript.</p>
+<p>I started ClipTips in August 2025, paused it through the southern winter when paid work crowded everything else out, and picked it back up earlier this month. I work on it whenever I&rsquo;m not on the line making pizza dough. Yesterday I sat down at noon and walked away from the keyboard at 1:30am. That&rsquo;s a normal day. The build isn&rsquo;t a six-week sprint - it&rsquo;s the steady accumulation of evenings, weekends, and the hours after the prep work&rsquo;s done.</p>
+
+<p>What it is right now: 118 API routes, 54,000 lines of TypeScript, a Postgres schema with a few dozen tables, Stripe Connect, Stripe Identity, Clerk, live video via Jitsi (with backend hooks already in place to migrate to Daily.co), HeyGen for voice translation, an admin dashboard, a Knowledge Nexus 3D map, and a Knowledge Repository for published sessions.</p>
 
 <p>Claude Code was my IDE for effectively all of it. I'm going to walk through what that actually looked like, because the conversations I keep having about AI-augmented building are either breathless or dismissive, and neither matches what it's like on the inside.</p>
 
@@ -443,12 +445,11 @@
 <li><strong>Supabase</strong> for Postgres + Realtime + Storage. Row Level Security everywhere. Supabase's SQL tooling cuts migration friction dramatically.</li>
 <li><strong>Clerk</strong> for auth and session management. One of the few places I paid for a hosted SaaS instead of rolling it myself. Worth every cent for the time saved on edge cases.</li>
 <li><strong>Stripe</strong> for top-ups, <strong>Stripe Connect Express</strong> for expert payouts, <strong>Stripe Identity</strong> for one-passport-one-account verification.</li>
-<li><strong>Daily.co</strong> for the live video rooms. Their SDK is unreasonably good for how little code it takes.</li>
-<li><strong>Sieve + HeyGen</strong> for the translation pipeline. HeyGen for voice clone plus dubbing. Sieve as the orchestration layer with fallback to other providers when a language pair isn't supported by the primary.</li>
-<li><strong>Playwright</strong> for E2E testing of the critical flows (signup, session booking, wallet, Connect onboarding).</li>
-<li><strong>PostHog</strong> for product analytics once sessions started happening.</li>
-<li><strong>Resend</strong> for transactional email.</li>
+<li><strong>Jitsi Meet External API</strong> for the live video rooms today. Loads at runtime, no SDK install, the iframe handles itself. <strong>Daily.co</strong> backend hooks (room creation, webhook handling) are already wired and the swap-over to Daily.co for the React component is queued. Mid-migration, deliberately.</li>
+<li><strong>HeyGen</strong> for the voice clone + dubbing pipeline. Machine-translated subtitles run in parallel as a separate text layer.</li>
+<li><strong>Resend</strong> for transactional email, called via raw REST since the SDK adds nothing useful for the few flows I have.</li>
 <li><strong>Vercel</strong> for hosting + cron.</li>
+<li><strong>Tailwind CSS 4</strong> + <strong>Radix UI</strong> + <strong>Lucide</strong> for the design system. <strong>React Three Fiber</strong> for the Knowledge Nexus 3D map.</li>
 </ul>
 
 <p>Nothing exotic. Modern tools used with intent. Every one of them has good documentation Claude Code can ingest and reason over. That last point is a selection criterion I only consciously noticed halfway through the build.</p>
@@ -463,9 +464,9 @@
 
 <p><strong>Schema migrations.</strong> Give it the current SQL state and the desired end state and it'll write the migration, including the data backfill, including the rollback script. It doesn't forget to add the indexes. It doesn't skip the RLS policy updates. This is the work that most solo devs cut corners on because it's tedious. With Claude Code it's no longer tedious, so the corners don't get cut.</p>
 
-<p><strong>Route consistency.</strong> Forty API routes in a codebase will drift stylistically when written by a human over six weeks. Claude Code maintains voice across hundreds of files. Every route returns its errors the same way. Every route validates its inputs in the same position. This matters later when something breaks and you need to reason about a route you haven't touched in a month.</p>
+<p><strong>Route consistency.</strong> 118 API routes in a codebase will drift stylistically when written by a human over months. Claude Code maintains voice across hundreds of files. Every route returns its errors the same way. Every route validates its inputs in the same position. This matters later when something breaks and you need to reason about a route you haven't touched in months.</p>
 
-<p><strong>Integration glue.</strong> Wiring HeyGen into a Sieve pipeline into a Supabase storage row into a session record that triggers a Daily.co room creation on spec is the kind of task where the domain knowledge of each tool matters more than the code. Claude Code has read every piece of documentation for every mature tool in my stack. I don't have to context-switch to read their docs. I ask it to wire X into Y, and it does, and it knows where the edge cases live.</p>
+<p><strong>Integration glue.</strong> Wiring HeyGen translation jobs into Supabase storage rows into a session record that triggers a Jitsi room handoff on spec is the kind of task where the domain knowledge of each tool matters more than the code. Claude Code has read every piece of documentation for every mature tool in my stack. I don't have to context-switch to read their docs. I ask it to wire X into Y, and it does, and it knows where the edge cases live.</p>
 
 <hr>
 
@@ -510,23 +511,20 @@
 
 <h2>The honest time and cost accounting</h2>
 
-<p>Six weeks of elapsed time. I was not working on ClipTips full-time. Most weeks I did four to six hours a day on it, with occasional weekend sprints. Call it 150 to 180 hours total.</p>
+<p>Started August 2025. Paused through the southern winter when paid work ate the rest of my hours. Picked it back up in April 2026. The build isn't bursty - it's the residue of every evening that wasn't in the pizza kitchen, every weekend that wasn't booked, every late-night stretch after the dough's proofed and the team's gone home. Yesterday was noon to 1:30am at the keyboard. That's a normal day on a coding stretch.</p>
 
-<p>Tool costs during the build, roughly:</p>
+<p>Tool costs to date, the actual receipts:</p>
 
 <ul>
-<li>Claude Max subscription: ~$200/month, so roughly $300 across the build.</li>
-<li>Supabase Pro: $25/month.</li>
-<li>Clerk Pro: $25/month when I crossed the free tier.</li>
-<li>Vercel Pro: $20/month.</li>
-<li>Stripe: zero until revenue lands.</li>
-<li>Daily.co: pay-per-use, ~$40 during testing.</li>
-<li>HeyGen + Sieve: trial tier during dev, ~$100 mostly on Sieve compute for pipeline experiments.</li>
+<li><strong>Claude subscription:</strong> roughly $1,100 across the whole build.</li>
+<li><strong>Domains + hosting renewals:</strong> roughly $350.</li>
+<li><strong>OpenRouter for model testing:</strong> ~$20.</li>
+<li><strong>Supabase, Clerk, Vercel, Stripe, HeyGen:</strong> all on free or trial tiers during the build. None of them have invoiced me yet.</li>
 </ul>
 
-<p>Total infrastructure and tooling to get to a deployed, verified, end-to-end-testable product: under $800. Hosting a three-person team to do the same work for six weeks would have cost somewhere north of $50,000 in salary alone.</p>
+<p>About <strong>$1,470 total</strong> to get a deployed, verified, end-to-end-testable product. That number means almost nothing without context though. Hosting a three-person team to do the same work over the same elapsed timeline would have cost somewhere over $100,000 in salary alone. The $1,100 on Claude was the real leverage.</p>
 
-<p>That's not the full accounting. The 150-180 hours of my time is a real cost. But it's worth flagging because the default conversation about solo AI-augmented dev treats it as if the model does everything. It doesn't. It amplifies what I was going to do anyway. I am not less busy. I'm doing more with the hours I already had.</p>
+<p>The hours are the part that's hard to count. I run a kitchen during the day. The coding fits around that. I'm not less busy than I was before this project started - I'm doing more with the same hours, which is what people mean when they talk about AI-augmented solo dev, even if they don't usually frame it that way.</p>
 
 <hr>
 
@@ -553,7 +551,7 @@
 <p>What it rewards is a specific profile. Operators who have felt a problem viscerally. People who can write well enough to direct a model precisely. People with enough taste to reject 80% of what the model produces. People patient enough to hold a full product in their head across a long build. Hospitality trained me for three of those four by accident. The writing I learned from running sites like this one.</p>
 
 <img src="../projects/cliptips-nexus.png" alt="ClipTips Knowledge Nexus 3D map" class="screenshot">
-<p class="screenshot-caption">// The Knowledge Nexus. 655 domains mapped, live session activity per sphere.</p>
+<p class="screenshot-caption">// The Knowledge Nexus. 141 domains seeded, live session activity per sphere.</p>
 
 <p>ClipTips is the first thing I've shipped where I felt the full speed of this mode. It won't be the last. And I suspect over the next eighteen months we'll see a lot more solo-built platforms of the same shape show up in categories that historically needed teams of ten to launch.</p>
 
