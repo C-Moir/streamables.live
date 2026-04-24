@@ -398,7 +398,7 @@
 
 <p>ClipTips is a live video marketplace where you book a verified expert by the minute, ask your question on camera, and hear the answer in your own language in real time. A Spanish chef can take a session from a Japanese asker. A Queensland lawyer can answer a Mandarin-speaking small-business owner without either of them typing a word.</p>
 
-<p>I started ClipTips in August 2025, paused it through the southern winter when paid work crowded everything else out, and picked it back up earlier this month. I work on it whenever I&rsquo;m not on the line making pizza dough. Yesterday I sat down at noon and walked away from the keyboard at 1:30am. That&rsquo;s a normal day. The build isn&rsquo;t a six-week sprint - it&rsquo;s the steady accumulation of evenings, weekends, and the hours after the prep work&rsquo;s done.</p>
+<p>I started ClipTips in August 2025, paused it through the southern winter when paid work crowded everything else out, and picked it back up earlier this month. I work on it whenever I&rsquo;m not running kitchen operations. Yesterday I sat down at noon and walked away from the keyboard at 1:30am. That&rsquo;s a normal day. The build isn&rsquo;t a six-week sprint - it&rsquo;s the steady accumulation of evenings, weekends, and the hours after the day job&rsquo;s done.</p>
 
 <p>What it is right now: 118 API routes, 54,000 lines of TypeScript, a Postgres schema with a few dozen tables, Stripe Connect, Stripe Identity, Clerk, live video via Jitsi (with backend hooks already in place to migrate to Daily.co), HeyGen for voice translation, an admin dashboard, a Knowledge Nexus 3D map, and a Knowledge Repository for published sessions.</p>
 
@@ -488,7 +488,7 @@
 
 <h3>The translation pipeline</h3>
 
-<p>Live dubbing has three failure modes and any one of them burns the session. The voice clone can drift, especially on unusual names or technical vocabulary. The machine translation can miss technical context (the word &ldquo;bread&rdquo; in a pizza kitchen means something specific). The synchronisation between speaker lip movement and dubbed audio can get out of sync enough that people disengage.</p>
+<p>Live dubbing has three failure modes and any one of them burns the session. The voice clone can drift, especially on unusual names or technical vocabulary. The machine translation can miss technical context (kitchen, legal, medical, trades - every domain has terms that look ordinary in English but mean something specific in context). The synchronisation between speaker lip movement and dubbed audio can get out of sync enough that people disengage.</p>
 
 <p>My fix: run the voice and text layers independently, with a small intentional buffer delay. Subtitles land immediately so the asker gets the literal translation. Dubbed audio lands 1.5 seconds later with a matched voice clone. Post-session, the final artefact is re-generated from the complete transcript with higher-quality translation and re-dubbed cleanly, replacing the live version in the session record. The asker sees live translation that's good-enough to have the conversation, and gets the higher-quality recording to reference afterwards.</p>
 
@@ -511,7 +511,7 @@
 
 <h2>The honest time and cost accounting</h2>
 
-<p>Started August 2025. Paused through the southern winter when paid work ate the rest of my hours. Picked it back up in April 2026. The build isn't bursty - it's the residue of every evening that wasn't in the pizza kitchen, every weekend that wasn't booked, every late-night stretch after the dough's proofed and the team's gone home. Yesterday was noon to 1:30am at the keyboard. That's a normal day on a coding stretch.</p>
+<p>Started August 2025. Paused through the southern winter when paid work ate the rest of my hours. Picked it back up in April 2026. The build isn't bursty - it's the residue of every evening that wasn't running kitchen operations, every weekend that wasn't booked, every late-night stretch after the team's gone home. Yesterday was noon to 1:30am at the keyboard. That's a normal day on a coding stretch.</p>
 
 <p>Tool costs to date, the actual receipts:</p>
 
@@ -524,7 +524,7 @@
 
 <p>About <strong>$1,470 total</strong> to get a deployed, verified, end-to-end-testable product. That number means almost nothing without context though. Hosting a three-person team to do the same work over the same elapsed timeline would have cost somewhere over $100,000 in salary alone. The $1,100 on Claude was the real leverage.</p>
 
-<p>The hours are the part that's hard to count. I run a kitchen during the day. The coding fits around that. I'm not less busy than I was before this project started - I'm doing more with the same hours, which is what people mean when they talk about AI-augmented solo dev, even if they don't usually frame it that way.</p>
+<p>The hours are the part that's hard to count. I run kitchen operations during the day. The coding fits around that. I'm not less busy than I was before this project started - I'm doing more with the same hours, which is what people mean when they talk about AI-augmented solo dev, even if they don't usually frame it that way.</p>
 
 <hr>
 
