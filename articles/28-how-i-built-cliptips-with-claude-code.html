@@ -245,6 +245,23 @@
         }
         .article-body ul li::marker{color:var(--neural-cyan)}
         .article-body strong{color:#fff;font-weight:600}
+        .article-body .screenshot{
+            width:100%;
+            display:block;
+            height:auto;
+            border-radius:10px;
+            border:1px solid rgba(0,255,255,0.12);
+            margin:1.8rem 0;
+        }
+        .article-body .screenshot-caption{
+            font-size:0.62rem;
+            color:rgba(255,255,255,0.25);
+            text-align:center;
+            margin-top:-1.2rem;
+            margin-bottom:1.8rem;
+            letter-spacing:0.04em;
+            font-family:'JetBrains Mono',monospace;
+        }
         .article-body code{
             font-family:'JetBrains Mono',monospace;
             font-size:0.82em;
@@ -385,6 +402,9 @@
 
 <p>Claude Code was my IDE for effectively all of it. I'm going to walk through what that actually looked like, because the conversations I keep having about AI-augmented building are either breathless or dismissive, and neither matches what it's like on the inside.</p>
 
+<img src="../projects/cliptips-hero.png" alt="ClipTips landing page hero" class="screenshot">
+<p class="screenshot-caption">// ClipTips landing. 3D Knowledge Nexus renders live in the background.</p>
+
 <hr>
 
 <h2>Why ClipTips exists</h2>
@@ -396,6 +416,9 @@
 <p>AI translation has quietly gotten good enough to close that gap for live conversation. Voice cloning plus real-time transcription plus decent MT models is a mature enough pipeline in 2026 that you can have a natural-sounding dubbed session with a sub-second buffer. What wasn't built was the marketplace around that pipeline. Verification, payments, trust, bounty economics, matchmaking, dispute resolution. The dev-facing problem is trivially understood but expensive to actually ship. Nobody solo was going to do it three years ago.</p>
 
 <p>In 2026, solo is the default shape for this kind of work.</p>
+
+<img src="../projects/cliptips-experts.png" alt="ClipTips Browse Experts marketplace" class="screenshot">
+<p class="screenshot-caption">// The end product. Browse Experts page with per-minute rates and verified credential badges.</p>
 
 <hr>
 
@@ -468,6 +491,9 @@
 
 <p>My fix: run the voice and text layers independently, with a small intentional buffer delay. Subtitles land immediately so the asker gets the literal translation. Dubbed audio lands 1.5 seconds later with a matched voice clone. Post-session, the final artefact is re-generated from the complete transcript with higher-quality translation and re-dubbed cleanly, replacing the live version in the session record. The asker sees live translation that's good-enough to have the conversation, and gets the higher-quality recording to reference afterwards.</p>
 
+<img src="../projects/cliptips-how-it-works.png" alt="ClipTips translation pipeline explainer" class="screenshot">
+<p class="screenshot-caption">// Voice layer and text layer run in parallel, with a small buffer so the dubbed audio catches up cleanly.</p>
+
 <h3>Webhook idempotency</h3>
 
 <p>Every marketplace eventually hits the problem where a webhook handler gets called twice for the same event, and if you're not careful, you credit the wallet twice or deduct the fee twice. The typical fix is a "processed events" table with a unique constraint. I got aggressive and put the unique constraint on the business record directly. The transactions table has a unique index on <code>stripe_payment_intent_id</code>. The attempt to insert a second transaction row for the same payment intent fails with a 23505 constraint violation. We catch that and return 200 to Stripe as idempotent-success. The wallet credit only runs after the transaction row commits. Double-fires become no-ops at the database level, not at the application level.</p>
@@ -525,6 +551,9 @@
 <p>That's not a prediction. That's just where the cost curves crossed. The friction of coordination is still real. The friction of using a capable model as your IDE is effectively zero. When coordination is more expensive than model usage, you pick the model. For most product categories, we're past that crossover.</p>
 
 <p>What it rewards is a specific profile. Operators who have felt a problem viscerally. People who can write well enough to direct a model precisely. People with enough taste to reject 80% of what the model produces. People patient enough to hold a full product in their head across a long build. Hospitality trained me for three of those four by accident. The writing I learned from running sites like this one.</p>
+
+<img src="../projects/cliptips-nexus.png" alt="ClipTips Knowledge Nexus 3D map" class="screenshot">
+<p class="screenshot-caption">// The Knowledge Nexus. 655 domains mapped, live session activity per sphere.</p>
 
 <p>ClipTips is the first thing I've shipped where I felt the full speed of this mode. It won't be the last. And I suspect over the next eighteen months we'll see a lot more solo-built platforms of the same shape show up in categories that historically needed teams of ten to launch.</p>
 
