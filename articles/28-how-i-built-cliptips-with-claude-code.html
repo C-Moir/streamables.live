@@ -572,14 +572,13 @@
 
 <h2>What's queued after ClipTips</h2>
 
-<p>Two more frameworks I built out earlier and parked, queued for the same rebuild treatment now that the toolchain has settled:</p>
+<p>Two builds I started in 2025 and parked, both due for the rebuild treatment now that the toolchain&rsquo;s right. Neither is what you&rsquo;d guess from the names.</p>
 
-<ul>
-<li><strong>ReportBot</strong> - operations intelligence for hospitality multi-venue groups, written from the back-of-house perspective. Daily / weekly / month-end reporting on the metrics that actually matter to a head chef and operations manager, not the ones that show up first in a generic accounting tool.</li>
-<li><strong>ChefBot</strong> - same underlying concept as ReportBot but branded and configured for single-venue independent kitchens. Operators with one site don't want enterprise dashboards; they want a knowledgeable second-in-command they can ask questions of.</li>
-</ul>
+<p><strong>ReportBot.AI-OS</strong> is computer-vision cleaning inspection. Cleaner shows up to a property, scans a QR code, films a quick before/after, and the system runs the footage through a YOLOv8 pipeline that scores cleanliness against the property&rsquo;s standard. End of dispute. The current version is a working Python/FastAPI backend with role-based access for cleaning companies, property managers, and individual cleaners - and it&rsquo;s genuinely useful even in its prototype state. The rebuild moves it onto the same Next.js + Supabase stack ClipTips uses, with a mobile-first capture flow that doesn&rsquo;t make a cleaner fight a desktop UI on their phone. The cleaning industry is enormous, the disputes are constant, and nobody&rsquo;s solving it with computer vision yet.</p>
 
-<p>After those: <strong>Shukinkara</strong> - the umbrella framework that ties multiple operator-facing apps together under a shared identity, governance, and value-exchange layer. That one's the longest-tail concept in the pile and the most ambitious. It'll get its own build log when the time comes.</p>
+<p><strong>ChefBot</strong> is recipe management that actually does the maths. Right now it&rsquo;s a Google Sheets monster - templates, formulas, cross-sheet automation - that turns a recipe input into a costed, standardised, supplier-mapped recipe card complete with prep times, labour cost, packaging cost, retail price, and CCPs. Every kitchen I&rsquo;ve worked in has some version of this on a clipboard or in a beat-up Excel file. The Sheets version proved the concept; the rebuild is going to be a proper app where a head chef adds a recipe once and it ripples through stock orders, costings, training docs, and the menu page. It&rsquo;s the boring software hospitality has been waiting for and never bothered to build.</p>
+
+<p>Both rebuilds are getting the same treatment ClipTips just got: thin Next.js routes over a clean Postgres schema, RLS everywhere, Stripe Connect for whichever payouts apply, and the same Claude Code workflow that lets one person hold the whole product in their head.</p>
 
 <p>ClipTips is live at <strong>cliptips-mvp.vercel.app</strong>. The full project writeup is on <a href="../projects/cliptips.html" style="color:rgba(0,255,255,0.7);text-decoration:none;border-bottom:1px dotted rgba(0,255,255,0.4);">streamables.live/projects/cliptips.html</a> if you want the feature-level breakdown.</p>
 
