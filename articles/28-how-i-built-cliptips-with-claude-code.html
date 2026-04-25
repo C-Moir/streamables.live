@@ -398,7 +398,9 @@
 
 <p>ClipTips is a live video marketplace where you book a verified expert by the minute, ask your question on camera, and hear the answer in your own language in real time. A Spanish chef can take a session from a Japanese asker. A Queensland lawyer can answer a Mandarin-speaking small-business owner without either of them typing a word.</p>
 
-<p>I started ClipTips in August 2025, paused it through the southern winter when paid work crowded everything else out, and picked it back up earlier this month. I work on it whenever I&rsquo;m not running kitchen operations. Yesterday I sat down at noon and walked away from the keyboard at 1:30am. That&rsquo;s a normal day. The build isn&rsquo;t a six-week sprint - it&rsquo;s the steady accumulation of evenings, weekends, and the hours after the day job&rsquo;s done.</p>
+<p>I started ClipTips in August 2025, paused for several months when other priorities took over, and picked it back up in April 2026. Part of why I paused was that the AI tooling I had at the time wasn&rsquo;t where it needed to be - I&rsquo;d hit a six-month ban dispute with the IDE I was using and didn&rsquo;t feel comfortable rebuilding momentum on a complex project without the right tools to come back to. By the time I picked it back up, the toolchain had settled (more on that below).</p>
+
+<p>I work on it whenever I&rsquo;m not running kitchen operations. Yesterday I sat down at noon and walked away from the keyboard at 1:30am. That&rsquo;s a normal day on a coding stretch. The build isn&rsquo;t a sprint - it&rsquo;s the steady accumulation of evenings, weekends, and the hours after the day job&rsquo;s done.</p>
 
 <p>What it is right now: 118 API routes, 54,000 lines of TypeScript, a Postgres schema with a few dozen tables, Stripe Connect, Stripe Identity, Clerk, live video via Jitsi (with backend hooks already in place to migrate to Daily.co), HeyGen for voice translation, an admin dashboard, a Knowledge Nexus 3D map, and a Knowledge Repository for published sessions.</p>
 
@@ -453,6 +455,24 @@
 </ul>
 
 <p>Nothing exotic. Modern tools used with intent. Every one of them has good documentation Claude Code can ingest and reason over. That last point is a selection criterion I only consciously noticed halfway through the build.</p>
+
+<hr>
+
+<h2>How the toolchain settled</h2>
+
+<p>The Claude Code part wasn&rsquo;t day one. Here&rsquo;s the actual sequence, because every "I built X with AI" article skips this and pretends the author landed on the right tools immediately.</p>
+
+<p>Started in mid-2025 with <strong>ChatGPT 3.5</strong>. Good for ideating, useless for actually doing work in a codebase. Couldn&rsquo;t reach files, couldn&rsquo;t run commands, couldn&rsquo;t hold context across a session.</p>
+
+<p>Switched to <strong>Warp</strong>, the terminal-with-embedded-AI. Burned about $400 in credits across multiple side projects in 2025 and built out the early frameworks for ClipTips and a few other ideas. Worked well until I tried to scale to multiple agents under one team account and hit a terms-of-service dispute. Got banned for six months while we sorted it out. The ban was eventually lifted but I&rsquo;d already moved on by then. That ban dispute is the main reason ClipTips paused - I didn&rsquo;t want to come back to a complex codebase without an IDE I trusted.</p>
+
+<p>Tried <strong>Wave</strong> next. Mixed results. The agent loop wasn&rsquo;t tight enough.</p>
+
+<p>Then ran an <strong>OpenClaw</strong> setup with thirteen agents through OpenRouter on free models, each scoped to a different part of the build. It produced output but the coordination overhead was bigger than the win. I deleted the whole rig and migrated the useful files into Claude.</p>
+
+<p>Settled on <strong>Claude (Pro)</strong> by late 2025. Started at $20/month, immediately ran the credit allocation in three days, paid about $880 in overages over the next stretch in $5 and $10 increments before I bit the bullet and upgraded to the $169/month plan. That&rsquo;s where I still am.</p>
+
+<p>The criterion I didn&rsquo;t have words for at the start but now do: <strong>an AI dev tool that can&rsquo;t reach the live web, can&rsquo;t install or use third-party tools, and can&rsquo;t download skills on demand isn&rsquo;t actually doing development work.</strong> It&rsquo;s autocomplete with extra steps. Claude Code crossed the threshold because it can read external documentation in real time, reach into actual systems with the tooling I configure, and add new capabilities through the skills + MCP servers I install. Everything else I tried was either too sandboxed (couldn&rsquo;t reach out) or too unwieldy (multi-agent overhead with no payoff).</p>
 
 <hr>
 
@@ -511,20 +531,11 @@
 
 <h2>The honest time and cost accounting</h2>
 
-<p>Started August 2025. Paused through the southern winter when paid work ate the rest of my hours. Picked it back up in April 2026. The build isn't bursty - it's the residue of every evening that wasn't running kitchen operations, every weekend that wasn't booked, every late-night stretch after the team's gone home. Yesterday was noon to 1:30am at the keyboard. That's a normal day on a coding stretch.</p>
+<p>Tooling spend across the build is real but a clean ClipTips-specific number doesn&rsquo;t make sense. I&rsquo;ve been on a rolling AI-tooling experiment since 2025 - ChatGPT credits, Warp subscriptions and overages, Wave trials, OpenRouter testing pools, Claude subscriptions and overage charges, domain registrations, hosting renewals - and they bleed across multiple projects. ClipTips is one of several frameworks I&rsquo;m building out from the same set of tools.</p>
 
-<p>Tool costs to date, the actual receipts:</p>
+<p>The relevant comparison is the alternative. Hiring a small team to ship this scope over the same elapsed timeline would have cost somewhere north of six figures in salary alone. The total tool spend across all my projects, however much it actually was, was the leverage that let one person hold a complete product in their head and ship it.</p>
 
-<ul>
-<li><strong>Claude subscription:</strong> roughly $1,100 across the whole build.</li>
-<li><strong>Domains + hosting renewals:</strong> roughly $350.</li>
-<li><strong>OpenRouter for model testing:</strong> ~$20.</li>
-<li><strong>Supabase, Clerk, Vercel, Stripe, HeyGen:</strong> all on free or trial tiers during the build. None of them have invoiced me yet.</li>
-</ul>
-
-<p>About <strong>$1,470 total</strong> to get a deployed, verified, end-to-end-testable product. That number means almost nothing without context though. Hosting a three-person team to do the same work over the same elapsed timeline would have cost somewhere over $100,000 in salary alone. The $1,100 on Claude was the real leverage.</p>
-
-<p>The hours are the part that's hard to count. I run kitchen operations during the day. The coding fits around that. I'm not less busy than I was before this project started - I'm doing more with the same hours, which is what people mean when they talk about AI-augmented solo dev, even if they don't usually frame it that way.</p>
+<p>The hours are the harder part to count. I run kitchen operations during the day. The coding fits around that. I&rsquo;m not less busy than I was before this project started - I&rsquo;m doing more with the same hours, which is what people mean when they talk about AI-augmented solo dev, even if they don&rsquo;t usually frame it that way.</p>
 
 <hr>
 
@@ -555,7 +566,20 @@
 
 <p>ClipTips is the first thing I've shipped where I felt the full speed of this mode. It won't be the last. And I suspect over the next eighteen months we'll see a lot more solo-built platforms of the same shape show up in categories that historically needed teams of ten to launch.</p>
 
-<p>If you're an operator sitting on a problem and wondering whether you can ship the solution yourself in 2026, the answer is almost certainly yes. The tooling is there. The model is good enough. The only real question is whether you're willing to do the 150 hours.</p>
+<p>If you're an operator sitting on a problem and wondering whether you can ship the solution yourself in 2026, the answer is almost certainly yes. The tooling is there. The model is good enough. The only real question is whether you're willing to do the hours.</p>
+
+<hr>
+
+<h2>What's queued after ClipTips</h2>
+
+<p>Two more frameworks I built out earlier and parked, queued for the same rebuild treatment now that the toolchain has settled:</p>
+
+<ul>
+<li><strong>ReportBot</strong> - operations intelligence for hospitality multi-venue groups, written from the back-of-house perspective. Daily / weekly / month-end reporting on the metrics that actually matter to a head chef and operations manager, not the ones that show up first in a generic accounting tool.</li>
+<li><strong>ChefBot</strong> - same underlying concept as ReportBot but branded and configured for single-venue independent kitchens. Operators with one site don't want enterprise dashboards; they want a knowledgeable second-in-command they can ask questions of.</li>
+</ul>
+
+<p>After those: <strong>Shukinkara</strong> - the umbrella framework that ties multiple operator-facing apps together under a shared identity, governance, and value-exchange layer. That one's the longest-tail concept in the pile and the most ambitious. It'll get its own build log when the time comes.</p>
 
 <p>ClipTips is live at <strong>cliptips-mvp.vercel.app</strong>. The full project writeup is on <a href="../projects/cliptips.html" style="color:rgba(0,255,255,0.7);text-decoration:none;border-bottom:1px dotted rgba(0,255,255,0.4);">streamables.live/projects/cliptips.html</a> if you want the feature-level breakdown.</p>
 
