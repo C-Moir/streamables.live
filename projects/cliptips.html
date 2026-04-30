@@ -412,7 +412,7 @@
 
 <h2>The Build</h2>
 
-<p>ClipTips is Next.js 15 App Router, TypeScript throughout. Supabase for Postgres + realtime + storage (layered under Clerk for identity and session management). Stripe for top-ups, Stripe Connect Express for Expert payouts, Stripe Identity for verification. HeyGen powers the voice translation layer. Live video currently runs through Jitsi Meet&rsquo;s External API; backend hooks for Daily.co are in place and the migration over is mid-flight. Resend for transactional email, Vercel for hosting and cron, Tailwind 4 + Radix UI for the design system, React Three Fiber for the Knowledge Nexus 3D map.</p>
+<p>ClipTips is Next.js 15 App Router, TypeScript throughout. Supabase for Postgres + realtime + storage (layered under Clerk for identity and session management). Stripe for top-ups, Stripe Connect Express for Expert payouts, Stripe Identity for verification. ElevenLabs Multilingual + Flash v2.5 powers the voice cloning + streaming TTS, Deepgram Flux handles streaming transcription at sub-300ms latency, OpenRouter / Anthropic models do the LLM translation, and MuseTalk (V1.5, queued) handles video lipsync. Live video runs through Daily.co + Jitsi Meet (provider-abstracted). Resend for transactional email, Vercel for hosting and cron, Tailwind 4 + Radix UI for the design system, React Three Fiber for the Knowledge Nexus 3D map.</p>
 
 <p>The whole application is thin route-wrappers over a Postgres schema with strict Row Level Security. Webhooks are idempotent at the DB level via unique constraints on Stripe payment intent IDs, so retries never double-credit a wallet. The admin tools, Expert dashboard, and the asker-facing product all share one codebase and deploy as a single Vercel project.</p>
 
@@ -431,16 +431,31 @@
 
 <p>The platform is deployed, verified end-to-end, and currently in pre-launch testing with a small invite cohort. Public launch is queued behind the first round of real-user sessions closing cleanly.</p>
 
+<hr>
+
+<h2>Build Log</h2>
+
+<p>The build is documented in chronological order on the streamables.live articles section. Two posts so far:</p>
+
+<ul>
+<li><a href="../articles/28-how-i-built-cliptips-with-claude-code.html" style="color:rgba(0,255,255,0.7);text-decoration:none;border-bottom:1px dotted rgba(0,255,255,0.4);"><strong>How I Built ClipTips with Claude Code</strong></a> - the original build log. Stack decisions, why the platform exists, what the AI-augmented solo workflow actually looks like.</li>
+<li><a href="../articles/29-cliptips-live-interpreter-ga.html" style="color:rgba(0,255,255,0.7);text-decoration:none;border-bottom:1px dotted rgba(0,255,255,0.4);"><strong>ClipTips Live Interpreter Mode is GA</strong></a> - the 2026-04-29 ship. Voice-cloned cross-language conversation in production at ~250-400ms end-to-end. Latency stack walkthrough, cost lock-down lesson, the mistakes, and what V1.5 lipsync looks like.</li>
+</ul>
+
+<p>Future ship-related posts will land under the same article numbering and get linked here.</p>
+
             </div>
 
             <div class="tag-row">
                 <span class="tag">Knowledge Marketplace</span>
                 <span class="tag">AI Translation</span>
+                <span class="tag">Live Interpreter</span>
                 <span class="tag">Next.js 15</span>
                 <span class="tag">Supabase</span>
                 <span class="tag">Stripe Connect</span>
-                <span class="tag">HeyGen</span>
-                <span class="tag">Jitsi Meet</span>
+                <span class="tag">ElevenLabs</span>
+                <span class="tag">Deepgram</span>
+                <span class="tag">Daily.co</span>
                 <span class="tag">TypeScript</span>
                 <span class="tag tag-cyan">Live</span>
             </div>
