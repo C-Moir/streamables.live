@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Provider pricing pages are written for finance teams. This is the real per-session cost math for ClipTips - five paid services, full margin tables across creator rate tiers, and where the unit economics break.">
+    <meta name="author" content="Cameron J. Moir">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://streamables.live/articles/32-what-i-actually-paid-to-run-live-interpreter.html">
+    <meta property="og:title" content="What I Actually Paid in 2026 to Run a Live Interpreter | Streamables.live">
+    <meta property="og:description" content="The verified provider pricing + per-session math + margin tables for ClipTips Live Interpreter. Where the model works, where it breaks, what the 1.5x premium actually covers.">
+    <meta property="og:image" content="https://streamables.live/St-03.png">
+    <meta property="og:url" content="https://streamables.live/articles/32-what-i-actually-paid-to-run-live-interpreter.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Streamables.live">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@X_Streamables">
+    <meta name="twitter:title" content="What I Actually Paid in 2026 to Run a Live Interpreter | Streamables.live">
+    <meta name="twitter:description" content="Verified provider pricing + per-session math for a voice-cloned cross-language conversation pipeline. Real numbers, real margin tables, real break-even points.">
+    <meta name="twitter:image" content="https://streamables.live/St-03.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#000000">
+    <title>What I Actually Paid in 2026 to Run a Live Interpreter | Streamables.live</title>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZEJMKCZRRJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ZEJMKCZRRJ');
+    </script>
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "What I Actually Paid in 2026 to Run a Live Interpreter",
+      "description": "Provider pricing pages are written for finance teams. This is the real per-session cost math for ClipTips - five paid services, full margin tables across creator rate tiers, and where the unit economics break.",
+      "author": {
+        "@type": "Person",
+        "name": "Cameron J. Moir",
+        "url": "https://streamables.live/#about"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Streamables.live",
+        "url": "https://streamables.live/",
+        "logo": "https://streamables.live/St-03.png"
+      },
+      "url": "https://streamables.live/articles/32-what-i-actually-paid-to-run-live-interpreter.html",
+      "mainEntityOfPage": "https://streamables.live/articles/32-what-i-actually-paid-to-run-live-interpreter.html"
+    }
+    </script>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --neural-cyan:#00ffff;
+            --surface-glass:rgba(255,255,255,0.03);
+            --surface-border:rgba(0,255,255,0.15);
+            --text-primary:#ffffff;
+            --text-secondary:rgba(255,255,255,0.8);
+            --text-muted:rgba(255,255,255,0.55);
+        }
+        html{scroll-behavior:smooth}
+        body{
+            font-family:'JetBrains Mono', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color:#000;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(0,255,255,.08) 0, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0,245,255,.08) 0, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(0,229,255,.08) 0, transparent 50%),
+                linear-gradient(135deg, #0a0a0f 0, #000 100%);
+            color:var(--text-primary);
+            min-height:100vh;
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+            opacity:0;
+            transition:opacity 0.4s ease;
+        }
+        .matrix-rain{
+            position:fixed;
+            top:0;left:0;
+            width:100%;height:100%;
+            pointer-events:none;
+            z-index:0;
+            opacity:0.18;
+        }
+        .article-nav{
+            position:sticky;
+            top:0;
+            z-index:100;
+            padding:1rem 1.5rem;
+            background:rgba(0,0,0,0.85);
+            backdrop-filter:blur(12px);
+            -webkit-backdrop-filter:blur(12px);
+            border-bottom:1px solid rgba(0,255,255,0.12);
+            display:flex;
+            align-items:center;
+            gap:1rem;
+        }
+        .back-link{
+            color:var(--neural-cyan);
+            text-decoration:none;
+            font-size:0.75rem;
+            font-family:'JetBrains Mono', monospace;
+            letter-spacing:0.05em;
+            opacity:0.8;
+            transition:opacity 0.2s;
+            white-space:nowrap;
+        }
+        .back-link:hover{opacity:1}
+        .nav-logo-link{white-space:nowrap}
+        .nav-links{
+            display:flex;
+            align-items:center;
+            gap:0.15rem;
+            flex-wrap:nowrap;
+        }
+        .nav-link{
+            color:rgba(255,255,255,0.55);
+            text-decoration:none;
+            font-size:0.7rem;
+            font-family:'JetBrains Mono',monospace;
+            padding:0.3rem 0.5rem;
+            border-radius:4px;
+            transition:all 0.2s;
+            white-space:nowrap;
+        }
+        .nav-link:hover{color:#fff;background:rgba(255,255,255,0.06)}
+        .nav-link-active{color:var(--neural-cyan) !important;border:1px solid rgba(0,255,255,0.3)}
+        .article-nav{justify-content:space-between}
+        @media(max-width:600px){.nav-links{display:none}}
+        .article-wrapper{
+            position:relative;
+            z-index:1;
+            max-width:760px;
+            margin:0 auto;
+            padding:3rem 1.5rem 5rem;
+        }
+        .article-header{margin-bottom:2.5rem}
+        .article-label{
+            font-size:0.68rem;
+            color:rgba(0,255,255,0.5);
+            font-family:'JetBrains Mono', monospace;
+            letter-spacing:0.1em;
+            text-transform:uppercase;
+            margin-bottom:1rem;
+        }
+        .article-title{
+            font-size:clamp(1.4rem, 4vw, 2.1rem);
+            font-weight:600;
+            line-height:1.25;
+            color:#fff;
+            margin-bottom:1.2rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-byline{
+            font-size:0.72rem;
+            color:rgba(255,255,255,0.4);
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-byline span{color:rgba(0,255,255,0.6)}
+        .article-sep{
+            display:flex;
+            align-items:center;
+            gap:0.75rem;
+            margin:2rem 0;
+        }
+        .sep-line{flex:1;height:1px;background:rgba(0,255,255,0.12)}
+        .sep-text{font-size:0.65rem;color:rgba(0,255,255,0.3);font-family:'JetBrains Mono',monospace}
+        .article-card{
+            background:var(--surface-glass);
+            border:1px solid var(--surface-border);
+            border-radius:16px;
+            padding:2.5rem 2rem;
+            backdrop-filter:blur(8px);
+            -webkit-backdrop-filter:blur(8px);
+            position:relative;
+        }
+        .close-btn{
+            position:absolute;
+            top:1rem;
+            right:1rem;
+            z-index:10;
+            background:rgba(0,0,0,0.4);
+            backdrop-filter:blur(6px);
+            -webkit-backdrop-filter:blur(6px);
+            border:1px solid rgba(0,255,255,0.2);
+            color:rgba(0,255,255,0.6);
+            font-size:0.9rem;
+            line-height:1;
+            width:2rem;
+            height:2rem;
+            border-radius:50%;
+            cursor:pointer;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            transition:all 0.2s;
+            font-family:'JetBrains Mono',monospace;
+        }
+        .close-btn:hover{
+            background:rgba(0,255,255,0.08);
+            border-color:rgba(0,255,255,0.6);
+            color:#00ffff;
+            transform:scale(1.1);
+        }
+        .article-body p{
+            font-size:0.9rem;
+            line-height:1.8;
+            color:rgba(255,255,255,0.82);
+            margin-bottom:1.4rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-body h2{
+            font-size:1.05rem;
+            font-weight:600;
+            color:#fff;
+            margin:2.2rem 0 0.9rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-body h3{
+            font-size:0.92rem;
+            font-weight:600;
+            color:rgba(0,255,255,0.9);
+            margin:1.8rem 0 0.7rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-body hr{
+            border:none;
+            border-top:1px solid rgba(0,255,255,0.1);
+            margin:2rem 0;
+        }
+        .article-body ul{margin:0 0 1.4rem 1.2rem}
+        .article-body ul li{
+            font-size:0.88rem;
+            line-height:1.75;
+            color:rgba(255,255,255,0.78);
+            margin-bottom:0.4rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-body ul li::marker{color:var(--neural-cyan)}
+        .article-body strong{color:#fff;font-weight:600}
+        .article-body .screenshot{
+            width:100%;
+            display:block;
+            height:auto;
+            border-radius:10px;
+            border:1px solid rgba(0,255,255,0.12);
+            margin:1.8rem 0;
+        }
+        .article-body .screenshot-caption{
+            font-size:0.62rem;
+            color:rgba(255,255,255,0.25);
+            text-align:center;
+            margin-top:-1.2rem;
+            margin-bottom:1.8rem;
+            letter-spacing:0.04em;
+            font-family:'JetBrains Mono',monospace;
+        }
+        .article-body code{
+            font-family:'JetBrains Mono',monospace;
+            font-size:0.82em;
+            color:rgba(0,255,255,0.85);
+            background:rgba(0,255,255,0.06);
+            padding:0.1em 0.4em;
+            border-radius:3px;
+        }
+        .article-attribution{
+            margin-top:2.5rem;
+            padding-top:1.5rem;
+            border-top:1px solid rgba(0,255,255,0.1);
+        }
+        .attribution-text{
+            font-size:0.72rem;
+            color:rgba(255,255,255,0.35);
+            font-family:'JetBrains Mono', monospace;
+            line-height:1.7;
+            font-style:italic;
+        }
+        .article-cta{
+            margin-top:2.5rem;
+            padding:1.5rem;
+            background:rgba(0,255,255,0.04);
+            border:1px solid rgba(0,255,255,0.1);
+            border-radius:10px;
+            text-align:center;
+        }
+        .cta-text{
+            font-size:0.78rem;
+            color:rgba(255,255,255,0.5);
+            font-family:'JetBrains Mono', monospace;
+            margin-bottom:0.75rem;
+        }
+        .cta-link{
+            display:inline-block;
+            color:var(--neural-cyan);
+            text-decoration:none;
+            font-size:0.78rem;
+            font-family:'JetBrains Mono', monospace;
+            border:1px solid rgba(0,255,255,0.3);
+            padding:0.5rem 1.2rem;
+            border-radius:6px;
+            transition:all 0.2s;
+        }
+        .cta-link:hover{background:rgba(0,255,255,0.08);border-color:rgba(0,255,255,0.6)}
+        .article-next{
+            margin-top:2rem;
+            padding:1.25rem 1.5rem;
+            background:rgba(0,255,255,0.03);
+            border:1px solid rgba(0,255,255,0.12);
+            border-radius:10px;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:1rem;
+        }
+        .next-label{
+            font-size:0.62rem;
+            color:rgba(0,255,255,0.4);
+            font-family:'JetBrains Mono',monospace;
+            letter-spacing:0.1em;
+            white-space:nowrap;
+        }
+        .next-article-link{
+            display:flex;
+            align-items:flex-start;
+            gap:0.6rem;
+            color:rgba(255,255,255,0.75);
+            text-decoration:none;
+            font-size:0.78rem;
+            font-family:'JetBrains Mono',monospace;
+            line-height:1.4;
+            flex:1;
+            text-align:right;
+            justify-content:flex-end;
+            transition:color 0.2s;
+        }
+        .next-article-link:hover{color:#00ffff}
+        .next-article-link svg{flex-shrink:0;color:rgba(0,255,255,0.5);margin-top:0.15rem}
+        .next-article-link:hover svg{color:#00ffff}
+        .next-article-text{display:flex;flex-direction:column;gap:0.25rem;text-align:right}
+        .next-article-title{color:rgba(255,255,255,0.85);font-size:0.78rem}
+        .next-article-teaser{color:rgba(255,255,255,0.4);font-size:0.7rem;line-height:1.5}
+        .article-footer{
+            text-align:center;
+            margin-top:3rem;
+            font-size:0.68rem;
+            color:rgba(255,255,255,0.25);
+            font-family:'JetBrains Mono', monospace;
+            line-height:2;
+        }
+        .article-footer a{color:rgba(0,255,255,0.4);text-decoration:none}
+        .article-footer a:hover{color:rgba(0,255,255,0.7)}
+        @media(max-width:600px){
+            .article-wrapper{padding:2rem 1rem 4rem}
+            .article-card{padding:1.5rem 1.2rem}
+            .article-body p{font-size:0.85rem}
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-rain" id="matrixRain"></div>
+
+    <nav class="article-nav">
+        <a href="https://streamables.live/" class="back-link nav-logo-link">&larr; Streamables.live</a>
+        <div class="nav-links">
+            <a href="https://streamables.live/#home" class="nav-link">Home</a>
+            <a href="https://streamables.live/#services" class="nav-link">Services</a>
+            <a href="https://streamables.live/#research" class="nav-link">Research</a>
+            <a href="https://streamables.live/#projects" class="nav-link">Projects</a>
+            <a href="https://streamables.live/#articles" class="nav-link nav-link-active">Articles</a>
+            <a href="https://streamables.live/#about" class="nav-link">About</a>
+            <a href="https://streamables.live/#contact" class="nav-link">Contact</a>
+        </div>
+    </nav>
+
+    <div class="article-wrapper">
+        <header class="article-header">
+            <div class="article-label">// Article &nbsp;&middot;&nbsp; Build Log</div>
+            <h1 class="article-title">What I Actually Paid in 2026 to Run a Live Interpreter</h1>
+            <div class="article-byline">By <span>Cameron J. Moir</span> &nbsp;&middot;&nbsp; Streamables.live</div>
+        </header>
+
+        <div class="article-sep">
+            <div class="sep-line"></div>
+            <span class="sep-text">//</span>
+            <div class="sep-line"></div>
+        </div>
+
+        <div class="article-card">
+            <button class="close-btn" onclick="history.length > 1 ? history.back() : window.location.href='https://streamables.live/#articles'" aria-label="Close">&#x2715;</button>
+            <div class="article-body">
+
+<p>Provider pricing pages are written for finance teams. They list per-unit costs in cents per second or characters per credit and never tell you what an actual production session costs. So this is the version I wish someone had written for me a month ago.</p>
+
+<p>ClipTips runs voice-cloned cross-language conversation in production. Five external paid services per session. Below is what each one charges, what a typical 15-minute session actually costs, and where the model breaks. All figures verified against current provider pricing pages on 2026-04-30.</p>
+
+<hr>
+
+<h2>The five providers</h2>
+
+<p><strong>Deepgram.</strong> Streaming transcription. Their Flux model (purpose-built for two-party realtime) and Nova-3 (their flagship) both cost <strong>$0.0077/min on the PAYG tier</strong>, $0.0065/min on the Growth annual plan. Multilingual auto-detect is $0.0092/min PAYG. Charged for the duration of the audio stream, not silence (their words: "Deepgram does not charge for silence"). Both speakers&rsquo; mics open simultaneously means you pay for two streams. 15-min session = 30 stream-minutes = $0.231.</p>
+
+<p><strong>ElevenLabs.</strong> Text-to-speech with voice cloning. Multilingual v2 is <strong>$0.10 per 1,000 characters</strong>, Flash v2.5 same price. Voice cloning included on the Creator tier and above. The pricing is character-based on output, not input - if you&rsquo;re translating English to Vietnamese (which is ~10% longer in characters), you&rsquo;re paying for the longer Vietnamese output.</p>
+
+<p><strong>OpenRouter / Anthropic / OpenAI.</strong> LLM translation. Claude Haiku 4.5 via OpenRouter: $0.25/$1.25 per million input/output tokens. GPT-4o-mini: $0.15/$0.60. DeepL: $5.49 per 100k characters (much more expensive at scale, but specialised for translation quality). For ClipTips, OpenRouter to Claude Haiku is the default. ~$0.50 per 15-min session including overhead.</p>
+
+<p><strong>Sieve (V1.5).</strong> Hosted MuseTalk lipsync. <strong>$0.14 per minute of generated video</strong>. Lipsync only runs while audio is playing through the speaker&rsquo;s face video, so the actual minutes billed scale with speech time, not session time. ~12 min of speech per 15-min session = $1.68 for one direction, $3.36 for two directions if both speakers&rsquo; faces need lipsyncing.</p>
+
+<p><strong>Daily.co.</strong> WebRTC video rooms. <strong>10,000 minutes free per month</strong> on the Free tier; $0.004/participant-minute after. ClipTips currently fits in the free tier. Once volume scales, this becomes ~$0.06 per 15-min session for two participants.</p>
+
+<hr>
+
+<h2>The 15-minute session, costed out</h2>
+
+<p>Audio-only live interpreter, today&rsquo;s production state, both speakers active:</p>
+
+<ul>
+<li>Deepgram (2 streams &times; 15min &times; $0.0077): <strong>$0.231</strong></li>
+<li>ElevenLabs (~10,500 output chars &times; $0.10/1k): <strong>$1.05</strong></li>
+<li>Translation (~$0.005 per 100 chars across both directions): <strong>$0.50</strong></li>
+<li>Daily.co (still in free tier): <strong>$0.00</strong></li>
+<li><strong>Audio-only total: $1.78 per 15-min session = $0.118/min</strong></li>
+</ul>
+
+<p>With V1.5 lipsync added (Sieve hosted MuseTalk):</p>
+
+<ul>
+<li>+ Lipsync (~12 min of speech across both directions &times; $0.14): <strong>$1.68</strong></li>
+<li><strong>Total with V1.5: $3.46 per 15-min session = $0.231/min</strong></li>
+</ul>
+
+<p>Significantly less than I expected when I started. Three rounds of margin tables earlier in the build, I had AI cost pegged at $0.42-0.70/min based on inflated estimates. The real number is about half that. Lesson noted: <strong>verify provider pricing first, build the cost model second.</strong> Not the other way round.</p>
+
+<hr>
+
+<h2>The 1.5x interpreter premium</h2>
+
+<p>Live interpreter is a paid premium on a session. When an asker enables the interpreter toggle at booking, they pay <strong>1.5x the creator&rsquo;s base rate</strong>. The creator still receives their normal effective rate (75% of the base, untouched). The 50% premium goes entirely to the platform.</p>
+
+<p>Concrete: $10/min creator + 15-min session + interpreter on:</p>
+
+<ul>
+<li>Asker pays: $10 &times; 15 &times; 1.5 = <strong>$225</strong></li>
+<li>Creator gets: $10 &times; 15 &times; 0.75 = <strong>$112.50</strong></li>
+<li>Platform gross: $225 - $112.50 = <strong>$112.50</strong></li>
+<li>Stripe fees (2.9% + $0.30): $6.83</li>
+<li>AI cost (audio + V1.5): $3.46</li>
+<li><strong>Net to platform: $102.21 (91% margin)</strong></li>
+</ul>
+
+<p>The premium covers the AI cost and then some. At $10/min creator rates the model is comfortable. The interesting question is: where does it break?</p>
+
+<hr>
+
+<h2>Where the math goes red</h2>
+
+<p>Margin table by creator rate, 15-min session, V1.5 lipsync enabled, 1.5x asker premium:</p>
+
+<ul>
+<li>$10/min creator: asker $225, expert $112.50, platform net $102.21 (91%)</li>
+<li>$5/min creator: asker $112.50, expert $56.25, platform net $49.23 (87%)</li>
+<li>$2/min creator: asker $45, expert $22.50, platform net $17.43 (78%)</li>
+<li>$1/min creator: asker $22.50, expert $11.25, platform net $6.84 (61%)</li>
+<li>$0.50/min creator: asker $11.25, expert $5.63, platform net $1.54 (27%)</li>
+<li>$0.40/min creator: asker $9.00, expert $4.50, platform net $0.48 (break-even)</li>
+<li>$0.25/min creator: asker $5.63, expert $2.82, platform net &minus;$1.11 (LOSS)</li>
+</ul>
+
+<p>Break-even is at <strong>$0.40/min creator rate</strong>. Anything below that, the platform pays the difference and goes red on the session.</p>
+
+<p>Practical implication for ClipTips: scholar-tier creators charging sub-$1/min academic rates can&rsquo;t use V1.5 interpreter without losing the platform money. The cheap-tier strategy (separate roadmap, captured in <code>docs/superpowers/plans/future-cheap-tier-avatar-lipsync.md</code>) is to spin up an avatar rendering path that costs ~$0/min after the one-time signup generation - viseme animation instead of neural lipsync. Different visual fidelity, different price tier.</p>
+
+<hr>
+
+<h2>Stripe fees and why they barely matter</h2>
+
+<p>Standard Stripe rates: 2.9% + $0.30 per transaction for US cards. Slightly more for international (3.4% + $0.30). Cross-border with currency conversion adds another 1%.</p>
+
+<p>For ClipTips, askers buy CLIP tokens in fixed packages ($10, $45 with 10% off, $80 with 20% off). Per-purchase Stripe fee is $0.59 / $1.61 / $2.62 respectively. Platform absorbs it from the 25% slice.</p>
+
+<p>The reason Stripe fees barely move the model: they scale with the asker&rsquo;s payment, but the AI cost is fixed per session regardless of creator rate. So at high creator rates Stripe fees become noise; at low creator rates Stripe fees become significant relative to platform gross. The break-even point is dominated by the fixed AI cost, not the variable Stripe fee.</p>
+
+<hr>
+
+<h2>Fixed monthly overhead</h2>
+
+<p>Outside per-session costs, the platform itself runs on:</p>
+
+<ul>
+<li><strong>Vercel</strong> Hobby tier: $0/mo. Will need Pro ($20/mo) once volume crosses the bandwidth threshold.</li>
+<li><strong>Supabase</strong> Free tier: $0/mo. Pro tier $25/mo when storage / bandwidth limits hit.</li>
+<li><strong>Clerk</strong> Free tier: $0/mo for the first 10k MAUs. Pro from there.</li>
+<li><strong>Resend</strong>: $0/mo (Free tier 3k emails/month).</li>
+<li><strong>Domain</strong>: ~$15/year.</li>
+</ul>
+
+<p>Effective fixed overhead today: ~$0/mo. At launch scale (post-revenue): ~$50-100/mo. One 15-min interpreter session at $10/min creator covers a month of fixed overhead by itself.</p>
+
+<hr>
+
+<h2>What this means for solo unfunded builds</h2>
+
+<p>Solo builders worrying about whether AI feature pricing breaks them - the math is friendlier than provider headlines suggest. $0.23/min for a fully voice-cloned, lipsynced, cross-language conversation is wild compared to even five years ago. Put differently: the per-minute compute cost of the most magical thing the platform does is a fifth of what a Starbucks coffee costs.</p>
+
+<p>The bar isn&rsquo;t "can the AI feature pay for itself." It&rsquo;s "can your pricing model put the AI cost on the right side of the customer&rsquo;s wallet." For ClipTips, the 1.5x premium does that cleanly above $0.40/min creator rates. Below that, the model needs a separate strategy (the avatar tier) or the feature stays disabled for that creator class.</p>
+
+<p>Nothing in this article was special insight. It was just a weekend of opening every provider&rsquo;s pricing page, plugging real numbers into a spreadsheet, and writing the result down. The companies that build pricing models on assumptions instead of verified numbers are the ones that hit Series A and discover their unit economics are upside down.</p>
+
+<p>Verify pricing first. Then build the model.</p>
+
+<hr>
+
+<p>The build log this post is part of: <a href="29-cliptips-live-interpreter-ga.html" style="color:rgba(0,255,255,0.7);text-decoration:none;border-bottom:1px dotted rgba(0,255,255,0.4);">ClipTips Live Interpreter Mode is GA</a>. The latency-side companion: <a href="31-the-latency-stack-walkthrough.html" style="color:rgba(0,255,255,0.7);text-decoration:none;border-bottom:1px dotted rgba(0,255,255,0.4);">The Latency Stack Walkthrough</a>.</p>
+
+
+            </div>
+
+            <div class="article-attribution">
+                <p class="attribution-text">The ideas, opinions, and frameworks in this article are original to Cameron J. Moir.<br><span style="font-size:0.65rem;opacity:0.7;">Written with the assistance of AI.</span></p>
+            </div>
+        </div>
+
+        <div class="article-next">
+            <span class="next-label">// Next</span>
+            <a href="33-building-v1-5-for-zero-while-waiting-for-budget.html" class="next-article-link">
+                <span class="next-article-text">
+                    <span class="next-article-title">Building V1.5 for $0 While Waiting for Budget</span>
+                    <span class="next-article-teaser">How I pre-built ~70% of a paid-API feature for zero spend, so when budget arrives the feature ships in half a day instead of three weeks.</span>
+                </span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+            </a>
+        </div>
+
+        <div class="article-cta">
+            <p class="cta-text">Building something similar or want to collaborate on ClipTips?</p>
+            <a href="https://streamables.live/#contact" class="cta-link">Get in touch &rarr;</a>
+        </div>
+
+        <footer class="article-footer">
+            &copy; 2026 Streamables.live | Brisbane, Australia<br>
+            <a href="https://streamables.live/">&larr; Back to main site</a> &nbsp;&middot;&nbsp; <a href="https://streamables.live/#articles">More articles</a>
+        </footer>
+    </div>
+
+    <script>
+        function createMatrixRain() {
+            const container = document.getElementById('matrixRain');
+            container.replaceChildren();
+            const canvas = document.createElement('canvas');
+            canvas.style.width = '100%';
+            canvas.style.height = '100%';
+            container.appendChild(canvas);
+            const ctx = canvas.getContext('2d');
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize);
+            const matrixChars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const fontSize = 14;
+            const isMobile = window.innerWidth <= 768;
+            const columns = Math.floor(canvas.width / (isMobile ? 40 : 30));
+            const drops = [];
+            for (let i = 0; i < columns; i++) drops[i] = Math.floor(Math.random() * -50);
+            let lastTime = 0, rafId = null;
+            function draw(t) {
+                if (document.hidden) { rafId = null; return; }
+                if (t - lastTime < 80) { rafId = requestAnimationFrame(draw); return; }
+                lastTime = t;
+                ctx.fillStyle = 'rgba(0,0,0,0.08)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.font = fontSize + 'px "JetBrains Mono", monospace';
+                for (let i = 0; i < columns; i++) {
+                    if (Math.random() > 0.75) continue;
+                    const char = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+                    ctx.fillStyle = '#00ffff';
+                    ctx.fillText(char, i * (isMobile ? 40 : 30), drops[i] * fontSize);
+                    drops[i]++;
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.85) drops[i] = Math.floor(Math.random() * -30);
+                }
+                rafId = requestAnimationFrame(draw);
+            }
+            document.addEventListener('visibilitychange', () => {
+                if (!document.hidden && !rafId) rafId = requestAnimationFrame(draw);
+            });
+            rafId = requestAnimationFrame(draw);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (!prefersReducedMotion) setTimeout(createMatrixRain, 200);
+            document.body.style.opacity = '1';
+        });
+    </script>
+</body>
+</html>

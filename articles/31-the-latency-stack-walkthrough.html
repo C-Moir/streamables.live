@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Five sequential stages turn speech into translated audio in real time. Here is exactly what each stage does, what it cost to compress, and why parallelism matters more than per-stage speed. Sourced from the ClipTips live interpreter pipeline.">
+    <meta name="author" content="Cameron J. Moir">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://streamables.live/articles/31-the-latency-stack-walkthrough.html">
+    <meta property="og:title" content="The Latency Stack Walkthrough | Streamables.live">
+    <meta property="og:description" content="Five sequential stages, real measurements, the optimisations that actually moved the numbers. Tutorial sourced from the ClipTips live interpreter pipeline.">
+    <meta property="og:image" content="https://streamables.live/St-03.png">
+    <meta property="og:url" content="https://streamables.live/articles/31-the-latency-stack-walkthrough.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Streamables.live">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@X_Streamables">
+    <meta name="twitter:title" content="The Latency Stack Walkthrough | Streamables.live">
+    <meta name="twitter:description" content="Five-stage breakdown of a real-time AI conversation pipeline. Real measurements, the optimisations that mattered, and why parallelism beats per-stage speed.">
+    <meta name="twitter:image" content="https://streamables.live/St-03.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#000000">
+    <title>The Latency Stack Walkthrough | Streamables.live</title>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZEJMKCZRRJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ZEJMKCZRRJ');
+    </script>
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "The Latency Stack Walkthrough",
+      "description": "Five sequential stages turn speech into translated audio in real time. Here is exactly what each stage does, what it cost to compress, and why parallelism matters more than per-stage speed. Sourced from the ClipTips live interpreter pipeline.",
+      "author": {
+        "@type": "Person",
+        "name": "Cameron J. Moir",
+        "url": "https://streamables.live/#about"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Streamables.live",
+        "url": "https://streamables.live/",
+        "logo": "https://streamables.live/St-03.png"
+      },
+      "url": "https://streamables.live/articles/31-the-latency-stack-walkthrough.html",
+      "mainEntityOfPage": "https://streamables.live/articles/31-the-latency-stack-walkthrough.html"
+    }
+    </script>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --neural-cyan:#00ffff;
+            --surface-glass:rgba(255,255,255,0.03);
+            --surface-border:rgba(0,255,255,0.15);
+            --text-primary:#ffffff;
+            --text-secondary:rgba(255,255,255,0.8);
+            --text-muted:rgba(255,255,255,0.55);
+        }
+        html{scroll-behavior:smooth}
+        body{
+            font-family:'JetBrains Mono', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color:#000;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(0,255,255,.08) 0, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0,245,255,.08) 0, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(0,229,255,.08) 0, transparent 50%),
+                linear-gradient(135deg, #0a0a0f 0, #000 100%);
+            color:var(--text-primary);
+            min-height:100vh;
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+            opacity:0;
+            transition:opacity 0.4s ease;
+        }
+        .matrix-rain{
+            position:fixed;
+            top:0;left:0;
+            width:100%;height:100%;
+            pointer-events:none;
+            z-index:0;
+            opacity:0.18;
+        }
+        .article-nav{
+            position:sticky;
+            top:0;
+            z-index:100;
+            padding:1rem 1.5rem;
+            background:rgba(0,0,0,0.85);
+            backdrop-filter:blur(12px);
+            -webkit-backdrop-filter:blur(12px);
+            border-bottom:1px solid rgba(0,255,255,0.12);
+            display:flex;
+            align-items:center;
+            gap:1rem;
+        }
+        .back-link{
+            color:var(--neural-cyan);
+            text-decoration:none;
+            font-size:0.75rem;
+            font-family:'JetBrains Mono', monospace;
+            letter-spacing:0.05em;
+            opacity:0.8;
+            transition:opacity 0.2s;
+            white-space:nowrap;
+        }
+        .back-link:hover{opacity:1}
+        .nav-logo-link{white-space:nowrap}
+        .nav-links{
+            display:flex;
+            align-items:center;
+            gap:0.15rem;
+            flex-wrap:nowrap;
+        }
+        .nav-link{
+            color:rgba(255,255,255,0.55);
+            text-decoration:none;
+            font-size:0.7rem;
+            font-family:'JetBrains Mono',monospace;
+            padding:0.3rem 0.5rem;
+            border-radius:4px;
+            transition:all 0.2s;
+            white-space:nowrap;
+        }
+        .nav-link:hover{color:#fff;background:rgba(255,255,255,0.06)}
+        .nav-link-active{color:var(--neural-cyan) !important;border:1px solid rgba(0,255,255,0.3)}
+        .article-nav{justify-content:space-between}
+        @media(max-width:600px){.nav-links{display:none}}
+        .article-wrapper{
+            position:relative;
+            z-index:1;
+            max-width:760px;
+            margin:0 auto;
+            padding:3rem 1.5rem 5rem;
+        }
+        .article-header{margin-bottom:2.5rem}
+        .article-label{
+            font-size:0.68rem;
+            color:rgba(0,255,255,0.5);
+            font-family:'JetBrains Mono', monospace;
+            letter-spacing:0.1em;
+            text-transform:uppercase;
+            margin-bottom:1rem;
+        }
+        .article-title{
+            font-size:clamp(1.4rem, 4vw, 2.1rem);
+            font-weight:600;
+            line-height:1.25;
+            color:#fff;
+            margin-bottom:1.2rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-byline{
+            font-size:0.72rem;
+            color:rgba(255,255,255,0.4);
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-byline span{color:rgba(0,255,255,0.6)}
+        .article-sep{
+            display:flex;
+            align-items:center;
+            gap:0.75rem;
+            margin:2rem 0;
+        }
+        .sep-line{flex:1;height:1px;background:rgba(0,255,255,0.12)}
+        .sep-text{font-size:0.65rem;color:rgba(0,255,255,0.3);font-family:'JetBrains Mono',monospace}
+        .article-card{
+            background:var(--surface-glass);
+            border:1px solid var(--surface-border);
+            border-radius:16px;
+            padding:2.5rem 2rem;
+            backdrop-filter:blur(8px);
+            -webkit-backdrop-filter:blur(8px);
+            position:relative;
+        }
+        .close-btn{
+            position:absolute;
+            top:1rem;
+            right:1rem;
+            z-index:10;
+            background:rgba(0,0,0,0.4);
+            backdrop-filter:blur(6px);
+            -webkit-backdrop-filter:blur(6px);
+            border:1px solid rgba(0,255,255,0.2);
+            color:rgba(0,255,255,0.6);
+            font-size:0.9rem;
+            line-height:1;
+            width:2rem;
+            height:2rem;
+            border-radius:50%;
+            cursor:pointer;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            transition:all 0.2s;
+            font-family:'JetBrains Mono',monospace;
+        }
+        .close-btn:hover{
+            background:rgba(0,255,255,0.08);
+            border-color:rgba(0,255,255,0.6);
+            color:#00ffff;
+            transform:scale(1.1);
+        }
+        .article-body p{
+            font-size:0.9rem;
+            line-height:1.8;
+            color:rgba(255,255,255,0.82);
+            margin-bottom:1.4rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-body h2{
+            font-size:1.05rem;
+            font-weight:600;
+            color:#fff;
+            margin:2.2rem 0 0.9rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-body h3{
+            font-size:0.92rem;
+            font-weight:600;
+            color:rgba(0,255,255,0.9);
+            margin:1.8rem 0 0.7rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-body hr{
+            border:none;
+            border-top:1px solid rgba(0,255,255,0.1);
+            margin:2rem 0;
+        }
+        .article-body ul{margin:0 0 1.4rem 1.2rem}
+        .article-body ul li{
+            font-size:0.88rem;
+            line-height:1.75;
+            color:rgba(255,255,255,0.78);
+            margin-bottom:0.4rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-body ul li::marker{color:var(--neural-cyan)}
+        .article-body strong{color:#fff;font-weight:600}
+        .article-body .screenshot{
+            width:100%;
+            display:block;
+            height:auto;
+            border-radius:10px;
+            border:1px solid rgba(0,255,255,0.12);
+            margin:1.8rem 0;
+        }
+        .article-body .screenshot-caption{
+            font-size:0.62rem;
+            color:rgba(255,255,255,0.25);
+            text-align:center;
+            margin-top:-1.2rem;
+            margin-bottom:1.8rem;
+            letter-spacing:0.04em;
+            font-family:'JetBrains Mono',monospace;
+        }
+        .article-body code{
+            font-family:'JetBrains Mono',monospace;
+            font-size:0.82em;
+            color:rgba(0,255,255,0.85);
+            background:rgba(0,255,255,0.06);
+            padding:0.1em 0.4em;
+            border-radius:3px;
+        }
+        .article-attribution{
+            margin-top:2.5rem;
+            padding-top:1.5rem;
+            border-top:1px solid rgba(0,255,255,0.1);
+        }
+        .attribution-text{
+            font-size:0.72rem;
+            color:rgba(255,255,255,0.35);
+            font-family:'JetBrains Mono', monospace;
+            line-height:1.7;
+            font-style:italic;
+        }
+        .article-cta{
+            margin-top:2.5rem;
+            padding:1.5rem;
+            background:rgba(0,255,255,0.04);
+            border:1px solid rgba(0,255,255,0.1);
+            border-radius:10px;
+            text-align:center;
+        }
+        .cta-text{
+            font-size:0.78rem;
+            color:rgba(255,255,255,0.5);
+            font-family:'JetBrains Mono', monospace;
+            margin-bottom:0.75rem;
+        }
+        .cta-link{
+            display:inline-block;
+            color:var(--neural-cyan);
+            text-decoration:none;
+            font-size:0.78rem;
+            font-family:'JetBrains Mono', monospace;
+            border:1px solid rgba(0,255,255,0.3);
+            padding:0.5rem 1.2rem;
+            border-radius:6px;
+            transition:all 0.2s;
+        }
+        .cta-link:hover{background:rgba(0,255,255,0.08);border-color:rgba(0,255,255,0.6)}
+        .article-next{
+            margin-top:2rem;
+            padding:1.25rem 1.5rem;
+            background:rgba(0,255,255,0.03);
+            border:1px solid rgba(0,255,255,0.12);
+            border-radius:10px;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:1rem;
+        }
+        .next-label{
+            font-size:0.62rem;
+            color:rgba(0,255,255,0.4);
+            font-family:'JetBrains Mono',monospace;
+            letter-spacing:0.1em;
+            white-space:nowrap;
+        }
+        .next-article-link{
+            display:flex;
+            align-items:flex-start;
+            gap:0.6rem;
+            color:rgba(255,255,255,0.75);
+            text-decoration:none;
+            font-size:0.78rem;
+            font-family:'JetBrains Mono',monospace;
+            line-height:1.4;
+            flex:1;
+            text-align:right;
+            justify-content:flex-end;
+            transition:color 0.2s;
+        }
+        .next-article-link:hover{color:#00ffff}
+        .next-article-link svg{flex-shrink:0;color:rgba(0,255,255,0.5);margin-top:0.15rem}
+        .next-article-link:hover svg{color:#00ffff}
+        .next-article-text{display:flex;flex-direction:column;gap:0.25rem;text-align:right}
+        .next-article-title{color:rgba(255,255,255,0.85);font-size:0.78rem}
+        .next-article-teaser{color:rgba(255,255,255,0.4);font-size:0.7rem;line-height:1.5}
+        .article-footer{
+            text-align:center;
+            margin-top:3rem;
+            font-size:0.68rem;
+            color:rgba(255,255,255,0.25);
+            font-family:'JetBrains Mono', monospace;
+            line-height:2;
+        }
+        .article-footer a{color:rgba(0,255,255,0.4);text-decoration:none}
+        .article-footer a:hover{color:rgba(0,255,255,0.7)}
+        @media(max-width:600px){
+            .article-wrapper{padding:2rem 1rem 4rem}
+            .article-card{padding:1.5rem 1.2rem}
+            .article-body p{font-size:0.85rem}
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-rain" id="matrixRain"></div>
+
+    <nav class="article-nav">
+        <a href="https://streamables.live/" class="back-link nav-logo-link">&larr; Streamables.live</a>
+        <div class="nav-links">
+            <a href="https://streamables.live/#home" class="nav-link">Home</a>
+            <a href="https://streamables.live/#services" class="nav-link">Services</a>
+            <a href="https://streamables.live/#research" class="nav-link">Research</a>
+            <a href="https://streamables.live/#projects" class="nav-link">Projects</a>
+            <a href="https://streamables.live/#articles" class="nav-link nav-link-active">Articles</a>
+            <a href="https://streamables.live/#about" class="nav-link">About</a>
+            <a href="https://streamables.live/#contact" class="nav-link">Contact</a>
+        </div>
+    </nav>
+
+    <div class="article-wrapper">
+        <header class="article-header">
+            <div class="article-label">// Article &nbsp;&middot;&nbsp; Build Log</div>
+            <h1 class="article-title">The Latency Stack Walkthrough</h1>
+            <div class="article-byline">By <span>Cameron J. Moir</span> &nbsp;&middot;&nbsp; Streamables.live</div>
+        </header>
+
+        <div class="article-sep">
+            <div class="sep-line"></div>
+            <span class="sep-text">//</span>
+            <div class="sep-line"></div>
+        </div>
+
+        <div class="article-card">
+            <button class="close-btn" onclick="history.length > 1 ? history.back() : window.location.href='https://streamables.live/#articles'" aria-label="Close">&#x2715;</button>
+            <div class="article-body">
+
+<p>This is a tutorial. If you&rsquo;re building real-time AI conversation pipelines and you keep hitting "it works but it feels laggy," read on. The five-stage breakdown below is exactly what ClipTips runs in production, with the actual measurements and the optimisations that mattered.</p>
+
+<p>End-to-end latency on the live interpreter pipeline sits at ~250-400ms today. Speaker stops talking; listener hears their cloned voice in another language ~300ms later. That&rsquo;s "feels truly conversational" territory. A year ago the same pipeline ran at ~1,500ms and felt like a delayed Skype call.</p>
+
+<p>The pipeline has five sequential stages. Any one of them slow and the whole thing breaks. Compress all five and you cross the threshold from "AI translation tool" to "actual cross-language conversation."</p>
+
+<hr>
+
+<h2>Stage 1: Mic to final transcript (~300-400ms)</h2>
+
+<p>Audio frames stream in continuously from the speaker&rsquo;s microphone. The streaming transcription provider buffers them, runs realtime ASR, and emits two flavours of result:</p>
+
+<ul>
+<li><strong>Interim transcripts</strong> - partial guesses that keep changing as more audio arrives. "How do I make..." becomes "How do I make pasta..." becomes "How do I make pasta carbonara..." Each interim is just a snapshot of the model&rsquo;s current best guess.</li>
+<li><strong>Final transcripts</strong> - emitted when the provider decides the speaker has finished an utterance. Triggered by silence detection (the "endpointing" parameter) or end-of-stream signals. Once final, the text is locked.</li>
+</ul>
+
+<p>You can&rsquo;t translate an interim. The text changes mid-translation and you&rsquo;d call the LLM five times for one sentence, with five different outputs feeding into TTS, all of them slightly wrong. So the pipeline waits for finals.</p>
+
+<p>The default endpointing on most providers is 300ms - the silence threshold before declaring an utterance final. Drop it to 150-200ms and you trade some false-positives on natural pauses for ~100-150ms of saved latency. Worth it for conversational use cases. Painful for legal transcription where you can&rsquo;t cut someone off mid-thought.</p>
+
+<p>Model choice matters too. Deepgram has nova-3 (their flagship), nova-2 (older, slightly cheaper), Flux (purpose-built for two-party realtime turn-taking). Switching from nova-3 to Flux on ClipTips saved another ~150ms - same $0.0077/min PAYG price, faster <code>is_final</code> emission. Different providers have different tradeoffs; the principle is "pick the model trained on your problem shape."</p>
+
+<p>Best achievable on Stage 1 with current commercial providers: ~300-400ms. Below that you&rsquo;re looking at on-device transcription (Whisper.cpp via WebAssembly) or self-hosted Riva, both with their own infrastructure costs.</p>
+
+<hr>
+
+<h2>Stage 2: Translation API (~150-400ms)</h2>
+
+<p>Final transcript arrives. Now translate it.</p>
+
+<p>The naive path: HTTP POST to OpenRouter / Anthropic / OpenAI with the source utterance, wait for the full translated string back. ~200-400ms depending on model + utterance length.</p>
+
+<p>The faster path: streaming token responses. The first token arrives in ~150ms; each subsequent token in ~50-80ms. You can pipe tokens directly into the next stage (TTS) instead of waiting for the full sentence to arrive. The "first audio byte at the listener" can start happening before the LLM has finished translating the rest of the sentence.</p>
+
+<p>Pipelining trick that matters here: most TTS providers have a streaming endpoint that accepts incremental text chunks. ElevenLabs, OpenAI TTS, Cartesia all support this. So the translation tokens arrive in order, get streamed into the TTS endpoint, and audio synthesis starts on the first token instead of the last one.</p>
+
+<p>ClipTips today doesn&rsquo;t do token-streaming yet - the production path waits for the full translated string before kicking off TTS. That&rsquo;s ~200-300ms of latency on the table. Phase B optimisation, queued for the next ship cycle. The architecture supports it; it&rsquo;s a refactor of <code>/api/live-interpreter/translate-speak</code> not new infrastructure.</p>
+
+<p>Best achievable: ~150ms first translated token. Realistic when streaming + a fast model (Claude Haiku 4.5, GPT-4o-mini, Llama 3 70B-Instruct).</p>
+
+<hr>
+
+<h2>Stage 3: Streaming TTS first byte (~75-500ms)</h2>
+
+<p>Biggest single optimisation this week. Switching ElevenLabs from <code>eleven_multilingual_v2</code> to <code>eleven_flash_v2_5</code> dropped TTS first-byte latency from ~400ms to ~75ms. That&rsquo;s a 5x reduction on a single stage.</p>
+
+<p>Both models support voice cloning (Instant Voice Clone and Professional Voice Clone). The Flash model is smaller and faster; Multilingual v2 has slightly richer prosody and a marginally more faithful voice clone. For live conversation where the listener priority is comprehension over exact tonal match, Flash wins. For recorded broadcasts where prosody matters more than first-byte speed, v2 wins.</p>
+
+<p>I exposed this as a <code>quality: &lsquo;fast&rsquo; | &lsquo;high&rsquo;</code> field on the streaming-tts provider interface so callers can pick per-request. The live interpreter sessions default to &lsquo;fast&rsquo;; future flows that need higher fidelity (recorded post-session dub, premium playback) opt into &lsquo;high&rsquo; explicitly.</p>
+
+<p>One-line change in <code>src/lib/streaming-tts/elevenlabs-provider.ts</code>:</p>
+
+<ul>
+<li><code>model_id: &lsquo;eleven_multilingual_v2&rsquo;</code> &rarr; <code>model_id: &lsquo;eleven_flash_v2_5&rsquo;</code></li>
+</ul>
+
+<p>~325ms saved per utterance, no behavioural change for callers.</p>
+
+<p>Other providers worth knowing: Cartesia&rsquo;s Sonic ~80ms first byte. OpenAI TTS HD ~600ms. PlayHT Turbo ~150ms. Pick the one with the cloning fidelity you need at the lowest first-byte you can tolerate.</p>
+
+<hr>
+
+<h2>Stage 4: Video frame buffering (V1.5 territory, ~200-500ms)</h2>
+
+<p>This stage doesn&rsquo;t exist on the audio-only pipeline. It enters when V1.5 ships - lipsync of the speaker&rsquo;s face video to the translated audio.</p>
+
+<p>The problem: lipsync needs both the audio chunk AND a few seconds of the speaker&rsquo;s face video. While Stages 1-3 are running, the speaker&rsquo;s camera is still capturing live frames but we don&rsquo;t know yet what audio those frames will be lipsynced to (the translation hasn&rsquo;t finished yet). So we have to buffer frames.</p>
+
+<p>Naive buffering: capture frames during the whole utterance + wait for audio + run lipsync on the buffered frames. Adds ~500ms.</p>
+
+<p>Optimised buffering: pre-buffer a "neutral face" cache (captured once at session start, reused as the lipsync source) so we don&rsquo;t need fresh capture for every utterance. Plus chunked streaming inference - process 200ms of audio + 5 frames at a time, output frames stream out as they&rsquo;re ready. Plus predictive frame extrapolation for the periods between audio arrivals.</p>
+
+<p>Best achievable: ~200-300ms.</p>
+
+<hr>
+
+<h2>Stage 5: Lipsync inference + return (V1.5, ~150-500ms)</h2>
+
+<p>Send the buffered face frames + audio chunk to the lipsync model, get back synced output frames. ClipTips&rsquo; V1.5 plan uses MuseTalk (Tencent 2024, MIT-licensed) hosted on Sieve at $0.14/min generated video.</p>
+
+<p>Latency budget: ~200-500ms via Sieve hosted, ~150-200ms self-hosted on Modal A10 in same region as the Daily call. Self-hosting saves ~100ms by removing the network round-trip but adds significant ML engineering work to optimise the pre/post-processing pipeline (face detection, crop alignment, mouth masking, output stitching). MuseTalk&rsquo;s core inference is fast; the surrounding pipeline is the actual bottleneck.</p>
+
+<p>For ClipTips, Sieve hosted is the day-1 path. Self-hosting becomes a Phase 7 cost-optimisation pass once volume justifies the dev investment.</p>
+
+<hr>
+
+<h2>The compressed total</h2>
+
+<p>Add up the optimised numbers:</p>
+
+<ul>
+<li>Stage 1 (transcript): ~350ms</li>
+<li>Stage 2 (translation): ~150ms first token, full sentence ~250ms</li>
+<li>Stage 3 (TTS first byte): ~100ms</li>
+<li>Stages 4+5 (V1.5 lipsync): ~400ms total</li>
+</ul>
+
+<p>Audio-only total (Stages 1-3): ~250-400ms. ClipTips today.</p>
+
+<p>Audio + V1.5 total (Stages 1-5): ~1,000-1,200ms. ClipTips when V1.5 ships.</p>
+
+<p>The first number feels conversational. The second feels like talking through a bad satellite link, but every alternative (avatars, captions-only, post-session dubbing) trades a different kind of UX cost. ~1s with synced video beats ~300ms with mismatched lips for most users.</p>
+
+<hr>
+
+<h2>The pipeline shape that matters most</h2>
+
+<p>Above all the per-stage optimisations: <strong>parallelism is more important than per-stage speed</strong>. The biggest mistake when building real-time AI pipelines is running stages sequentially when they could overlap.</p>
+
+<p>Concrete examples in the live interpreter pipeline:</p>
+
+<ul>
+<li>Stage 2 streams tokens to Stage 3 instead of finishing then handing off (buys ~250ms).</li>
+<li>Stage 4 frame-buffering happens during Stages 1-3 instead of waiting for them (buys ~300ms).</li>
+<li>Captions render on the listener&rsquo;s screen at the end of Stage 2 - they don&rsquo;t wait for audio playback (buys perceived latency: user has something to read while audio catches up).</li>
+</ul>
+
+<p>The "naive total" of 2,600ms compresses to ~1,000ms not because any single stage got faster, but because three stages now run in parallel where they used to run in series. That&rsquo;s the difference between a pipeline that feels broken and one that feels native.</p>
+
+<hr>
+
+<h2>What you can copy</h2>
+
+<p>If you&rsquo;re building anything real-time-AI-shaped, the recipe is:</p>
+
+<ul>
+<li>Pick a streaming-capable provider for every stage. Don&rsquo;t ever use batch endpoints in a realtime pipeline.</li>
+<li>Default to the fastest model your quality bar allows. Flash &gt; v2 if comprehension &gt; tonal exactness.</li>
+<li>Tune endpointing thresholds aggressively. 150-200ms is fine for conversation; 300ms+ is for transcription accuracy.</li>
+<li>Pipeline-overlap stages wherever the data dependencies allow. Token-stream from translation directly into TTS. Pre-buffer video while audio is processing.</li>
+<li>Render captions / partial UI updates BEFORE the full audio arrives. Perceived latency is what the user feels.</li>
+<li>Provider abstractions matter. When a faster model ships next month, you want a one-line switch, not a rewrite.</li>
+</ul>
+
+<p>This article&rsquo;s code paths live in <code>src/lib/streaming-transcription/</code>, <code>src/lib/streaming-tts/</code>, <code>src/lib/streaming-lipsync/</code>, and <code>src/components/video/LiveInterpreterRoom.tsx</code> on the (private) ClipTips repo. The principles are stack-agnostic.</p>
+
+<p>The build log series this post is part of: <a href="29-cliptips-live-interpreter-ga.html" style="color:rgba(0,255,255,0.7);text-decoration:none;border-bottom:1px dotted rgba(0,255,255,0.4);">ClipTips Live Interpreter Mode is GA</a> for the broader ship context, and <a href="32-what-i-actually-paid-to-run-live-interpreter.html" style="color:rgba(0,255,255,0.7);text-decoration:none;border-bottom:1px dotted rgba(0,255,255,0.4);">What I Actually Paid in 2026</a> for the cost side.</p>
+
+
+            </div>
+
+            <div class="article-attribution">
+                <p class="attribution-text">The ideas, opinions, and frameworks in this article are original to Cameron J. Moir.<br><span style="font-size:0.65rem;opacity:0.7;">Written with the assistance of AI.</span></p>
+            </div>
+        </div>
+
+        <div class="article-next">
+            <span class="next-label">// Next</span>
+            <a href="32-what-i-actually-paid-to-run-live-interpreter.html" class="next-article-link">
+                <span class="next-article-text">
+                    <span class="next-article-title">What I Actually Paid in 2026 to Run a Live Interpreter</span>
+                    <span class="next-article-teaser">Real provider pricing, real session math, where the model breaks. The cost-side companion to the latency walkthrough.</span>
+                </span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+            </a>
+        </div>
+
+        <div class="article-cta">
+            <p class="cta-text">Building something similar or want to collaborate on ClipTips?</p>
+            <a href="https://streamables.live/#contact" class="cta-link">Get in touch &rarr;</a>
+        </div>
+
+        <footer class="article-footer">
+            &copy; 2026 Streamables.live | Brisbane, Australia<br>
+            <a href="https://streamables.live/">&larr; Back to main site</a> &nbsp;&middot;&nbsp; <a href="https://streamables.live/#articles">More articles</a>
+        </footer>
+    </div>
+
+    <script>
+        function createMatrixRain() {
+            const container = document.getElementById('matrixRain');
+            container.replaceChildren();
+            const canvas = document.createElement('canvas');
+            canvas.style.width = '100%';
+            canvas.style.height = '100%';
+            container.appendChild(canvas);
+            const ctx = canvas.getContext('2d');
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize);
+            const matrixChars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const fontSize = 14;
+            const isMobile = window.innerWidth <= 768;
+            const columns = Math.floor(canvas.width / (isMobile ? 40 : 30));
+            const drops = [];
+            for (let i = 0; i < columns; i++) drops[i] = Math.floor(Math.random() * -50);
+            let lastTime = 0, rafId = null;
+            function draw(t) {
+                if (document.hidden) { rafId = null; return; }
+                if (t - lastTime < 80) { rafId = requestAnimationFrame(draw); return; }
+                lastTime = t;
+                ctx.fillStyle = 'rgba(0,0,0,0.08)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.font = fontSize + 'px "JetBrains Mono", monospace';
+                for (let i = 0; i < columns; i++) {
+                    if (Math.random() > 0.75) continue;
+                    const char = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+                    ctx.fillStyle = '#00ffff';
+                    ctx.fillText(char, i * (isMobile ? 40 : 30), drops[i] * fontSize);
+                    drops[i]++;
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.85) drops[i] = Math.floor(Math.random() * -30);
+                }
+                rafId = requestAnimationFrame(draw);
+            }
+            document.addEventListener('visibilitychange', () => {
+                if (!document.hidden && !rafId) rafId = requestAnimationFrame(draw);
+            });
+            rafId = requestAnimationFrame(draw);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (!prefersReducedMotion) setTimeout(createMatrixRain, 200);
+            document.body.style.opacity = '1';
+        });
+    </script>
+</body>
+</html>
