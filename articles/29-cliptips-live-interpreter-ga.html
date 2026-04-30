@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="ClipTips Live Interpreter Mode shipped to production this week. Voice-cloned cross-language conversation in real time, sub-500ms end-to-end. Walk-through of the latency stack, the cost lock-down, the mistakes that cost me an hour, and what V1.5 lipsync looks like.">
+    <meta name="author" content="Cameron J. Moir">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://streamables.live/articles/29-cliptips-live-interpreter-ga.html">
+    <meta property="og:title" content="ClipTips Live Interpreter Mode is GA | Streamables.live">
+    <meta property="og:description" content="Voice-cloned cross-language conversation now runs in production at ~250-400ms end-to-end. Walk-through of the latency stack, the cost lock-down, the mistakes that cost me an hour, and what V1.5 lipsync looks like.">
+    <meta property="og:image" content="https://streamables.live/St-03.png">
+    <meta property="og:url" content="https://streamables.live/articles/29-cliptips-live-interpreter-ga.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Streamables.live">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@X_Streamables">
+    <meta name="twitter:title" content="ClipTips Live Interpreter Mode is GA | Streamables.live">
+    <meta name="twitter:description" content="Voice-cloned cross-language conversation in production at ~250-400ms. The latency stack, the cost lock-down, the mistakes, and what V1.5 lipsync looks like.">
+    <meta name="twitter:image" content="https://streamables.live/St-03.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#000000">
+    <title>ClipTips Live Interpreter Mode is GA | Streamables.live</title>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZEJMKCZRRJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ZEJMKCZRRJ');
+    </script>
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "ClipTips Live Interpreter Mode is GA",
+      "description": "Voice-cloned cross-language conversation now runs in production at ~250-400ms end-to-end. Walk-through of the latency stack, the cost lock-down, the mistakes that cost me an hour, and what V1.5 lipsync looks like.",
+      "author": {
+        "@type": "Person",
+        "name": "Cameron J. Moir",
+        "url": "https://streamables.live/#about"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Streamables.live",
+        "url": "https://streamables.live/",
+        "logo": "https://streamables.live/St-03.png"
+      },
+      "url": "https://streamables.live/articles/29-cliptips-live-interpreter-ga.html",
+      "mainEntityOfPage": "https://streamables.live/articles/29-cliptips-live-interpreter-ga.html"
+    }
+    </script>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --neural-cyan:#00ffff;
+            --surface-glass:rgba(255,255,255,0.03);
+            --surface-border:rgba(0,255,255,0.15);
+            --text-primary:#ffffff;
+            --text-secondary:rgba(255,255,255,0.8);
+            --text-muted:rgba(255,255,255,0.55);
+        }
+        html{scroll-behavior:smooth}
+        body{
+            font-family:'JetBrains Mono', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color:#000;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(0,255,255,.08) 0, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0,245,255,.08) 0, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(0,229,255,.08) 0, transparent 50%),
+                linear-gradient(135deg, #0a0a0f 0, #000 100%);
+            color:var(--text-primary);
+            min-height:100vh;
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+            opacity:0;
+            transition:opacity 0.4s ease;
+        }
+        .matrix-rain{
+            position:fixed;
+            top:0;left:0;
+            width:100%;height:100%;
+            pointer-events:none;
+            z-index:0;
+            opacity:0.18;
+        }
+        .article-nav{
+            position:sticky;
+            top:0;
+            z-index:100;
+            padding:1rem 1.5rem;
+            background:rgba(0,0,0,0.85);
+            backdrop-filter:blur(12px);
+            -webkit-backdrop-filter:blur(12px);
+            border-bottom:1px solid rgba(0,255,255,0.12);
+            display:flex;
+            align-items:center;
+            gap:1rem;
+        }
+        .back-link{
+            color:var(--neural-cyan);
+            text-decoration:none;
+            font-size:0.75rem;
+            font-family:'JetBrains Mono', monospace;
+            letter-spacing:0.05em;
+            opacity:0.8;
+            transition:opacity 0.2s;
+            white-space:nowrap;
+        }
+        .back-link:hover{opacity:1}
+        .nav-logo-link{white-space:nowrap}
+        .nav-links{
+            display:flex;
+            align-items:center;
+            gap:0.15rem;
+            flex-wrap:nowrap;
+        }
+        .nav-link{
+            color:rgba(255,255,255,0.55);
+            text-decoration:none;
+            font-size:0.7rem;
+            font-family:'JetBrains Mono',monospace;
+            padding:0.3rem 0.5rem;
+            border-radius:4px;
+            transition:all 0.2s;
+            white-space:nowrap;
+        }
+        .nav-link:hover{color:#fff;background:rgba(255,255,255,0.06)}
+        .nav-link-active{color:var(--neural-cyan) !important;border:1px solid rgba(0,255,255,0.3)}
+        .article-nav{justify-content:space-between}
+        @media(max-width:600px){.nav-links{display:none}}
+        .article-wrapper{
+            position:relative;
+            z-index:1;
+            max-width:760px;
+            margin:0 auto;
+            padding:3rem 1.5rem 5rem;
+        }
+        .article-header{margin-bottom:2.5rem}
+        .article-label{
+            font-size:0.68rem;
+            color:rgba(0,255,255,0.5);
+            font-family:'JetBrains Mono', monospace;
+            letter-spacing:0.1em;
+            text-transform:uppercase;
+            margin-bottom:1rem;
+        }
+        .article-title{
+            font-size:clamp(1.4rem, 4vw, 2.1rem);
+            font-weight:600;
+            line-height:1.25;
+            color:#fff;
+            margin-bottom:1.2rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-byline{
+            font-size:0.72rem;
+            color:rgba(255,255,255,0.4);
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-byline span{color:rgba(0,255,255,0.6)}
+        .article-sep{
+            display:flex;
+            align-items:center;
+            gap:0.75rem;
+            margin:2rem 0;
+        }
+        .sep-line{flex:1;height:1px;background:rgba(0,255,255,0.12)}
+        .sep-text{font-size:0.65rem;color:rgba(0,255,255,0.3);font-family:'JetBrains Mono',monospace}
+        .article-card{
+            background:var(--surface-glass);
+            border:1px solid var(--surface-border);
+            border-radius:16px;
+            padding:2.5rem 2rem;
+            backdrop-filter:blur(8px);
+            -webkit-backdrop-filter:blur(8px);
+            position:relative;
+        }
+        .close-btn{
+            position:absolute;
+            top:1rem;
+            right:1rem;
+            z-index:10;
+            background:rgba(0,0,0,0.4);
+            backdrop-filter:blur(6px);
+            -webkit-backdrop-filter:blur(6px);
+            border:1px solid rgba(0,255,255,0.2);
+            color:rgba(0,255,255,0.6);
+            font-size:0.9rem;
+            line-height:1;
+            width:2rem;
+            height:2rem;
+            border-radius:50%;
+            cursor:pointer;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            transition:all 0.2s;
+            font-family:'JetBrains Mono',monospace;
+        }
+        .close-btn:hover{
+            background:rgba(0,255,255,0.08);
+            border-color:rgba(0,255,255,0.6);
+            color:#00ffff;
+            transform:scale(1.1);
+        }
+        .article-body p{
+            font-size:0.9rem;
+            line-height:1.8;
+            color:rgba(255,255,255,0.82);
+            margin-bottom:1.4rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-body h2{
+            font-size:1.05rem;
+            font-weight:600;
+            color:#fff;
+            margin:2.2rem 0 0.9rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-body h3{
+            font-size:0.92rem;
+            font-weight:600;
+            color:rgba(0,255,255,0.9);
+            margin:1.8rem 0 0.7rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-body hr{
+            border:none;
+            border-top:1px solid rgba(0,255,255,0.1);
+            margin:2rem 0;
+        }
+        .article-body ul{margin:0 0 1.4rem 1.2rem}
+        .article-body ul li{
+            font-size:0.88rem;
+            line-height:1.75;
+            color:rgba(255,255,255,0.78);
+            margin-bottom:0.4rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-body ul li::marker{color:var(--neural-cyan)}
+        .article-body strong{color:#fff;font-weight:600}
+        .article-body .screenshot{
+            width:100%;
+            display:block;
+            height:auto;
+            border-radius:10px;
+            border:1px solid rgba(0,255,255,0.12);
+            margin:1.8rem 0;
+        }
+        .article-body .screenshot-caption{
+            font-size:0.62rem;
+            color:rgba(255,255,255,0.25);
+            text-align:center;
+            margin-top:-1.2rem;
+            margin-bottom:1.8rem;
+            letter-spacing:0.04em;
+            font-family:'JetBrains Mono',monospace;
+        }
+        .article-body code{
+            font-family:'JetBrains Mono',monospace;
+            font-size:0.82em;
+            color:rgba(0,255,255,0.85);
+            background:rgba(0,255,255,0.06);
+            padding:0.1em 0.4em;
+            border-radius:3px;
+        }
+        .article-attribution{
+            margin-top:2.5rem;
+            padding-top:1.5rem;
+            border-top:1px solid rgba(0,255,255,0.1);
+        }
+        .attribution-text{
+            font-size:0.72rem;
+            color:rgba(255,255,255,0.35);
+            font-family:'JetBrains Mono', monospace;
+            line-height:1.7;
+            font-style:italic;
+        }
+        .article-cta{
+            margin-top:2.5rem;
+            padding:1.5rem;
+            background:rgba(0,255,255,0.04);
+            border:1px solid rgba(0,255,255,0.1);
+            border-radius:10px;
+            text-align:center;
+        }
+        .cta-text{
+            font-size:0.78rem;
+            color:rgba(255,255,255,0.5);
+            font-family:'JetBrains Mono', monospace;
+            margin-bottom:0.75rem;
+        }
+        .cta-link{
+            display:inline-block;
+            color:var(--neural-cyan);
+            text-decoration:none;
+            font-size:0.78rem;
+            font-family:'JetBrains Mono', monospace;
+            border:1px solid rgba(0,255,255,0.3);
+            padding:0.5rem 1.2rem;
+            border-radius:6px;
+            transition:all 0.2s;
+        }
+        .cta-link:hover{background:rgba(0,255,255,0.08);border-color:rgba(0,255,255,0.6)}
+        .article-next{
+            margin-top:2rem;
+            padding:1.25rem 1.5rem;
+            background:rgba(0,255,255,0.03);
+            border:1px solid rgba(0,255,255,0.12);
+            border-radius:10px;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:1rem;
+        }
+        .next-label{
+            font-size:0.62rem;
+            color:rgba(0,255,255,0.4);
+            font-family:'JetBrains Mono',monospace;
+            letter-spacing:0.1em;
+            white-space:nowrap;
+        }
+        .next-article-link{
+            display:flex;
+            align-items:flex-start;
+            gap:0.6rem;
+            color:rgba(255,255,255,0.75);
+            text-decoration:none;
+            font-size:0.78rem;
+            font-family:'JetBrains Mono',monospace;
+            line-height:1.4;
+            flex:1;
+            text-align:right;
+            justify-content:flex-end;
+            transition:color 0.2s;
+        }
+        .next-article-link:hover{color:#00ffff}
+        .next-article-link svg{flex-shrink:0;color:rgba(0,255,255,0.5);margin-top:0.15rem}
+        .next-article-link:hover svg{color:#00ffff}
+        .next-article-text{display:flex;flex-direction:column;gap:0.25rem;text-align:right}
+        .next-article-title{color:rgba(255,255,255,0.85);font-size:0.78rem}
+        .next-article-teaser{color:rgba(255,255,255,0.4);font-size:0.7rem;line-height:1.5}
+        .article-footer{
+            text-align:center;
+            margin-top:3rem;
+            font-size:0.68rem;
+            color:rgba(255,255,255,0.25);
+            font-family:'JetBrains Mono', monospace;
+            line-height:2;
+        }
+        .article-footer a{color:rgba(0,255,255,0.4);text-decoration:none}
+        .article-footer a:hover{color:rgba(0,255,255,0.7)}
+        @media(max-width:600px){
+            .article-wrapper{padding:2rem 1rem 4rem}
+            .article-card{padding:1.5rem 1.2rem}
+            .article-body p{font-size:0.85rem}
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-rain" id="matrixRain"></div>
+
+    <nav class="article-nav">
+        <a href="https://streamables.live/" class="back-link nav-logo-link">&larr; Streamables.live</a>
+        <div class="nav-links">
+            <a href="https://streamables.live/#home" class="nav-link">Home</a>
+            <a href="https://streamables.live/#services" class="nav-link">Services</a>
+            <a href="https://streamables.live/#research" class="nav-link">Research</a>
+            <a href="https://streamables.live/#projects" class="nav-link">Projects</a>
+            <a href="https://streamables.live/#articles" class="nav-link nav-link-active">Articles</a>
+            <a href="https://streamables.live/#about" class="nav-link">About</a>
+            <a href="https://streamables.live/#contact" class="nav-link">Contact</a>
+        </div>
+    </nav>
+
+    <div class="article-wrapper">
+        <header class="article-header">
+            <div class="article-label">// Article &nbsp;&middot;&nbsp; Build Log</div>
+            <h1 class="article-title">ClipTips Live Interpreter Mode is GA</h1>
+            <div class="article-byline">By <span>Cameron J. Moir</span> &nbsp;&middot;&nbsp; Streamables.live</div>
+        </header>
+
+        <div class="article-sep">
+            <div class="sep-line"></div>
+            <span class="sep-text">//</span>
+            <div class="sep-line"></div>
+        </div>
+
+        <div class="article-card">
+            <button class="close-btn" onclick="history.length > 1 ? history.back() : window.location.href='https://streamables.live/#articles'" aria-label="Close">&#x2715;</button>
+            <div class="article-body">
+
+<p>Two days ago ClipTips couldn&rsquo;t do real-time cross-language conversation. Today it can.</p>
+
+<p>Live Interpreter Mode is GA in production as of 2026-04-29. Speaker A talks in English. Speaker B hears A&rsquo;s actual cloned voice - not a synthesised stand-in - speaking Vietnamese, or Spanish, or any of 100+ supported languages, with live captions running in parallel underneath. End-to-end latency from "speaker stops talking" to "listener hears the translation" sits at around 250-400ms. That&rsquo;s "feels truly conversational" territory. Below 500ms a Zoom call doesn&rsquo;t feel laggy any more.</p>
+
+<p>This is a build-log post. What shipped, what cost me an hour I&rsquo;d like back, what I learned about cost-modelling provider APIs, and what V1.5 looks like.</p>
+
+<img src="../projects/cliptips-translation.png" alt="ClipTips translation showcase - AI draft + native speaker correction" class="screenshot">
+<p class="screenshot-caption">// The translation engine in motion. AI proposes the textbook draft. A native speaker (Marco from Rome) corrects it - "we say &lsquo;come si deve&rsquo;, not &lsquo;autentica&rsquo;. That&rsquo;s textbook Italian, nobody says that." Every native correction compounds across the platform.</p>
+
+<hr>
+
+<h2>What actually shipped this week</h2>
+
+<p>The audio-only live interpreter pipeline went from "works in dev" to "GA in production with real Stripe payout math wired in" in a single push. Concretely:</p>
+
+<ul>
+<li><strong>Phase 5f closed.</strong> Stages 6 (Stripe payout test), 7 (production flag flip via <code>NEXT_PUBLIC_LIVE_INTERPRETER_ENABLED=true</code>), and 8 (admin-gating the dev demos so they&rsquo;re not publicly poking holes in the pipeline) all landed. The production session route now branches on <code>session.live_interpreter_enabled</code> and mounts the new <code>LiveInterpreterRoom</code> component instead of the existing iframe path when the toggle is on.</li>
+<li><strong>1.5x interpreter premium wired into booking + payout.</strong> When an asker enables interpreter on a session, they pay 1.5x the creator&rsquo;s base rate. Creator still gets 75% of the base (their normal effective rate, untouched). The 50% premium goes entirely to platform to fund the per-minute Deepgram + ElevenLabs + translation API spend.</li>
+<li><strong>Latency cut by 50-60%.</strong> Switched Deepgram from nova-3 to Flux (their conversational realtime model, same price, faster <code>is_final</code> emission). Switched ElevenLabs from <code>eleven_multilingual_v2</code> to <code>eleven_flash_v2_5</code> (sub-100ms first byte instead of ~400ms). Two one-line changes; together they dropped end-to-end latency from 600-900ms to 250-400ms.</li>
+<li><strong>V1.5 lipsync prep shipped.</strong> Free-tier infrastructure for the next phase: face baseline capture (<code>FaceBaselineRecorder</code> on /settings), per-utterance recording into a private Supabase Storage bucket (data flywheel), lipsync UI scaffolding inside <code>LiveInterpreterRoom</code> ready to mount the synced video stream when the lipsync provider is wired up.</li>
+</ul>
+
+<p>Twelve commits across the day. Around 1,100 lines of new code. Zero in API spend - everything that needed paid-tier services was either Sieve free credit (untouched) or built against existing keys.</p>
+
+<img src="../projects/cliptips-experts-v2.png" alt="ClipTips Browse Experts - refreshed cards" class="screenshot">
+<p class="screenshot-caption">// The refreshed Expert card. Banner image, Gold Verified + Pro tier badges, trust ring inline next to avatar, "Available Now" pill top-right, two CTAs (See full profile + Book a Session). Every visual element on this card was a bug filed and fixed within the same session.</p>
+
+<hr>
+
+<h2>The latency stack</h2>
+
+<p>The interpreter pipeline has five sequential stages. Any one of them slow and the whole thing feels broken. Here&rsquo;s what each one does and what it cost to compress.</p>
+
+<p><strong>Stage 1: Mic to final transcript.</strong> Audio frames stream in continuously. Deepgram waits for a "silence threshold" before declaring an utterance final. The default endpointing is 300ms, which means after the speaker stops talking we wait another 300ms before deciding they&rsquo;re actually done. Drop that to 150ms and you trade some false-positives on hesitations for ~150ms of latency. Switching the model from nova-3 to Flux (same $0.0077/min PAYG pricing, purpose-built for two-party realtime) buys another ~100-150ms. Best achievable: ~300-400ms.</p>
+
+<p><strong>Stage 2: Translation API.</strong> HTTP POST to OpenRouter with the source utterance, wait for the full translated string back. Streaming token responses arrive in ~150ms first-token; piping tokens straight to ElevenLabs as they arrive (instead of waiting for the full sentence) saves another ~100-200ms. Currently the production path waits for the full string. Phase B optimisation queued.</p>
+
+<p><strong>Stage 3: ElevenLabs first audio byte.</strong> The biggest single win this week. <code>eleven_multilingual_v2</code> takes ~400-500ms to return the first PCM byte. <code>eleven_flash_v2_5</code> takes ~75-150ms. Both support voice cloning. The trade-off is Flash has slightly less rich prosody than v2, but for live conversation where the listener cares about understanding what&rsquo;s said (not exact tonal match) the trade is worth it. I exposed it as a per-request <code>quality: &lsquo;fast&rsquo; | &lsquo;high&rsquo;</code> field on the streaming-tts provider so future flows that need higher fidelity (recorded broadcasts, premium playback) can opt in to v2 explicitly.</p>
+
+<p><strong>Stage 4: Video frame buffering.</strong> V1.5 territory. To lipsync the speaker&rsquo;s face to the translated audio, MuseTalk needs both the audio chunk AND a few seconds of the speaker&rsquo;s face video. While translation+TTS is running, we have to buffer video frames so we have a face crop ready when audio arrives. Pre-buffered "neutral face" cache + chunked streaming inference + predictive frame extrapolation cuts this from naive ~500ms to ~200-300ms.</p>
+
+<p><strong>Stage 5: Lipsync inference + return.</strong> Send the video frames + audio to Sieve&rsquo;s hosted MuseTalk endpoint, get back synced frames. ~200-500ms via Sieve hosted, ~150-200ms self-hosted on Modal A10 in same region as Daily. Self-hosting is a phase-7 cost-optimisation pass once we have real volume.</p>
+
+<p>Total naive (no optimisations): ~2,600ms. Total compressed: ~1,050ms. ClipTips audio-only today sits at the compressed half of stages 1-3 (no V1.5 yet) for that ~250-400ms total.</p>
+
+<hr>
+
+<h2>The cost-model lock-down</h2>
+
+<p>I burned three iterations of margin tables before I realised I was building cost models on assumptions instead of verified numbers. Lesson written down in blood: <strong>verify provider pricing FIRST, then build the cost model.</strong> Not the other way round.</p>
+
+<p>What I had to do: web-fetch Modal&rsquo;s pricing page, Deepgram&rsquo;s pricing page, ElevenLabs&rsquo; API pricing page, Sieve&rsquo;s MuseTalk pricing post, fal.ai&rsquo;s MuseTalk listing. Then run the numbers against actual session profiles instead of worst-case assumptions.</p>
+
+<p>The verified numbers are cheaper than I&rsquo;d been telling myself. Deepgram nova-3 is $0.0077/min (my code comment was citing the older nova-2 rate of $0.0058 - small but worth fixing for accuracy). ElevenLabs Multilingual v2 is $0.10/1k chars (was telling myself $0.22/1k from a stale rate). Sieve MuseTalk hosted is $0.14/min generated video, MIT-licensed under the hood.</p>
+
+<p>Per 15-min session AI cost with full V1.5 lipsync: ~$3.46. That&rsquo;s about $0.23/min. Significantly less than my earlier $0.42-0.70/min estimates. Margin at 1.5x interpreter premium holds at 78-91% for creators rated $2-$10/min, breaks even at ~$0.40/min creator base.</p>
+
+<p>Practical implication: the 1.5x premium I shipped is fine. I don&rsquo;t need to bump it to 1.7x like I&rsquo;d almost convinced myself to do based on the inflated estimates. Sub-$0.40/min creators don&rsquo;t work with V1.5 enabled, but those creators don&rsquo;t exist on the platform yet anyway.</p>
+
+<img src="../projects/cliptips-pricing.png" alt="ClipTips pricing page" class="screenshot">
+<p class="screenshot-caption">// CLIP token pricing. 1000 CLIP = $10 USD flat. Tokens never expire. Three top-up packages (Starter / Standard 10% off / Pro 20% off). Per-minute billing - when you end the session, billing stops immediately.</p>
+
+<hr>
+
+<h2>The mistakes</h2>
+
+<p>Two pieces of friction worth writing down because I&rsquo;ll forget them otherwise.</p>
+
+<p><strong>Anchored on the wrong tech for too long.</strong> The original live interpreter parent plan referenced Wav2Lip (2020 model, IIIT Hyderabad, research-only license). When the conversation turned to "what about lipsync video", I parroted the parent plan&rsquo;s framing and recommended forking Wav2Lip. Wrong call - I should have web-searched current state-of-the-art before quoting four-year-old planning docs. Tencent shipped MuseTalk in 2024 (MIT-licensed, 30fps real-time on V100, way better quality), and there&rsquo;s no good reason to start from Wav2Lip in 2026. The lesson: tech recommendations need a current web-search, not a quote from old plan docs. State of the art in this space moves monthly.</p>
+
+<p><strong>Andrew/Brittany rename revert.</strong> Mid-session I started swapping demo voice IDs from "Harry/Sally" (custom Voice Design clones) to "Andrew/Brittany" (ElevenLabs library voices with native multilingual support). Two of the Edit calls failed silently because surrounding code had drifted and the partial state left four TypeScript errors. About thirty minutes of pure waste recovering. The lesson: when an Edit doesn&rsquo;t take, stop and re-read the actual file state before firing more edits. Don&rsquo;t pile changes on top of a broken intermediate state.</p>
+
+<p>Both were small. Both got caught and fixed within the same session. But both are the kind of thing that snowballs if you ignore the early warning signs.</p>
+
+<hr>
+
+<h2>The bug-batch</h2>
+
+<p>Cam (the user / founder) tested the live deploy and filed five bugs in a single review pass. All five fixed and shipped within the next hour:</p>
+
+<ul>
+<li>Trust ring badge was rendering at <code>top-3 right-3</code> on the Expert card, covering the "Available Now" pill which was at the same coords. Moved the trust ring inline next to the avatar so they sit side-by-side.</li>
+<li>Gold Verified + Pro tier badges existed on the detail page but had never been ported to the list-view CreatorCard component. Added the same badge logic.</li>
+<li>The /api/creators endpoint never returned <code>creator.tier</code> in the response shape - so even if the badge logic existed, it would always evaluate to false. Joined <code>users.tier</code> in the query and added it to the shaped response.</li>
+<li>Banner image upload existed and stored, but CreatorCard never rendered it - just used the deterministic name-hashed gradient. Added <code>banner_url</code> to the header div&rsquo;s background-image when uploaded, gradient remains as fallback.</li>
+<li>The "founding 10 experts - 9 spots left" CTA was counting the platform founder himself as one of the 10 founding cohort spots. Hardcoded <code>taken=0</code> until a <code>creators.is_founding_cohort</code> flag exists.</li>
+<li>(Bonus, sixth fix.) Added a "See full profile" secondary CTA next to "Book a Session" so users who want to read more before committing have an explicit path - was a single primary button before.</li>
+</ul>
+
+<p>Six commits, four files touched, ~100 lines net. Each fix shipped + deployed + re-screenshotted before moving to the next. The dev-loop with Claude Code is genuinely tight enough that this kind of "review pass + immediate fix-batch" works without ceremony.</p>
+
+<hr>
+
+<h2>What V1.5 lipsync looks like</h2>
+
+<p>The honest answer: I haven&rsquo;t shipped it yet, and I won&rsquo;t until there&rsquo;s API budget. Sieve&rsquo;s hosted MuseTalk costs $0.14/min and the free tier is $20 credit which would cover dev testing comfortably, but committing to a paid card-on-file when I&rsquo;m solo and unfunded is the kind of decision that compounds badly if I get distracted for a week.</p>
+
+<p>What I did instead: built every piece of V1.5 that doesn&rsquo;t need the paid API. The <code>streaming-lipsync</code> provider abstraction (sibling pattern to <code>streaming-tts</code> and <code>streaming-transcription</code>), Sieve + fal.ai stub providers, env-based selection, <code>POST /api/live-interpreter/lipsync</code> server route ready to receive audio + face URL, face baseline capture flow on /settings, per-utterance recording infrastructure, lipsync video panel with three render states (waiting / streaming / unavailable), primary/inset toggle in the production session room.</p>
+
+<p>When budget arrives, V1.5 is roughly half a day from shipping. The pre-built infrastructure means it&rsquo;s no longer 3 weeks of work blocked behind an API key.</p>
+
+<p>That trade - building the surround for $0 so the moment money is available the feature ships immediately - is exactly the shape of solo unfunded work that actually compounds. The opposite (waiting to start until you have the budget, then doing 3 weeks of work) is how products get to "almost ready" and stay there forever.</p>
+
+<img src="../projects/cliptips-nexus-v2.png" alt="ClipTips Knowledge Nexus - 655 domains" class="screenshot">
+<p class="screenshot-caption">// Live Knowledge Nexus, 655 domains rendered as orbiting spheres. Click any to drop into that domain&rsquo;s Expert list. Sized by activity, coloured by category. WebGL on desktop, procedural SVG fallback on mobile. The map is part of the pitch: trust isn&rsquo;t built by certificates alone - it&rsquo;s built by being able to see, at a glance, the breadth of what the platform knows.</p>
+
+<hr>
+
+<h2>The "solo and unfunded vs research labs" reality check</h2>
+
+<p>At one point during the build I genuinely had a "fml, am I trying to compete with Meta&rsquo;s research lab on simultaneous translation?" moment. Cam&rsquo;s words. The honest answer reframed the whole situation:</p>
+
+<p>I&rsquo;m not building research models. I&rsquo;m orchestrating productized state-of-the-art into a working product. That&rsquo;s a different problem than what Meta or Google research labs work on. They publish papers and drop weights. The integration into a real-time conversation marketplace with payments, identity verification, creator matchmaking, and bidirectional voice cloning is a separate engineering problem they don&rsquo;t touch.</p>
+
+<p>The closest commercial competitors I can think of: Google Meet&rsquo;s live translation (text only, no voice cloning, no in-original-speaker-voice rendering); Zoom AI Companion (text translation, no real-time voice synthesis); HeyGen Streaming Avatars (fake avatars, not the speaker&rsquo;s actual face); Synthesia and D-ID (pre-recorded only, not live conversation). None of them combine real expert face + cloned voice + real-time + paid marketplace. ClipTips would be first to market with that specific combination if V1.5 ships.</p>
+
+<p>That&rsquo;s a different race with a different finish line than "out-research Meta on simultaneous MT." The race is: who productizes this stack first, who gets the data flywheel turning, who builds the trust + verification layer that lets paid users transact across language boundaries without falling for fake credentials.</p>
+
+<p>Solo and unfunded is genuinely a constraint. I can&rsquo;t train custom models. I can&rsquo;t hire ML researchers to trim the last 200ms of latency. I can&rsquo;t reserve a fleet of GPUs for self-hosted MuseTalk. But the hosted APIs are doing the heavy lifting (Deepgram + ElevenLabs + Tencent collectively spent hundreds of millions on the components I string together for $0.23/min). The product moat isn&rsquo;t model architecture - it&rsquo;s the marketplace, the verified-identity layer, the asker/expert flywheel, and the cross-language conversation corpus that&rsquo;ll accumulate from real sessions starting now.</p>
+
+<hr>
+
+<h2>What&rsquo;s next</h2>
+
+<p>Three things, in order:</p>
+
+<ul>
+<li><strong>Real Experts.</strong> Founding cohort of 10. The infrastructure is live and economically viable now. The platform needs people on it. Outreach starts this week.</li>
+<li><strong>V1.5 lipsync ship.</strong> Gated on budget. ~Half a day of work when Sieve API budget exists. The infrastructure is already in place.</li>
+<li><strong>First paid session.</strong> The end-to-end test that no amount of dev-demo testing replaces. Real asker, real expert, real CLIP balance debit, real Stripe Connect payout, real translation through the full pipeline.</li>
+</ul>
+
+<p>ClipTips is live at <strong>cliptips-mvp.vercel.app</strong>. The full project writeup is on <a href="../projects/cliptips.html" style="color:rgba(0,255,255,0.7);text-decoration:none;border-bottom:1px dotted rgba(0,255,255,0.4);">streamables.live/projects/cliptips.html</a>. The previous build log (the one written before this week&rsquo;s push) is at <a href="28-how-i-built-cliptips-with-claude-code.html" style="color:rgba(0,255,255,0.7);text-decoration:none;border-bottom:1px dotted rgba(0,255,255,0.4);">how I built ClipTips with Claude Code</a> if you want the longer-form version of how the platform got here.</p>
+
+
+            </div>
+
+            <div class="article-attribution">
+                <p class="attribution-text">The ideas, opinions, and frameworks in this article are original to Cameron J. Moir.<br><span style="font-size:0.65rem;opacity:0.7;">Written with the assistance of AI.</span></p>
+            </div>
+        </div>
+
+        <div class="article-next">
+            <span class="next-label">// Next</span>
+            <a href="28-how-i-built-cliptips-with-claude-code.html" class="next-article-link">
+                <span class="next-article-text">
+                    <span class="next-article-title">How I Built ClipTips with Claude Code</span>
+                    <span class="next-article-teaser">The original build log. How a live video marketplace with real-time AI translation got here, solo, with Claude Code as the IDE.</span>
+                </span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+            </a>
+        </div>
+
+        <div class="article-cta">
+            <p class="cta-text">Building something similar or want to collaborate on ClipTips?</p>
+            <a href="https://streamables.live/#contact" class="cta-link">Get in touch &rarr;</a>
+        </div>
+
+        <footer class="article-footer">
+            &copy; 2026 Streamables.live | Brisbane, Australia<br>
+            <a href="https://streamables.live/">&larr; Back to main site</a> &nbsp;&middot;&nbsp; <a href="https://streamables.live/#articles">More articles</a>
+        </footer>
+    </div>
+
+    <script>
+        function createMatrixRain() {
+            const container = document.getElementById('matrixRain');
+            container.replaceChildren();
+            const canvas = document.createElement('canvas');
+            canvas.style.width = '100%';
+            canvas.style.height = '100%';
+            container.appendChild(canvas);
+            const ctx = canvas.getContext('2d');
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize);
+            const matrixChars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const fontSize = 14;
+            const isMobile = window.innerWidth <= 768;
+            const columns = Math.floor(canvas.width / (isMobile ? 40 : 30));
+            const drops = [];
+            for (let i = 0; i < columns; i++) drops[i] = Math.floor(Math.random() * -50);
+            let lastTime = 0, rafId = null;
+            function draw(t) {
+                if (document.hidden) { rafId = null; return; }
+                if (t - lastTime < 80) { rafId = requestAnimationFrame(draw); return; }
+                lastTime = t;
+                ctx.fillStyle = 'rgba(0,0,0,0.08)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.font = fontSize + 'px "JetBrains Mono", monospace';
+                for (let i = 0; i < columns; i++) {
+                    if (Math.random() > 0.75) continue;
+                    const char = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+                    ctx.fillStyle = '#00ffff';
+                    ctx.fillText(char, i * (isMobile ? 40 : 30), drops[i] * fontSize);
+                    drops[i]++;
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.85) drops[i] = Math.floor(Math.random() * -30);
+                }
+                rafId = requestAnimationFrame(draw);
+            }
+            document.addEventListener('visibilitychange', () => {
+                if (!document.hidden && !rafId) rafId = requestAnimationFrame(draw);
+            });
+            rafId = requestAnimationFrame(draw);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (!prefersReducedMotion) setTimeout(createMatrixRain, 200);
+            document.body.style.opacity = '1';
+        });
+    </script>
+</body>
+</html>

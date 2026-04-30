@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="How to spot AI-generated writing in 2026. Banned phrases, sentence-structure tells, em dashes, the Not-X-it's-Y reframing pattern, and the new bar: text that uses AI without sounding like AI. The full anti-AI filter I run my own writing through.">
+    <meta name="author" content="Cameron J. Moir">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://streamables.live/articles/30-ai-identifiers-how-to-spot-ai.html">
+    <meta property="og:title" content="AI Identifiers: How to Spot AI Usage | Streamables.live">
+    <meta property="og:description" content="Banned phrases. Sentence-structure tells. Em dashes. The patterns AI writes when humans don't. The full anti-AI filter I run my own writing through, and why it matters more in 2026 than it did last year.">
+    <meta property="og:image" content="https://streamables.live/St-03.png">
+    <meta property="og:url" content="https://streamables.live/articles/30-ai-identifiers-how-to-spot-ai.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Streamables.live">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@X_Streamables">
+    <meta name="twitter:title" content="AI Identifiers: How to Spot AI Usage | Streamables.live">
+    <meta name="twitter:description" content="Banned phrases, sentence-structure tells, em dashes, the patterns AI writes when humans don't. The anti-AI filter and why it matters in 2026.">
+    <meta name="twitter:image" content="https://streamables.live/St-03.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#000000">
+    <title>AI Identifiers: How to Spot AI Usage | Streamables.live</title>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZEJMKCZRRJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ZEJMKCZRRJ');
+    </script>
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "AI Identifiers: How to Spot AI Usage",
+      "description": "How to spot AI-generated writing in 2026. Banned phrases, sentence-structure tells, em dashes, the Not-X-it's-Y reframing pattern, and the new bar: text that uses AI without sounding like AI. The full anti-AI filter I run my own writing through.",
+      "author": {
+        "@type": "Person",
+        "name": "Cameron J. Moir",
+        "url": "https://streamables.live/#about"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Streamables.live",
+        "url": "https://streamables.live/",
+        "logo": "https://streamables.live/St-03.png"
+      },
+      "url": "https://streamables.live/articles/30-ai-identifiers-how-to-spot-ai.html",
+      "mainEntityOfPage": "https://streamables.live/articles/30-ai-identifiers-how-to-spot-ai.html"
+    }
+    </script>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --neural-cyan:#00ffff;
+            --surface-glass:rgba(255,255,255,0.03);
+            --surface-border:rgba(0,255,255,0.15);
+            --text-primary:#ffffff;
+            --text-secondary:rgba(255,255,255,0.8);
+            --text-muted:rgba(255,255,255,0.55);
+        }
+        html{scroll-behavior:smooth}
+        body{
+            font-family:'JetBrains Mono', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color:#000;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(0,255,255,.08) 0, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0,245,255,.08) 0, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(0,229,255,.08) 0, transparent 50%),
+                linear-gradient(135deg, #0a0a0f 0, #000 100%);
+            color:var(--text-primary);
+            min-height:100vh;
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+            opacity:0;
+            transition:opacity 0.4s ease;
+        }
+        .matrix-rain{
+            position:fixed;
+            top:0;left:0;
+            width:100%;height:100%;
+            pointer-events:none;
+            z-index:0;
+            opacity:0.18;
+        }
+        .article-nav{
+            position:sticky;
+            top:0;
+            z-index:100;
+            padding:1rem 1.5rem;
+            background:rgba(0,0,0,0.85);
+            backdrop-filter:blur(12px);
+            -webkit-backdrop-filter:blur(12px);
+            border-bottom:1px solid rgba(0,255,255,0.12);
+            display:flex;
+            align-items:center;
+            gap:1rem;
+        }
+        .back-link{
+            color:var(--neural-cyan);
+            text-decoration:none;
+            font-size:0.75rem;
+            font-family:'JetBrains Mono', monospace;
+            letter-spacing:0.05em;
+            opacity:0.8;
+            transition:opacity 0.2s;
+            white-space:nowrap;
+        }
+        .back-link:hover{opacity:1}
+        .nav-logo-link{white-space:nowrap}
+        .nav-links{
+            display:flex;
+            align-items:center;
+            gap:0.15rem;
+            flex-wrap:nowrap;
+        }
+        .nav-link{
+            color:rgba(255,255,255,0.55);
+            text-decoration:none;
+            font-size:0.7rem;
+            font-family:'JetBrains Mono',monospace;
+            padding:0.3rem 0.5rem;
+            border-radius:4px;
+            transition:all 0.2s;
+            white-space:nowrap;
+        }
+        .nav-link:hover{color:#fff;background:rgba(255,255,255,0.06)}
+        .nav-link-active{color:var(--neural-cyan) !important;border:1px solid rgba(0,255,255,0.3)}
+        .article-nav{justify-content:space-between}
+        @media(max-width:600px){.nav-links{display:none}}
+        .article-wrapper{
+            position:relative;
+            z-index:1;
+            max-width:760px;
+            margin:0 auto;
+            padding:3rem 1.5rem 5rem;
+        }
+        .article-header{margin-bottom:2.5rem}
+        .article-label{
+            font-size:0.68rem;
+            color:rgba(0,255,255,0.5);
+            font-family:'JetBrains Mono', monospace;
+            letter-spacing:0.1em;
+            text-transform:uppercase;
+            margin-bottom:1rem;
+        }
+        .article-title{
+            font-size:clamp(1.4rem, 4vw, 2.1rem);
+            font-weight:600;
+            line-height:1.25;
+            color:#fff;
+            margin-bottom:1.2rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-byline{
+            font-size:0.72rem;
+            color:rgba(255,255,255,0.4);
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-byline span{color:rgba(0,255,255,0.6)}
+        .article-sep{
+            display:flex;
+            align-items:center;
+            gap:0.75rem;
+            margin:2rem 0;
+        }
+        .sep-line{flex:1;height:1px;background:rgba(0,255,255,0.12)}
+        .sep-text{font-size:0.65rem;color:rgba(0,255,255,0.3);font-family:'JetBrains Mono',monospace}
+        .article-card{
+            background:var(--surface-glass);
+            border:1px solid var(--surface-border);
+            border-radius:16px;
+            padding:2.5rem 2rem;
+            backdrop-filter:blur(8px);
+            -webkit-backdrop-filter:blur(8px);
+            position:relative;
+        }
+        .close-btn{
+            position:absolute;
+            top:1rem;
+            right:1rem;
+            z-index:10;
+            background:rgba(0,0,0,0.4);
+            backdrop-filter:blur(6px);
+            -webkit-backdrop-filter:blur(6px);
+            border:1px solid rgba(0,255,255,0.2);
+            color:rgba(0,255,255,0.6);
+            font-size:0.9rem;
+            line-height:1;
+            width:2rem;
+            height:2rem;
+            border-radius:50%;
+            cursor:pointer;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            transition:all 0.2s;
+            font-family:'JetBrains Mono',monospace;
+        }
+        .close-btn:hover{
+            background:rgba(0,255,255,0.08);
+            border-color:rgba(0,255,255,0.6);
+            color:#00ffff;
+            transform:scale(1.1);
+        }
+        .article-body p{
+            font-size:0.9rem;
+            line-height:1.8;
+            color:rgba(255,255,255,0.82);
+            margin-bottom:1.4rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-body h2{
+            font-size:1.05rem;
+            font-weight:600;
+            color:#fff;
+            margin:2.2rem 0 0.9rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-body h3{
+            font-size:0.92rem;
+            font-weight:600;
+            color:rgba(0,255,255,0.9);
+            margin:1.8rem 0 0.7rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-body hr{
+            border:none;
+            border-top:1px solid rgba(0,255,255,0.1);
+            margin:2rem 0;
+        }
+        .article-body ul{margin:0 0 1.4rem 1.2rem}
+        .article-body ul li{
+            font-size:0.88rem;
+            line-height:1.75;
+            color:rgba(255,255,255,0.78);
+            margin-bottom:0.4rem;
+            font-family:'JetBrains Mono', monospace;
+        }
+        .article-body ul li::marker{color:var(--neural-cyan)}
+        .article-body strong{color:#fff;font-weight:600}
+        .article-body .screenshot{
+            width:100%;
+            display:block;
+            height:auto;
+            border-radius:10px;
+            border:1px solid rgba(0,255,255,0.12);
+            margin:1.8rem 0;
+        }
+        .article-body .screenshot-caption{
+            font-size:0.62rem;
+            color:rgba(255,255,255,0.25);
+            text-align:center;
+            margin-top:-1.2rem;
+            margin-bottom:1.8rem;
+            letter-spacing:0.04em;
+            font-family:'JetBrains Mono',monospace;
+        }
+        .article-body code{
+            font-family:'JetBrains Mono',monospace;
+            font-size:0.82em;
+            color:rgba(0,255,255,0.85);
+            background:rgba(0,255,255,0.06);
+            padding:0.1em 0.4em;
+            border-radius:3px;
+        }
+        .article-attribution{
+            margin-top:2.5rem;
+            padding-top:1.5rem;
+            border-top:1px solid rgba(0,255,255,0.1);
+        }
+        .attribution-text{
+            font-size:0.72rem;
+            color:rgba(255,255,255,0.35);
+            font-family:'JetBrains Mono', monospace;
+            line-height:1.7;
+            font-style:italic;
+        }
+        .article-cta{
+            margin-top:2.5rem;
+            padding:1.5rem;
+            background:rgba(0,255,255,0.04);
+            border:1px solid rgba(0,255,255,0.1);
+            border-radius:10px;
+            text-align:center;
+        }
+        .cta-text{
+            font-size:0.78rem;
+            color:rgba(255,255,255,0.5);
+            font-family:'JetBrains Mono', monospace;
+            margin-bottom:0.75rem;
+        }
+        .cta-link{
+            display:inline-block;
+            color:var(--neural-cyan);
+            text-decoration:none;
+            font-size:0.78rem;
+            font-family:'JetBrains Mono', monospace;
+            border:1px solid rgba(0,255,255,0.3);
+            padding:0.5rem 1.2rem;
+            border-radius:6px;
+            transition:all 0.2s;
+        }
+        .cta-link:hover{background:rgba(0,255,255,0.08);border-color:rgba(0,255,255,0.6)}
+        .article-next{
+            margin-top:2rem;
+            padding:1.25rem 1.5rem;
+            background:rgba(0,255,255,0.03);
+            border:1px solid rgba(0,255,255,0.12);
+            border-radius:10px;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:1rem;
+        }
+        .next-label{
+            font-size:0.62rem;
+            color:rgba(0,255,255,0.4);
+            font-family:'JetBrains Mono',monospace;
+            letter-spacing:0.1em;
+            white-space:nowrap;
+        }
+        .next-article-link{
+            display:flex;
+            align-items:flex-start;
+            gap:0.6rem;
+            color:rgba(255,255,255,0.75);
+            text-decoration:none;
+            font-size:0.78rem;
+            font-family:'JetBrains Mono',monospace;
+            line-height:1.4;
+            flex:1;
+            text-align:right;
+            justify-content:flex-end;
+            transition:color 0.2s;
+        }
+        .next-article-link:hover{color:#00ffff}
+        .next-article-link svg{flex-shrink:0;color:rgba(0,255,255,0.5);margin-top:0.15rem}
+        .next-article-link:hover svg{color:#00ffff}
+        .next-article-text{display:flex;flex-direction:column;gap:0.25rem;text-align:right}
+        .next-article-title{color:rgba(255,255,255,0.85);font-size:0.78rem}
+        .next-article-teaser{color:rgba(255,255,255,0.4);font-size:0.7rem;line-height:1.5}
+        .article-footer{
+            text-align:center;
+            margin-top:3rem;
+            font-size:0.68rem;
+            color:rgba(255,255,255,0.25);
+            font-family:'JetBrains Mono', monospace;
+            line-height:2;
+        }
+        .article-footer a{color:rgba(0,255,255,0.4);text-decoration:none}
+        .article-footer a:hover{color:rgba(0,255,255,0.7)}
+        @media(max-width:600px){
+            .article-wrapper{padding:2rem 1rem 4rem}
+            .article-card{padding:1.5rem 1.2rem}
+            .article-body p{font-size:0.85rem}
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-rain" id="matrixRain"></div>
+
+    <nav class="article-nav">
+        <a href="https://streamables.live/" class="back-link nav-logo-link">&larr; Streamables.live</a>
+        <div class="nav-links">
+            <a href="https://streamables.live/#home" class="nav-link">Home</a>
+            <a href="https://streamables.live/#services" class="nav-link">Services</a>
+            <a href="https://streamables.live/#research" class="nav-link">Research</a>
+            <a href="https://streamables.live/#projects" class="nav-link">Projects</a>
+            <a href="https://streamables.live/#articles" class="nav-link nav-link-active">Articles</a>
+            <a href="https://streamables.live/#about" class="nav-link">About</a>
+            <a href="https://streamables.live/#contact" class="nav-link">Contact</a>
+        </div>
+    </nav>
+
+    <div class="article-wrapper">
+        <header class="article-header">
+            <div class="article-label">// Article &nbsp;&middot;&nbsp; Field Guide</div>
+            <h1 class="article-title">AI Identifiers: How to Spot AI Usage</h1>
+            <div class="article-byline">By <span>Cameron J. Moir</span> &nbsp;&middot;&nbsp; Streamables.live</div>
+        </header>
+
+        <div class="article-sep">
+            <div class="sep-line"></div>
+            <span class="sep-text">//</span>
+            <div class="sep-line"></div>
+        </div>
+
+        <div class="article-card">
+            <button class="close-btn" onclick="history.length > 1 ? history.back() : window.location.href='https://streamables.live/#articles'" aria-label="Close">&#x2715;</button>
+            <div class="article-body">
+
+<p>I got an email from a stranger this week. Software engineer at a Turkish university, decent profile, active GitHub. The email itself was clearly written with ChatGPT - em dashes, generic flattery, vague specifics that sound technical but commit to nothing. Same shape as a hundred others.</p>
+
+<p>The annoying thing is the writer wasn&rsquo;t a fraud. He&rsquo;s a real person, English is his second language, he&rsquo;d leaned on AI to clean up his prose before sending. That&rsquo;s a reasonable use of the tool. The mistake was leaving the AI&rsquo;s fingerprints all over the final draft.</p>
+
+<p>The whole point of using AI to write is that it should be invisible. Once a reader spots the AI fingerprints, they stop reading the content and start scoring the prompt. Trust collapses. The signal you wanted to send (I&rsquo;m capable, take me seriously) gets replaced by the signal you didn&rsquo;t want (this person can&rsquo;t be bothered to write their own outreach).</p>
+
+<p>So this article is two things. A spotter&rsquo;s guide to the most common AI tells, and a survival guide for anyone using AI to write things they want people to actually read.</p>
+
+<hr>
+
+<h2>Why this matters more in 2026 than last year</h2>
+
+<p>The volume has flipped. A year ago, most cold outreach was human-written and the occasional ChatGPT-flavoured email stood out as lazy. Today most cold outreach is AI-written, and the rare human-flavoured email stands out as effortful.</p>
+
+<p>That flip changes the game in three ways:</p>
+
+<ul>
+<li><strong>The bar to be ignored has dropped.</strong> Generic AI patterns get filtered as noise inside the first sentence. Your reader doesn&rsquo;t even finish the email.</li>
+<li><strong>The bar to be trusted has risen.</strong> Human-flavoured prose now signals you actually care enough to write it. AI-flavoured prose signals you don&rsquo;t.</li>
+<li><strong>The detectors aren&rsquo;t catching up.</strong> AI-detection tools (GPTZero, Turnitin, etc.) have a higher false-positive rate than humans do at this point. The reader is the detector. They might not articulate it, but they feel it.</li>
+</ul>
+
+<p>The implication: if you use AI to write something, you have to actively erase the AI from the final draft. Not "let it write and lightly edit." Strip the patterns. Rewrite the sentences. Add personality back.</p>
+
+<hr>
+
+<h2>The banned phrases</h2>
+
+<p>These are the words and phrases AI loves and humans almost never use in casual prose. Spotting any of them in a piece of writing should make your eyebrow twitch.</p>
+
+<p><strong>Opening filler:</strong> "It&rsquo;s important to note that...", "In today&rsquo;s world...", "Let&rsquo;s explore...", "Let&rsquo;s break it down", "First and foremost", "Last but not least".</p>
+
+<p><strong>Closing filler:</strong> "In conclusion...", "To sum up...", "All things considered...", "Ultimately, what matters is...".</p>
+
+<p><strong>Marketing-speak:</strong> "Cutting-edge", "game-changer", "take it to the next level", "unlock the potential", "synergy", "leverage" (used as a verb on anything that isn&rsquo;t literally a fulcrum), "ecosystem" (used metaphorically), "landscape" (the abstract kind, not actual scenery).</p>
+
+<p><strong>Purple prose:</strong> "Tapestry", "realm", "beacon", "journey" (as a metaphor), "embark", "delve", "underscore", "harness", "illuminate", "facilitate", "bolster".</p>
+
+<p><strong>Filler nouns:</strong> "Nuance" (especially "the nuance is"), "myriad", "plethora", "panoply", "tapestry of [anything]".</p>
+
+<p>None of these phrases are wrong on their own. A real writer might use one of them once in a while. The tell is when several of them show up in the same paragraph. That&rsquo;s the AI&rsquo;s training data leaking through - it learned to write essays, and essays read like this.</p>
+
+<p>The fix when you catch yourself producing these in an AI-edit pass: delete the sentence and rewrite it like you&rsquo;re explaining the same thing to a friend at the pub. Less polished, more direct, fewer adjectives.</p>
+
+<hr>
+
+<h2>The structural tells</h2>
+
+<p>Phrases are the easy ones. The structural patterns are harder to spot but more reliable.</p>
+
+<p><strong>The "Not X - it&rsquo;s Y" reframing.</strong> "It&rsquo;s not just a tool - it&rsquo;s an extension of your team." "Not a feature - a philosophy." "It&rsquo;s not about the destination, it&rsquo;s about the journey." This pattern showed up in the GPT-3 training data and never left. Real humans occasionally write a "not X but Y" but they don&rsquo;t do it three times a paragraph. AI does. If you see this pattern more than once in a piece of writing, AI was involved.</p>
+
+<p><strong>Three-item lists.</strong> AI loves a triplet. "Fast, cheap, and reliable." "Bold, decisive, and ready to act." "Innovative, scalable, and future-proof." Humans use lists too, but the lengths vary - sometimes two items, sometimes four, sometimes a stray fifth thrown in as an afterthought. AI defaults to three almost every time.</p>
+
+<p><strong>Uniform sentence length.</strong> Read a paragraph aloud. If every sentence takes about the same number of breaths, the writer is either AI or someone who learned to write from how-to-write-essays guides. Real prose has rhythm. Short sentence. Then a longer one that builds and rolls until it lands. Then a fragment. Like that.</p>
+
+<p><strong>Uniform paragraph length.</strong> Same problem at the next level up. AI tends to produce paragraphs that all hover around the same word count. Real writing has a one-line paragraph next to a chunky 200-word one because that&rsquo;s how the thoughts came out.</p>
+
+<p><strong>Rhetorical question, then immediate answer.</strong> "What does this mean for your business? It means..." Nobody talks like that. Real questions hang. AI fills them in instantly because its training rewards "completeness."</p>
+
+<p><strong>Starting too many sentences with the subject.</strong> "Companies need to think strategically. They should consider their long-term goals. They must also evaluate..." Every sentence opens with a noun. Real writing varies the starts - prepositional phrases, subordinate clauses, fragments, dialogue.</p>
+
+<p><strong>The "tagging" sentence end.</strong> "...making it a powerful tool for modern teams." "...creating endless possibilities for innovation." "...delivering value at every stage of the customer journey." That trailing modifier phrase is AI&rsquo;s way of stuffing in keywords for completeness. Real writers cut these because they don&rsquo;t add information.</p>
+
+<hr>
+
+<h2>The em dash</h2>
+
+<p>This one deserves its own section. The em dash (the long one, &mdash;) is the single most reliable AI tell in 2026. Not the en dash (&ndash;), not the hyphen (-). The actual em dash.</p>
+
+<p>The reason: AI training data is heavy on edited journalism, polished essays, and Wikipedia, all of which use em dashes properly. AI learned that em dashes are a sign of "good writing" and now sprinkles them everywhere.</p>
+
+<p>Most humans either:</p>
+
+<ul>
+<li>Don&rsquo;t know how to type an em dash on their keyboard (it requires a key combo most people never learn);</li>
+<li>Use a regular dash (-) for the same purpose because it&rsquo;s right there;</li>
+<li>Use parentheses or commas instead.</li>
+</ul>
+
+<p>If you see em dashes in casual writing - emails, LinkedIn comments, tweets, blog comments, cold outreach - AI was almost certainly involved. The exceptions are professional writers and editors who learned the trick on purpose. Those people are rare and you usually know who they are.</p>
+
+<p>What to do if you&rsquo;re using AI: tell it explicitly to use regular dashes (-) instead of em dashes (&mdash;). The model will comply for that response. It won&rsquo;t volunteer the change otherwise.</p>
+
+<hr>
+
+<h2>The 17-point self-check</h2>
+
+<p>This is the filter I run my own writing through before I send anything I want to be taken seriously. It&rsquo;s adapted from a guide I built for AI agents I run, but it works the same way for human writing assisted by AI. Run through these in your head before you hit send:</p>
+
+<ol>
+<li>Any banned phrases?</li>
+<li>Every paragraph the same length?</li>
+<li>Every sentence the same length?</li>
+<li>Too many sentences starting with the subject?</li>
+<li>Hedging instead of having an opinion?</li>
+<li>Bolding random words?</li>
+<li>Too many three-item lists?</li>
+<li>"Not X - it&rsquo;s Y" pattern anywhere?</li>
+<li>Semicolons where a comma or full stop would do?</li>
+<li>Sentences ending with "...making it X" / "...creating Y"?</li>
+<li>Does it sound like something ChatGPT would say?</li>
+<li>Spelling consistent with how you actually spell? (Australian, American, British)</li>
+<li>Using "I" enough? AI avoids first person; humans don&rsquo;t.</li>
+<li>Any personality, humour, or opinion - or is it flat?</li>
+<li>Any tangents, asides, or "wait actually" moments?</li>
+<li>Too polished? Real messages are a bit rough.</li>
+<li>Any em dashes (&mdash;)? Replace with normal dash (-).</li>
+</ol>
+
+<p>The check takes 30 seconds once you&rsquo;ve done it a few times. The output reads like you wrote it, even if AI did the first draft.</p>
+
+<hr>
+
+<h2>The "uses AI but doesn&rsquo;t sound AI" bar</h2>
+
+<p>Here&rsquo;s the thing nobody quite says out loud: using AI to write isn&rsquo;t the problem. Sounding like AI is the problem.</p>
+
+<p>I use Claude every day. This article had AI in the loop. The previous article on this site had AI in the loop. Most professional writing in 2026 has AI in the loop somewhere - draft generation, fact-checking, copy-editing, headline brainstorming, structure suggestions. That&rsquo;s fine. The model is faster than you at certain tasks and saying "I refuse to use it" is now the equivalent of refusing to use spell-check in 2010.</p>
+
+<p>What separates writing that gets read from writing that gets ignored is the rewrite step. Not the use of AI - the cleanup of AI&rsquo;s fingerprints from the final draft.</p>
+
+<p>The standard isn&rsquo;t "did you use AI." The standard is "can I tell you used AI." If I can&rsquo;t tell, the work is yours. If I can tell, the work is the model&rsquo;s, and I&rsquo;m wondering why you didn&rsquo;t bother to finish it.</p>
+
+<hr>
+
+<h2>For the people who use AI to write outreach</h2>
+
+<p>If you&rsquo;re cold-emailing me (or anyone else with a public profile), here&rsquo;s the test:</p>
+
+<ul>
+<li>Read your draft out loud.</li>
+<li>If it sounds like a LinkedIn post, you&rsquo;ve failed.</li>
+<li>If it sounds like an essay, you&rsquo;ve failed.</li>
+<li>If it sounds like the way you&rsquo;d explain the same thing to a mate, you&rsquo;ve passed.</li>
+</ul>
+
+<p>The Turkish engineer who emailed me would have got a different response if he&rsquo;d written: "Hey Cameron, saw your GitHub. I&rsquo;ve been working on speech analytics with PyTorch and FastAPI - hit sub-800ms latency on a streaming pipeline. Curious how you&rsquo;re handling the buffer on the lipsync side. Got 10 minutes for a chat?"</p>
+
+<p>That&rsquo;s six lines, no em dashes, no flattery, no AI tells. It commits to specifics (PyTorch, FastAPI, latency target). It asks for a defined thing (10 minutes). I&rsquo;d have replied yes within the hour.</p>
+
+<p>What he sent was three paragraphs of AI-flattened prose with em dashes and "tackling some of the most exciting bottlenecks in the space." I almost dismissed it as another networking-bot. The only reason I didn&rsquo;t is that I&rsquo;d initiated the contact - he was responding to me, not cold-pitching. The shape was still wrong, but the context saved it.</p>
+
+<hr>
+
+<h2>The honest summary</h2>
+
+<p>AI writes the way it was trained to write: polished, three-item-listed, em-dashed, never-repeating-words, evenly-paced, slightly-too-formal, strangely confident. Humans write the way they actually think: uneven, occasionally confused, contracting all the time, dropping fragments, using "yeah" and "kinda" and the occasional swear word, going on tangents and coming back, having opinions about things they&rsquo;ve actually done.</p>
+
+<p>Spotting AI in 2026 isn&rsquo;t about catching one phrase. It&rsquo;s about feeling the difference between a piece of writing that came from a person and a piece of writing that came from an output prediction model trained on a billion essays.</p>
+
+<p>The patterns above are the most common tells. Once you see them, you can&rsquo;t unsee them. That&rsquo;s a useful filter for incoming writing - emails, LinkedIn posts, blog comments, GitHub issues. It&rsquo;s an even more useful filter for your own outgoing writing if you want to be read.</p>
+
+<p>Use AI. Just don&rsquo;t sound like AI.</p>
+
+
+            </div>
+
+            <div class="article-attribution">
+                <p class="attribution-text">The ideas, opinions, and frameworks in this article are original to Cameron J. Moir.<br><span style="font-size:0.65rem;opacity:0.7;">Written with the assistance of AI.</span></p>
+            </div>
+        </div>
+
+        <div class="article-next">
+            <span class="next-label">// Next</span>
+            <a href="29-cliptips-live-interpreter-ga.html" class="next-article-link">
+                <span class="next-article-text">
+                    <span class="next-article-title">ClipTips Live Interpreter Mode is GA</span>
+                    <span class="next-article-teaser">Voice-cloned cross-language conversation in production. The latency stack, the cost lock-down, and the V1.5 lipsync queue.</span>
+                </span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+            </a>
+        </div>
+
+        <div class="article-cta">
+            <p class="cta-text">Building something similar or want to collaborate on ClipTips?</p>
+            <a href="https://streamables.live/#contact" class="cta-link">Get in touch &rarr;</a>
+        </div>
+
+        <footer class="article-footer">
+            &copy; 2026 Streamables.live | Brisbane, Australia<br>
+            <a href="https://streamables.live/">&larr; Back to main site</a> &nbsp;&middot;&nbsp; <a href="https://streamables.live/#articles">More articles</a>
+        </footer>
+    </div>
+
+    <script>
+        function createMatrixRain() {
+            const container = document.getElementById('matrixRain');
+            container.replaceChildren();
+            const canvas = document.createElement('canvas');
+            canvas.style.width = '100%';
+            canvas.style.height = '100%';
+            container.appendChild(canvas);
+            const ctx = canvas.getContext('2d');
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize);
+            const matrixChars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const fontSize = 14;
+            const isMobile = window.innerWidth <= 768;
+            const columns = Math.floor(canvas.width / (isMobile ? 40 : 30));
+            const drops = [];
+            for (let i = 0; i < columns; i++) drops[i] = Math.floor(Math.random() * -50);
+            let lastTime = 0, rafId = null;
+            function draw(t) {
+                if (document.hidden) { rafId = null; return; }
+                if (t - lastTime < 80) { rafId = requestAnimationFrame(draw); return; }
+                lastTime = t;
+                ctx.fillStyle = 'rgba(0,0,0,0.08)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.font = fontSize + 'px "JetBrains Mono", monospace';
+                for (let i = 0; i < columns; i++) {
+                    if (Math.random() > 0.75) continue;
+                    const char = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+                    ctx.fillStyle = '#00ffff';
+                    ctx.fillText(char, i * (isMobile ? 40 : 30), drops[i] * fontSize);
+                    drops[i]++;
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.85) drops[i] = Math.floor(Math.random() * -30);
+                }
+                rafId = requestAnimationFrame(draw);
+            }
+            document.addEventListener('visibilitychange', () => {
+                if (!document.hidden && !rafId) rafId = requestAnimationFrame(draw);
+            });
+            rafId = requestAnimationFrame(draw);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (!prefersReducedMotion) setTimeout(createMatrixRain, 200);
+            document.body.style.opacity = '1';
+        });
+    </script>
+</body>
+</html>
