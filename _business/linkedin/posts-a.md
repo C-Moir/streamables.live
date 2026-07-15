@@ -1,8 +1,8 @@
 # LinkedIn posts A: consulting and operations set
 
-Voice rules (from resources/anti-ai-style-guide.md): no em dashes, no "delve", no "game-changer",
-short sentences, real numbers. Every post ends with `[link in first comment]`. Post the article
-URL as the first comment yourself, immediately.
+Rewritten against resources/anti-ai-style-guide.md. Each post is built from the article's own
+opening prose, so the voice is the articles' voice. Post the teaser, then immediately paste the
+First comment link as your own comment.
 
 ---
 
@@ -10,135 +10,122 @@ URL as the first comment yourself, immediately.
 *Image: images/01.png · Article: /articles/01-what-ai-actually-costs-hospitality.html*
 *First comment: https://streamables.live/articles/01-what-ai-actually-costs-hospitality.html*
 
-Nobody in hospitality gets a straight answer on what AI actually costs. You get a demo, a subscription price, and a promise about efficiency.
+Nobody gives you a straight answer on this. You get a demo, a pitch deck, a subscription price, and a vague promise about "efficiency gains." What you don't get is someone sitting down and telling you what you're actually signing up for.
 
-Here's the real bill, from watching it land across a dozen venues:
+So I wrote it down.
 
-Software: $500 to $2,000 a month once you stack reservations, POS and rostering.
-Your manager's time: 40 to 80 hours over the first 3 months. At $45 an hour fully loaded, that's real money.
-Data clean-up nobody warns you about: one to two weeks. Three years of inventory in three systems, the roster in a spreadsheet.
-Ongoing ownership: 2 to 4 hours a week. Forever. Someone has to own it.
+The software's the cheapest part. $200 to $800 a month for a decent reservation system, add a couple hundred for POS with predictive ordering, same again for rostering. The bit nobody prices in is your manager's time. I've watched it across a dozen venues: the tool that's meant to save 10 hours a week costs 10 hours a week for the first 90 days. At $45 an hour fully loaded, that's $1,800 a month before the thing starts helping.
 
-These tools aren't plug-and-play. They're infrastructure, same as a new POS. Budget three times the subscription price and make someone own it.
+And then there's the data clean-up nobody warns you about. Usually a week of work. Sometimes two.
 
-Small cafe at $1.5M turnover: the maths gets tight. Multi-venue at $10M+: it starts making real sense.
-
-Full breakdown in the article. [link in first comment]
+Full numbers in the comments.
 
 ## §20 Hospitality Is a Data Goldmine Nobody's Mining
 *Image: images/20.png · Article: /articles/20-hospitality-data-goldmine-nobody-mines.html*
 *First comment: https://streamables.live/articles/20-hospitality-data-goldmine-nobody-mines.html*
 
-Every service, your venue generates cover counts, table turns, send rates by section, wastage by shift, weather against bookings, spend per cover by channel.
+Twenty years in and around commercial kitchens leaves you with a specific appreciation for how much information flows through a venue every single day. And how almost none of it gets captured usefully.
 
-And for most venues, all of it disappears by close.
+Cover counts. Turn times. Send rates by section, wastage by ingredient by shift, weather against bookings. It's all there. It happens every service. For most venues it's gone by close.
 
-Not because operators don't care. Because capturing it used to need expensive integrated systems or admin time nobody has.
+We ran a grill-section tracker in a Brisbane venue once. A form the section chef fills out in three minutes at end of service, cross-referenced against prep and end-of-shift inventory. Eight weeks of that showed the venue was over-prepping by about 20% every Wednesday.
 
-Counter-example: a grill-section tracker we ran in a Brisbane venue. A digital form the section chef fills in three minutes at end of service. What went out, against prep quantities and end-of-shift inventory.
+Not AI. A form.
 
-Eight weeks of that data showed the venue was over-prepping about 20% every Wednesday, showed where the prep-to-send gap was waste versus prep inaccuracy, and showed which staff configurations produced the highest section output.
-
-No AI required. Just data that finally exists in a consistent format. That's step one for every venue. The AI conversation only makes sense after it. [link in first comment]
+Story's in the comments.
 
 ## §17 Every Venue Needs an Operational Bible. Almost None Have One.
 *Image: images/17.png · Article: /articles/17-operational-bible-every-venue-needs.html*
 *First comment: https://streamables.live/articles/17-operational-bible-every-venue-needs.html*
 
-Ask a head chef where the recipes live. Ask a manager where the opening procedure is written down. Ask the owner what happens if both of them quit in the same week.
+Ask a venue owner to show you their operational bible. Watch what happens.
 
-Twenty years in kitchens taught me that most venues run on knowledge that lives in two or three heads. It walks out the door every time someone resigns, and the venue pays to relearn it.
+Best case: a folder of SOPs from three years ago, half of which don't reflect how the place actually runs anymore. More common: they've been meaning to put one together. Most common of all: a slightly defensive explanation of why they don't need one, because the team knows what they're doing.
 
-The fix isn't software first. It's an operational bible: recipes, prep standards, section procedures, supplier terms, the why behind each rule. Written down, owned, versioned.
+The team does know. That's the problem. The knowledge lives in two or three heads and it walks out the door with every resignation, and the venue pays to relearn it every time.
 
-Then software has something to enforce.
-
-I wrote up what goes in one and how to build it without stopping service to do it. [link in first comment]
+I wrote up what goes in one, and how to build it without stopping service to do it. Link below.
 
 ## §02 Why Most AI Projects Fail in Year One
 *Image: images/02.png · Article: /articles/02-why-ai-projects-fail-year-one.html*
 *First comment: https://streamables.live/articles/02-why-ai-projects-fail-year-one.html*
 
-Depending on which study you read, somewhere between 50% and 80% of business AI projects fail inside a year.
+The failure rate on business AI implementations is genuinely embarrassing. Somewhere between 50% and 80% of projects don't deliver what they promised, depending which study you read.
 
-Having watched this from inside venues, the failures look remarkably similar:
+That's not a technology problem. The technology mostly works.
 
-Bought for the demo, not the Monday morning. The tool worked in the sales call. It never worked during a full book with two staff down.
+The most common failure is ownership, or the absence of it. You buy the tool, you get it set up, and then it becomes nobody's job. By week three staff are routing around it and the spreadsheet's back. I've watched the same handful of failure patterns from inside venues for years, so I wrote them all out.
 
-No owner. Software without a named human owner is abandonware on a subscription.
-
-Dirty data underneath. The AI was asked to be smart about numbers nobody trusted.
-
-Staff were told, not trained. Week three, they route around it. The spreadsheet comes back.
-
-None of these are technology failures. They're operational failures wearing a technology costume. Which is good news: operations can be fixed. [link in first comment]
+Link's in the first comment.
 
 ## §09 The Real Reason Your Business Needs an AI Strategy
 *Image: images/09.png · Article: /articles/09-real-reason-your-business-needs-ai-strategy.html*
 *First comment: https://streamables.live/articles/09-real-reason-your-business-needs-ai-strategy.html*
 
-It's not efficiency.
+Every conversation about AI for business eventually lands on efficiency. Automate the repetitive stuff. Speed up the slow processes. The ROI calculator shows green and everyone nods.
 
-Efficiency is the brochure word. The real reason is that without a strategy, AI decisions get made anyway. By default, one subscription at a time, by whoever saw an ad that week.
+I think efficiency is the least interesting reason, honestly.
 
-Eighteen months later you're paying for five tools that don't talk to each other, your data is scattered across five vendors, and nobody can say what any of it returns.
+Here's the thing: without a strategy, the AI decisions still get made. One subscription at a time, by whoever saw an ad that week. Eighteen months later you're paying for five tools that don't talk to each other, your data's scattered across five vendors, and nobody can tell you what any of it returns.
 
-A strategy is one page: what we're trying to improve, what data we have, what we'll never hand over, who owns each tool, and what gets reviewed in 90 days.
-
-One page beats five subscriptions. [link in first comment]
+The actual argument is in the article. It fits on one page, which is sort of the point.
 
 ## §16 ChefBot Isn't an AI Chef
 *Image: images/16.png · Article: /articles/16-chefbot-what-it-actually-is.html*
 *First comment: https://streamables.live/articles/16-chefbot-what-it-actually-is.html*
 
-Nobody needs an AI that pretends to cook. Cooking was never the problem.
+The name throws people. ChefBot sounds like something that writes recipes or suggests wine pairings. That's not what it is.
 
-The problem is everything around the cooking: the prep list that lives in someone's head, the ordering done by gut feel at 11pm, the handover that didn't happen, the temp log nobody filled in.
+Cooking was never the problem in any kitchen I've run. The problem was everything around the cooking. The prep list that lives in someone's head. Ordering done on gut feel at 11pm. The handover that didn't happen because Tuesday.
 
-That's the layer AI can actually hold: structured, boring, relentless. The knowledge stays the chef's. The system just makes sure it gets applied on the days the chef isn't standing there.
+That's the layer worth automating. The knowledge stays the chef's; the system just makes sure it gets applied on the days the chef isn't standing there.
 
-I wrote about what that looks like in practice. [link in first comment]
+Wrote up what it actually is. Comments.
 
 ## §25 ReportBot Is Not a Reporting Tool
 *Image: images/25.png · Article: /articles/25-reportbot-what-it-actually-is.html*
 *First comment: https://streamables.live/articles/25-reportbot-what-it-actually-is.html*
 
-Most businesses don't have a reporting problem. They have a knowing problem.
+Every day a business runs, it generates a complete picture of how it's actually doing. Bookings, POS, compliance logs, staff records, maintenance requests, supplier invoices.
 
-The numbers exist. They're in the POS, the roster system, the accounting file, four spreadsheets and a WhatsApp thread. What doesn't exist is one honest picture, assembled without a human spending Sunday night doing it.
+The picture exists. It's just spread across six systems that don't talk to each other, so nobody ever sees it assembled. The owner finds out how the month went when the accountant tells them, weeks later.
 
-That's the entire pitch for automated reporting: not prettier charts, but a business that actually knows what it did last week, every week, without anyone burning hours to find out.
+That's the gap ReportBot exists for. Not prettier charts. Just a business knowing what it did last week without someone burning their Sunday night to find out.
 
-What that looks like in practice. [link in first comment]
+Link below if you want the longer version.
 
 ## §00 An Introduction to AI
 *Image: images/00.png · Article: /articles/00-introduction-to-ai.html*
 *First comment: https://streamables.live/articles/00-introduction-to-ai.html*
 
-I spent twenty years in kitchens before I built software, so I remember what AI explanations look like from the other side: either baby talk or a sales pitch.
+Most people using AI are getting about 20% of what it can actually do. Not because they're not smart enough. Because nobody ever explained how the thing works.
 
-So I wrote the explainer I wish someone had handed me. What AI actually is, what it's genuinely good at, where it falls over, and how to use it inside a real business without getting harvested by the tools.
+I spent twenty years in kitchens before I built software, so I remember what these explanations look like from the other side. Baby talk or a sales pitch. Nothing in between.
 
-No hype, no doom. Written for operators, useful for anyone. [link in first comment]
+This is the explainer I wish someone had handed me. What AI actually is, where it's genuinely useful, where it falls over, and how to use it without getting harvested by your own tools. Written for operators.
+
+No hype in it. No doom either.
 
 ## §03 You're Already Generating Valuable Data. Someone Else Is Selling It.
 *Image: images/03.png · Article: /articles/03-youre-generating-valuable-data.html*
 *First comment: https://streamables.live/articles/03-youre-generating-valuable-data.html*
 
-Your POS provider knows your sales patterns. Your booking platform knows your customers. Your delivery apps know your menu performance to the item.
+Every time you tap your card at a cafe, open an app, or just carry your phone through a shopping centre, data gets generated. Your data. Your behaviour, your habits, your patterns.
 
-You generated every byte of that. Most of it is being monetised, and not by you.
+You don't see any of the money it makes. You never agreed to be paid for it. Though you did agree, somewhere in a terms-of-service you didn't read, for someone else to sell it.
 
-The first step isn't legal or technical. It's noticing: make a list of every system that touches your operation and ask two questions. What data does it collect? And can I get it out?
+Your business runs the same way. Try this: list every system that touches your operation and ask two questions. What does it collect? Can I get it out?
 
-The answers usually change how you feel about the renewal. [link in first comment]
+The renewal conversation feels different after that exercise. Article's in the comments.
 
 ## §26 I Run My Own AI Stack. Here's What That Actually Means.
 *Image: images/26.png · Article: /articles/26-running-your-own-ai-stack.html*
 *First comment: https://www.linkedin.com/pulse/i-run-my-own-ai-stack-heres-what-actually-means-cameron-moir-iderc/ (full article already live on LinkedIn) · site copy: https://streamables.live/articles/26-running-your-own-ai-stack.html*
 
-My chat history, notes and business data don't live in a vendor's cloud. They live in systems I run, and the AI tools I use plug into them, not the other way around.
+In July 2025 I built a central AI brain with moral laws hard-coded into its foundation. Vector memory so it could remember. Modular nodes so it could grow. A dashboard so I could watch it think.
 
-That's not paranoia, it's the same logic as owning your recipes: whoever holds the data holds the leverage.
+I called it HiveMind-AI.OS. It runs on my own hardware, in my own space, on my own terms. Nothing leaves unless I say so.
 
-I wrote up what running your own stack actually involves in 2026, what it costs, and where the line is between sensible ownership and hobbyist masochism. [link in first comment]
+Most people hear that and think: sounds complicated. It is, a bit. But that's not why I did it, and it's not why I think more businesses should look at running the sensitive parts of their AI usage locally.
+
+The full piece is already up here on LinkedIn. Link in the comments.
