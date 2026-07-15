@@ -8,6 +8,7 @@ URL as the first comment yourself, immediately.
 
 ## §01 What AI Actually Costs a Hospitality Business
 *Image: images/01.png · Article: /articles/01-what-ai-actually-costs-hospitality.html*
+*First comment: https://streamables.live/articles/01-what-ai-actually-costs-hospitality.html*
 
 Nobody in hospitality gets a straight answer on what AI actually costs. You get a demo, a subscription price, and a promise about efficiency.
 
@@ -26,6 +27,7 @@ Full breakdown in the article. [link in first comment]
 
 ## §20 Hospitality Is a Data Goldmine Nobody's Mining
 *Image: images/20.png · Article: /articles/20-hospitality-data-goldmine-nobody-mines.html*
+*First comment: https://streamables.live/articles/20-hospitality-data-goldmine-nobody-mines.html*
 
 Every service, your venue generates cover counts, table turns, send rates by section, wastage by shift, weather against bookings, spend per cover by channel.
 
@@ -41,6 +43,7 @@ No AI required. Just data that finally exists in a consistent format. That's ste
 
 ## §17 Every Venue Needs an Operational Bible. Almost None Have One.
 *Image: images/17.png · Article: /articles/17-operational-bible-every-venue-needs.html*
+*First comment: https://streamables.live/articles/17-operational-bible-every-venue-needs.html*
 
 Ask a head chef where the recipes live. Ask a manager where the opening procedure is written down. Ask the owner what happens if both of them quit in the same week.
 
@@ -54,6 +57,7 @@ I wrote up what goes in one and how to build it without stopping service to do i
 
 ## §02 Why Most AI Projects Fail in Year One
 *Image: images/02.png · Article: /articles/02-why-ai-projects-fail-year-one.html*
+*First comment: https://streamables.live/articles/02-why-ai-projects-fail-year-one.html*
 
 Depending on which study you read, somewhere between 50% and 80% of business AI projects fail inside a year.
 
@@ -71,6 +75,7 @@ None of these are technology failures. They're operational failures wearing a te
 
 ## §09 The Real Reason Your Business Needs an AI Strategy
 *Image: images/09.png · Article: /articles/09-real-reason-your-business-needs-ai-strategy.html*
+*First comment: https://streamables.live/articles/09-real-reason-your-business-needs-ai-strategy.html*
 
 It's not efficiency.
 
@@ -84,6 +89,7 @@ One page beats five subscriptions. [link in first comment]
 
 ## §16 ChefBot Isn't an AI Chef
 *Image: images/16.png · Article: /articles/16-chefbot-what-it-actually-is.html*
+*First comment: https://streamables.live/articles/16-chefbot-what-it-actually-is.html*
 
 Nobody needs an AI that pretends to cook. Cooking was never the problem.
 
@@ -95,6 +101,7 @@ I wrote about what that looks like in practice. [link in first comment]
 
 ## §25 ReportBot Is Not a Reporting Tool
 *Image: images/25.png · Article: /articles/25-reportbot-what-it-actually-is.html*
+*First comment: https://streamables.live/articles/25-reportbot-what-it-actually-is.html*
 
 Most businesses don't have a reporting problem. They have a knowing problem.
 
@@ -106,6 +113,7 @@ What that looks like in practice. [link in first comment]
 
 ## §00 An Introduction to AI
 *Image: images/00.png · Article: /articles/00-introduction-to-ai.html*
+*First comment: https://streamables.live/articles/00-introduction-to-ai.html*
 
 I spent twenty years in kitchens before I built software, so I remember what AI explanations look like from the other side: either baby talk or a sales pitch.
 
@@ -115,6 +123,7 @@ No hype, no doom. Written for operators, useful for anyone. [link in first comme
 
 ## §03 You're Already Generating Valuable Data. Someone Else Is Selling It.
 *Image: images/03.png · Article: /articles/03-youre-generating-valuable-data.html*
+*First comment: https://streamables.live/articles/03-youre-generating-valuable-data.html*
 
 Your POS provider knows your sales patterns. Your booking platform knows your customers. Your delivery apps know your menu performance to the item.
 
@@ -126,6 +135,7 @@ The answers usually change how you feel about the renewal. [link in first commen
 
 ## §26 I Run My Own AI Stack. Here's What That Actually Means.
 *Image: images/26.png · Article: /articles/26-running-your-own-ai-stack.html*
+*First comment: https://www.linkedin.com/pulse/i-run-my-own-ai-stack-heres-what-actually-means-cameron-moir-iderc/ (full article already live on LinkedIn) · site copy: https://streamables.live/articles/26-running-your-own-ai-stack.html*
 
 My chat history, notes and business data don't live in a vendor's cloud. They live in systems I run, and the AI tools I use plug into them, not the other way around.
 
