@@ -1102,6 +1102,20 @@
                         <svg class="faq-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"></path></svg>
                     </div>
 
+                    <div class="faq-item" style="cursor:default;pointer-events:none;margin-top:0.5rem;">
+                        <div class="faq-item-text">
+                            <span class="faq-heading" style="color:rgba(0,255,255,0.5);font-size:0.62rem;letter-spacing:0.14em;">// CLIPTIPS BUILD LOG</span>
+                        </div>
+                    </div>
+
+                    <div class="faq-item" onclick="window.location.href='articles/28-how-i-built-cliptips-with-claude-code.html'" style="border-left:2px solid rgba(0,255,255,0.4);padding-left:1rem;">
+                        <div class="faq-item-text">
+                            <span class="faq-heading" style="color:rgba(0,255,255,0.9);">// Build Log: How I Built ClipTips with Claude Code</span>
+                            <span class="faq-teaser">Six weeks, solo, AI-augmented. What the stack looks like, what Claude Code accelerated, what broke, and what I'd do differently.</span>
+                        </div>
+                        <svg class="faq-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"></path></svg>
+                    </div>
+
                     <div class="faq-item" onclick="window.location.href='articles/29-cliptips-live-interpreter-ga.html'" style="border-left:2px solid rgba(0,255,255,0.4);padding-left:1rem;">
                         <div class="faq-item-text">
                             <span class="faq-heading" style="color:rgba(0,255,255,0.9);">// Build Log: ClipTips Live Interpreter Mode is GA</span>
@@ -1110,18 +1124,50 @@
                         <svg class="faq-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"></path></svg>
                     </div>
 
-                    <div class="faq-item" onclick="window.location.href='articles/30-ai-identifiers-how-to-spot-ai.html'" style="border-left:2px solid rgba(0,255,255,0.4);padding-left:1rem;">
+                    <div class="faq-item" onclick="window.location.href='articles/31-the-latency-stack-walkthrough.html'" style="border-left:2px solid rgba(0,255,255,0.4);padding-left:1rem;">
                         <div class="faq-item-text">
-                            <span class="faq-heading" style="color:rgba(0,255,255,0.9);">// Field Guide: AI Identifiers - How to Spot AI Usage</span>
-                            <span class="faq-teaser">Banned phrases, sentence-structure tells, em dashes, the patterns AI writes when humans don't. The full anti-AI filter and why it matters in 2026.</span>
+                            <span class="faq-heading" style="color:rgba(0,255,255,0.9);">// Build Log: The Latency Stack Walkthrough</span>
+                            <span class="faq-teaser">Deep dive on the 5-stage real-time AI pipeline. Real measurements, the optimisations that compressed naive 2,600ms to ~300ms, and why parallelism beats per-stage speed.</span>
                         </div>
                         <svg class="faq-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"></path></svg>
                     </div>
 
-                    <div class="faq-item" onclick="window.location.href='articles/28-how-i-built-cliptips-with-claude-code.html'" style="border-left:2px solid rgba(0,255,255,0.4);padding-left:1rem;">
+                    <div class="faq-item" onclick="window.location.href='articles/32-what-i-actually-paid-to-run-live-interpreter.html'" style="border-left:2px solid rgba(0,255,255,0.4);padding-left:1rem;">
                         <div class="faq-item-text">
-                            <span class="faq-heading" style="color:rgba(0,255,255,0.9);">// Build Log: How I Built ClipTips with Claude Code</span>
-                            <span class="faq-teaser">Six weeks, solo, AI-augmented. What the stack looks like, what Claude Code accelerated, what broke, and what I'd do differently.</span>
+                            <span class="faq-heading" style="color:rgba(0,255,255,0.9);">// Build Log: What I Actually Paid in 2026</span>
+                            <span class="faq-teaser">Verified provider pricing + per-session math + full margin tables for the live interpreter pipeline. Where the model works, where it breaks, what 1.5x premium covers.</span>
+                        </div>
+                        <svg class="faq-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"></path></svg>
+                    </div>
+
+                    <div class="faq-item" onclick="window.location.href='articles/33-building-v1-5-for-zero-while-waiting-for-budget.html'" style="border-left:2px solid rgba(0,255,255,0.4);padding-left:1rem;">
+                        <div class="faq-item-text">
+                            <span class="faq-heading" style="color:rgba(0,255,255,0.9);">// Build Log: Building V1.5 for $0 While Waiting for Budget</span>
+                            <span class="faq-teaser">Pre-build the surround of paid-API features for free now. ~70% of any paid-API feature can ship before you spend a cent. Case study from V1.5 lipsync prep.</span>
+                        </div>
+                        <svg class="faq-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"></path></svg>
+                    </div>
+
+                    <div class="faq-item" onclick="window.location.href='articles/34-the-provider-abstraction-pattern.html'" style="border-left:2px solid rgba(0,255,255,0.4);padding-left:1rem;">
+                        <div class="faq-item-text">
+                            <span class="faq-heading" style="color:rgba(0,255,255,0.9);">// Build Log: The Provider Abstraction Pattern</span>
+                            <span class="faq-teaser">Seven external dependencies, all behind small interfaces. Three-file pattern, env-based selection, vendor swaps in minutes. Why this matters more on solo builds.</span>
+                        </div>
+                        <svg class="faq-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"></path></svg>
+                    </div>
+
+                    <div class="faq-item" onclick="window.location.href='articles/35-mistakes-captured-honestly.html'" style="border-left:2px solid rgba(0,255,255,0.4);padding-left:1rem;">
+                        <div class="faq-item-text">
+                            <span class="faq-heading" style="color:rgba(0,255,255,0.9);">// Build Log: Mistakes, Captured Honestly</span>
+                            <span class="faq-teaser">Documentation that hides mistakes does not teach. The session-log practice for solo founders, why public visibility creates an accountability loop.</span>
+                        </div>
+                        <svg class="faq-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"></path></svg>
+                    </div>
+
+                    <div class="faq-item" onclick="window.location.href='articles/30-ai-identifiers-how-to-spot-ai.html'" style="border-left:2px solid rgba(0,255,255,0.4);padding-left:1rem;">
+                        <div class="faq-item-text">
+                            <span class="faq-heading" style="color:rgba(0,255,255,0.9);">// Field Guide: AI Identifiers - How to Spot AI Usage</span>
+                            <span class="faq-teaser">Banned phrases, sentence-structure tells, em dashes, the patterns AI writes when humans don't. The full anti-AI filter and why it matters in 2026.</span>
                         </div>
                         <svg class="faq-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"></path></svg>
                     </div>
