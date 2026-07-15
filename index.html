@@ -404,6 +404,14 @@
                 <div class="faq-card">
                 <div class="faq-list">
 
+                    <div class="faq-item" onclick="openFaqModal('svc-audit')">
+                        <div class="faq-item-text">
+                            <span class="faq-heading">// Venue Operations &amp; AI Audit</span>
+                            <span class="faq-teaser">Fixed price, one week - find where your venue is bleeding money.</span>
+                        </div>
+                        <svg class="faq-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"></path></svg>
+                    </div>
+
                     <div class="faq-item" onclick="openFaqModal('svc-consulting')">
                         <div class="faq-item-text">
                             <span class="faq-heading">// Business Systems Consulting</span>
@@ -446,6 +454,36 @@
 
                 </div>
                 </div>
+            </div>
+
+            <div id="svc-audit" class="faq-content">
+                <h2 class="col-card-label">// Venue Operations &amp; AI Audit</h2>
+                <p style="font-size:0.7rem;color:rgba(0,255,255,0.4);font-family:'JetBrains Mono',monospace;margin-bottom:1rem;">Service - Available Now · Fixed Price · One Week</p>
+                <p style="font-size:0.78rem;color:rgba(255,255,255,0.65);line-height:1.6;margin-bottom:0.8rem;">You know something in the operation is leaking - labour, waste, time, covers. This tells you exactly what, what it's costing you, and what to do about it, in order. Half a day on site during real prep and service, a review of the systems around it, and short conversations with your key people.</p>
+                <p style="font-size:0.78rem;color:rgba(255,255,255,0.65);line-height:1.6;margin-bottom:0.8rem;">Five business days later you get a written report: the top five things bleeding money or time with a dollar estimate on each, which are fixable with process, which with off-the-shelf tools, which with AI - and which to leave alone. Plus a prioritised 90-day roadmap and a 45-minute walkthrough call.</p>
+                <ul class="about-bio-points" style="margin-bottom:1.2rem;">
+                    <li>Half-day on site - prep, service, close, and the admin around it</li>
+                    <li>Systems review - POS, rosters, ordering, the spreadsheets and WhatsApp groups</li>
+                    <li>Written report - top 5 leaks, each costed, each with a fix</li>
+                    <li>90-day roadmap - what to do first, what it costs, what it returns</li>
+                    <li>Fee credited against any implementation engagement booked within 60 days</li>
+                </ul>
+                <div style="border-top:1px solid rgba(0,255,255,0.08);padding-top:1rem;margin-bottom:1.2rem;">
+                    <p style="font-size:0.65rem;font-family:'JetBrains Mono',monospace;color:rgba(255,255,255,0.25);margin-bottom:0.7rem;letter-spacing:0.05em;">PRICING (AUD inc. GST) - Fixed</p>
+                    <div style="display:flex;flex-direction:column;gap:0.5rem;">
+                        <div style="display:flex;justify-content:space-between;align-items:baseline;">
+                            <span style="font-size:0.75rem;font-family:'JetBrains Mono',monospace;color:rgba(0,255,255,0.7);">Single Venue</span>
+                            <span style="font-size:0.68rem;color:rgba(255,255,255,0.35);flex:1;margin:0 0.8rem;border-bottom:1px dotted rgba(255,255,255,0.08);"></span>
+                            <span style="font-size:0.75rem;font-family:'JetBrains Mono',monospace;color:rgba(255,255,255,0.6);">$1,650</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;align-items:baseline;">
+                            <span style="font-size:0.75rem;font-family:'JetBrains Mono',monospace;color:rgba(0,255,255,0.7);">Each Additional Site</span>
+                            <span style="font-size:0.68rem;color:rgba(255,255,255,0.35);flex:1;margin:0 0.8rem;border-bottom:1px dotted rgba(255,255,255,0.08);"></span>
+                            <span style="font-size:0.75rem;font-family:'JetBrains Mono',monospace;color:rgba(255,255,255,0.6);">$550</span>
+                        </div>
+                    </div>
+                </div>
+                <span class="github-link" style="cursor:pointer;" onclick="closeFaqModal();showPanel('contact')">→ Enquire</span>
             </div>
 
             <div id="svc-ai" class="faq-content">
