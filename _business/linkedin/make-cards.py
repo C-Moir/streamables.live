@@ -45,6 +45,22 @@ CHIP = {
     "33": "ZERO BUDGET", "34": "PROVIDER PATTERN", "35": "HONEST LOGS",
 }
 
+# Per-card adjustments. Any key can be set for any article number:
+#   white / cyan  - custom headline split (cyan renders on its own line, in cyan)
+#   chip          - overrides CHIP
+#   cat           - overrides SERIES, as ("LEFT PART", "CYAN PART")
+#   desc          - overrides the meta-description subline
+# Add or edit entries, rerun make-cards.py, done.
+OVERRIDES = {
+    "02": {"white": "Why Most AI Projects Fail", "cyan": "in Year One"},
+    "20": {"white": "Hospitality Is a Data Goldmine", "cyan": "Nobody's Mining"},
+    "22": {"white": "Universal Basic Income", "cyan": "Funded by Data, Not Taxes"},
+    "28": {"white": "How I Built ClipTips", "cyan": "with Claude Code"},
+    "32": {"white": "What I Actually Paid in 2026", "cyan": "to Run a Live Interpreter"},
+    "33": {"white": "Building V1.5 for $0", "cyan": "While Waiting for Budget"},
+    "35": {"white": "Mistakes,", "cyan": "Captured Honestly"},
+}
+
 TPL = """<!doctype html><html><head><meta charset="utf-8"><style>
   * {{ margin:0; padding:0; box-sizing:border-box; }}
   html {{ background:#000; height:100%; }}
@@ -177,17 +193,22 @@ def main():
         title = html.unescape(t.group(1)).split("|")[0].strip() if t else f
         d = re.search(r'name="description" content="([^"]*)"', raw)
         desc = html.unescape(d.group(1)) if d else ""
+        ov = OVERRIDES.get(num, {})
+        desc = ov.get("desc", desc)
         if len(desc) > 210:
             desc = desc[:207].rsplit(" ", 1)[0] + "…"
-        white, cyan = split_title(title)
+        if "white" in ov:
+            white, cyan = ov["white"], ov.get("cyan")
+        else:
+            white, cyan = split_title(title)
         longest = max(len(white), len(cyan or ""))
         size = 52 if longest <= 34 else (44 if longest <= 48 else 38)
         h1 = glue_orphan(white)
         if cyan:
             h1 += '<br><span class="cy">' + glue_orphan(cyan) + "</span>"
-        cat1, cat2 = SERIES.get(num, ("SOVEREIGN AI", "FIELD NOTES"))
+        cat1, cat2 = ov.get("cat", SERIES.get(num, ("SOVEREIGN AI", "FIELD NOTES")))
         page = TPL.format(cat1=cat1, cat2=cat2,
-                          chip=CHIP.get(num, "FIELD NOTES"),
+                          chip=ov.get("chip", CHIP.get(num, "FIELD NOTES")),
                           title=h1, size=size,
                           desc=html.escape(desc),
                           graph=node_graph(int(num)), num=num)
